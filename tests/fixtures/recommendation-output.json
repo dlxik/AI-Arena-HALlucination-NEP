@@ -1,0 +1,76 @@
+{
+  "looks": [
+    {
+      "id": "van-mieu-01",
+      "name": "Thanh Lam",
+      "garment": "ao_ngu_than",
+      "style": "Thanh lịch, tối giản",
+      "palette": ["xanh pastel", "trắng ngà"],
+      "items": ["Áo ngũ thân mẫu", "Quần dài trơn mẫu"],
+      "accessories": ["Phụ kiện tối giản mẫu"],
+      "reason": "Bản phối mock ưu tiên bảng màu nhẹ và ít chi tiết.",
+      "culturalNote": "Nội dung văn hóa đang chờ nguồn và chuyên gia rà soát; không dùng như dữ kiện đã kiểm chứng.",
+      "sourceIds": ["SOURCE_PLACEHOLDER"],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "SOURCE_REVIEW_REQUIRED",
+            "severity": "medium",
+            "reason": "Cultural Knowledge Base hiện chỉ có placeholder.",
+            "suggestedFix": "Bổ sung nguồn đáng tin cậy và phê duyệt quy tắc trước khi phát hành."
+          }
+        ]
+      },
+      "imagePrompt": "Mock prompt: elegant minimal outfit concept, pastel blue palette; cultural details require review."
+    },
+    {
+      "id": "van-mieu-02",
+      "name": "Ngọc Sương",
+      "garment": "ao_ngu_than",
+      "style": "Tối giản đương đại",
+      "palette": ["xanh ngọc nhạt", "kem"],
+      "items": ["Áo ngũ thân mẫu", "Lớp nền màu kem mẫu"],
+      "accessories": ["Túi cầm tay trơn mẫu"],
+      "reason": "Biến thể mock giữ tổng thể tiết chế để frontend kiểm thử hiển thị.",
+      "culturalNote": "Nội dung văn hóa đang chờ nguồn và chuyên gia rà soát; không dùng như dữ kiện đã kiểm chứng.",
+      "sourceIds": ["SOURCE_PLACEHOLDER"],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "SOURCE_REVIEW_REQUIRED",
+            "severity": "medium",
+            "reason": "Cultural Knowledge Base hiện chỉ có placeholder.",
+            "suggestedFix": "Bổ sung nguồn đáng tin cậy và phê duyệt quy tắc trước khi phát hành."
+          }
+        ]
+      },
+      "imagePrompt": "Mock prompt: restrained contemporary styling, pale jade and cream; cultural details require review."
+    },
+    {
+      "id": "van-mieu-03",
+      "name": "Lam Khói",
+      "garment": "ao_ngu_than",
+      "style": "Thanh lịch, nhẹ nhàng",
+      "palette": ["xanh khói pastel", "xám sáng"],
+      "items": ["Áo ngũ thân mẫu", "Quần xám sáng mẫu"],
+      "accessories": ["Phụ kiện trung tính mẫu"],
+      "reason": "Biến thể mock cung cấp lựa chọn thứ ba cho luồng kết quả.",
+      "culturalNote": "Nội dung văn hóa đang chờ nguồn và chuyên gia rà soát; không dùng như dữ kiện đã kiểm chứng.",
+      "sourceIds": ["SOURCE_PLACEHOLDER"],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "SOURCE_REVIEW_REQUIRED",
+            "severity": "medium",
+            "reason": "Cultural Knowledge Base hiện chỉ có placeholder.",
+            "suggestedFix": "Bổ sung nguồn đáng tin cậy và phê duyệt quy tắc trước khi phát hành."
+          }
+        ]
+      },
+      "imagePrompt": "Mock prompt: soft elegant styling, smoky pastel blue and light gray; cultural details require review."
+    }
+  ]
+}

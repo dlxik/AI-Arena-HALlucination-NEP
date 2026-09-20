@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-labelledby="title description">
+  <title id="title">AI Arena image placeholder</title>
+  <desc id="description">A neutral placeholder used before image generation is integrated.</desc>
+  <rect width="1200" height="1500" fill="#e7eee9"/>
+  <circle cx="600" cy="620" r="220" fill="#c4d8cc"/>
+  <rect x="330" y="880" width="540" height="16" rx="8" fill="#6d8f7c"/>
+  <rect x="430" y="930" width="340" height="12" rx="6" fill="#9db5a7"/>
+</svg>
