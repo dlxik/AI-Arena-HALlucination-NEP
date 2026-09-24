@@ -1,8 +1,8 @@
 {
-  "occasion": "Tham quan Văn Miếu",
+  "occasion": "cultural_visit",
   "garment": "ao_ngu_than",
-  "style": "Thanh lịch, tối giản",
-  "colors": ["xanh pastel"],
+  "style": "minimal",
+  "colors": ["pastel_blue"],
   "remixLevel": 40,
   "description": "Ưu tiên tổng thể gọn gàng và phù hợp không gian tham quan."
 }

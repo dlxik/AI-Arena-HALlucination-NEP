@@ -21,4 +21,4 @@ User Input
 - **Image Generator:** chỉ chạy sau khi kết quả vượt ngưỡng validation.
 - **Result UI:** hiển thị bản phối, cảnh báo và Cultural Passport có nguồn.
 
-Scaffold hiện dừng ở contract và deterministic mock. Không route nào gọi Gemini.
+`POST /api/parse-intent` đã gọi Gemini bằng structured output và validate lại ở server. Các bước retrieval, stylist, critic và image generator vẫn đang dùng scaffold hoặc deterministic mock.
