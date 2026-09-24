@@ -354,12 +354,12 @@ Không cần đưa mọi đoạn code vào Gemini conversation. Code được ch
 
 #### Công việc
 
-- [ ] Thiết lập Gemini client đọc API key từ environment.
-- [ ] Thử một Gemini API call tối thiểu.
-- [ ] Tạo Intent Parser phiên bản đầu.
-- [ ] Yêu cầu structured output đúng input schema.
-- [ ] Tạo endpoint mock hoặc fixture để Hiền tích hợp trước.
-- [ ] Ghi prompt version đầu tiên vào `prompts/intent/`.
+- [x] Thiết lập Gemini client đọc API key từ environment — `src/lib/gemini/client.ts`.
+- [x] Thử một Gemini API call tối thiểu — evaluation 5/5 cases theo AI Log.
+- [x] Tạo Intent Parser phiên bản đầu — `src/lib/gemini/parse-intent.ts`.
+- [x] Yêu cầu structured output đúng input schema — schema và parser đã có test.
+- [x] Tạo endpoint mock hoặc fixture để Hiền tích hợp trước — `/api/parse-intent` và fixtures đã sẵn sàng.
+- [x] Ghi prompt version đầu tiên vào `prompts/intent/intent-v1.md`.
 
 #### Definition of Done
 
@@ -372,12 +372,12 @@ Không cần đưa mọi đoạn code vào Gemini conversation. Code được ch
 
 #### Công việc
 
-- [ ] Tạo Cultural KB Sheet với các cột đã thống nhất.
-- [ ] Lập danh sách nguồn cho 4 loại trang phục.
-- [ ] Bắt đầu nhập dữ liệu cho Áo ngũ thân và Áo tứ thân.
-- [ ] Với mỗi fact, ghi `source_id`, publisher và URL.
-- [ ] Đề xuất các rule type và confidence level.
-- [ ] Tạo 3-5 test case đầu tiên cho cultural validation.
+- [x] Tạo Cultural KB Sheet với các cột đã thống nhất — `data/knowledge/records.json`.
+- [x] Lập danh sách nguồn cho 4 loại trang phục — `data/sources/references.json`.
+- [x] Bắt đầu nhập dữ liệu cho Áo ngũ thân và Áo tứ thân.
+- [x] Với mỗi fact, ghi `source_ids`, publisher và URL.
+- [x] Đề xuất `preserve`, `flexible`, `context`, `warning` và confidence level.
+- [x] Tạo 5 test case đầu tiên cho cultural validation.
 
 #### Definition of Done
 
@@ -392,8 +392,8 @@ Không cần đưa mọi đoạn code vào Gemini conversation. Code được ch
 - [ ] Mọi người clone và chạy được repository.
 - [x] Schema được lưu vào repository — `src/types/outfit.ts`, `src/types/api.ts`, `src/types/cultural.ts`.
 - [x] Có ít nhất một fixture input và một fixture output gồm 3 looks — `src/lib/fixtures.ts`.
-- [ ] Mỗi người có feature branch riêng.
-- [x] Mỗi thành viên mở ít nhất một Pull Request hoặc để lại artefact review được — Hiền: các file trong `src/`.
+- [x] Mỗi người có feature branch riêng — `hien`, `lanh`, `linh`.
+- [x] Mỗi thành viên mở ít nhất một Pull Request hoặc để lại artefact review được — artefact của cả ba đã được merge vào `main`.
 - [ ] Task board phản ánh đúng trạng thái.
 - [x] AI Log được cập nhật — `docs/ai-log.md` có entry ngày 2026-09-24.
 - [ ] Gemini conversation đã được tạo và lưu link.
@@ -408,8 +408,8 @@ Buổi 1 chỉ được coi là hoàn thành khi có đủ:
 - [x] Input/output schema đã chốt — `src/types/api.ts` + `src/types/outfit.ts`.
 - [x] Kiến trúc pipeline đã chốt — Intent Parser → Cultural Retrieval → Stylist → Critic → Image → UI.
 - [ ] Repo và branch workflow đã thống nhất — cần cả đội xác nhận trong buổi họp.
-- [ ] Cultural KB Sheet đã được tạo — Linh phụ trách.
-- [ ] Gemini API call tối thiểu đã chạy hoặc có blocker rõ ràng — Lan Anh phụ trách.
+- [x] Cultural KB Sheet đã được tạo — 7 nguồn, 7 records, 4 rule types và 5 test cases.
+- [x] Gemini API call tối thiểu đã chạy — evaluation 5/5 cases; parser có 10 automated tests.
 - [ ] Gemini conversation đã được tạo — cần tạo trong buổi họp.
 - [ ] Task của Hiền, Lan Anh và Linh có deadline — chốt trong buổi họp.
 - [ ] Cả ba hiểu Definition of Done trước buổi 2.
@@ -442,6 +442,6 @@ Blocker:
 ## 9. Trạng thái checkpoint
 
 - [ ] Chưa bắt đầu.
-- [x] Đang thực hiện — Hiền đã hoàn thành phần frontend skeleton.
-- [ ] Hoàn thành — chờ Lan Anh (Gemini API) và Linh (Cultural KB).
+- [x] Đang thực hiện — artefact của Hiền, Lan Anh và Linh đã tích hợp vào `main`.
+- [ ] Hoàn thành — còn chờ Gemini conversation, deadline checkpoint 2 và xác nhận workflow của cả đội.
 - [ ] Có blocker cần xử lý.
