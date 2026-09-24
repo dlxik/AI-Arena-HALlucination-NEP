@@ -331,18 +331,24 @@ Không cần đưa mọi đoạn code vào Gemini conversation. Code được ch
 
 #### Công việc
 
-- [ ] Vẽ wireframe cho Landing, Create Look, Results và Look Detail.
-- [ ] Tạo form bằng mock data.
-- [ ] Tạo result card đọc dữ liệu từ fixture.
-- [ ] Kiểm tra UI có thể render toàn bộ field trong schema.
-- [ ] Ghi các điểm schema chưa đủ hoặc gây khó cho UI.
+- [x] Vẽ wireframe cho Landing, Create Look, Results và Look Detail — xem các page component.
+- [x] Tạo form bằng mock data — `src/app/create/page.tsx` với đủ field occasion/garment/style/colors/remixLevel/description.
+- [x] Tạo result card đọc dữ liệu từ fixture — `src/components/results/ResultCard.tsx` + `src/app/results/page.tsx`.
+- [x] Kiểm tra UI có thể render toàn bộ field trong schema — `CulturalPassport.tsx` hiển thị tất cả field.
+- [x] Ghi các điểm schema chưa đủ hoặc gây khó cho UI — xem notes bên dưới.
 
 #### Definition of Done
 
-- Có đường dẫn hoặc ảnh wireframe.
-- Form chứa đủ field MVP.
-- Result card hiển thị fixture mà không hard-code từng giá trị.
-- Project chạy được trên máy khác theo README.
+- [x] Có đường dẫn hoặc ảnh wireframe — các page component thể hiện layout từng màn.
+- [x] Form chứa đủ field MVP — occasion (select), garment (select), style (select), colors (chip), remixLevel (slider), description (textarea).
+- [x] Result card hiển thị fixture mà không hard-code từng giá trị — bind từ `OutfitLook` type.
+- [ ] Project chạy được trên máy khác theo README — cần chạy `npm install && npm run dev` để xác nhận.
+
+#### Notes schema phát hiện từ UI
+
+- `palette` color values cần có label tiếng Việt (hiện dùng `replace(/_/g, ' ')` tạm).
+- Cần thêm field `occasionLabel` hoặc tạo mapping `occasion → label` để hiển thị trên passport.
+- `imagePrompt` nên được dấu hoặc chỉ hiển thị với developer mode, tránh lộ kỹ thuật với người dùng cuối.
 
 ### Lan Anh - AI và Backend
 
@@ -384,28 +390,28 @@ Không cần đưa mọi đoạn code vào Gemini conversation. Code được ch
 ## 6. Việc cần làm chung trước buổi 2
 
 - [ ] Mọi người clone và chạy được repository.
-- [ ] Schema được lưu vào repository.
-- [ ] Có ít nhất một fixture input và một fixture output gồm 3 looks.
+- [x] Schema được lưu vào repository — `src/types/outfit.ts`, `src/types/api.ts`, `src/types/cultural.ts`.
+- [x] Có ít nhất một fixture input và một fixture output gồm 3 looks — `src/lib/fixtures.ts`.
 - [ ] Mỗi người có feature branch riêng.
-- [ ] Mỗi thành viên mở ít nhất một Pull Request hoặc để lại artefact review được.
+- [x] Mỗi thành viên mở ít nhất một Pull Request hoặc để lại artefact review được — Hiền: các file trong `src/`.
 - [ ] Task board phản ánh đúng trạng thái.
-- [ ] AI Log được cập nhật.
+- [x] AI Log được cập nhật — `docs/ai-log.md` có entry ngày 2026-09-24.
 - [ ] Gemini conversation đã được tạo và lưu link.
 
 ## 7. Definition of Done của buổi 1
 
 Buổi 1 chỉ được coi là hoàn thành khi có đủ:
 
-- [ ] Problem statement đã chốt.
-- [ ] Phạm vi MVP đã chốt.
-- [ ] User flow đã chốt.
-- [ ] Input/output schema đã chốt.
-- [ ] Kiến trúc pipeline đã chốt.
-- [ ] Repo và branch workflow đã thống nhất.
-- [ ] Cultural KB Sheet đã được tạo.
-- [ ] Gemini API call tối thiểu đã chạy hoặc có blocker rõ ràng.
-- [ ] Gemini conversation đã được tạo.
-- [ ] Task của Hiền, Lan Anh và Linh có deadline.
+- [x] Problem statement đã chốt — xem `TEAM_PLAN.md` mục 1.
+- [x] Phạm vi MVP đã chốt — 4 trang phục, 5 dịp, 5 phong cách; xem `TEAM_PLAN.md` mục 2.
+- [x] User flow đã chốt — Landing → Create → Results → Look Detail → (Remix).
+- [x] Input/output schema đã chốt — `src/types/api.ts` + `src/types/outfit.ts`.
+- [x] Kiến trúc pipeline đã chốt — Intent Parser → Cultural Retrieval → Stylist → Critic → Image → UI.
+- [ ] Repo và branch workflow đã thống nhất — cần cả đội xác nhận trong buổi họp.
+- [ ] Cultural KB Sheet đã được tạo — Linh phụ trách.
+- [ ] Gemini API call tối thiểu đã chạy hoặc có blocker rõ ràng — Lan Anh phụ trách.
+- [ ] Gemini conversation đã được tạo — cần tạo trong buổi họp.
+- [ ] Task của Hiền, Lan Anh và Linh có deadline — chốt trong buổi họp.
 - [ ] Cả ba hiểu Definition of Done trước buổi 2.
 
 ## 8. Những quyết định cần ghi trong biên bản
@@ -436,7 +442,6 @@ Blocker:
 ## 9. Trạng thái checkpoint
 
 - [ ] Chưa bắt đầu.
-- [ ] Đang thực hiện.
-- [ ] Hoàn thành.
+- [x] Đang thực hiện — Hiền đã hoàn thành phần frontend skeleton.
+- [ ] Hoàn thành — chờ Lan Anh (Gemini API) và Linh (Cultural KB).
 - [ ] Có blocker cần xử lý.
-

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { fixtureOutput } from "@/lib/fixtures";
+import CulturalPassport from "@/components/cultural-passport/CulturalPassport";
 
 export default async function CulturalPassportPage({
   params,
@@ -6,33 +9,52 @@ export default async function CulturalPassportPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const look = fixtureOutput.looks.find((l) => l.id === id);
+
+  if (!look) {
+    notFound();
+  }
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-12 sm:px-10">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
-        <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
-          Cultural Passport
-        </p>
-        <h1 className="mt-3 text-3xl font-semibold text-slate-950">
-          Hồ sơ bản phối
-        </h1>
-        <dl className="mt-8 grid gap-5 sm:grid-cols-2">
-          <div>
-            <dt className="text-sm text-slate-500">Look ID</dt>
-            <dd className="mt-1 font-mono text-sm text-slate-900">{id}</dd>
-          </div>
-          <div>
-            <dt className="text-sm text-slate-500">Trạng thái kiểm chứng</dt>
-            <dd className="mt-1 text-slate-900">Dữ liệu mẫu — cần rà soát</dd>
-          </div>
-        </dl>
-        <p className="mt-8 leading-7 text-slate-600">
-          Nội dung nguồn, quy tắc bảo tồn và đánh giá chi tiết sẽ hiển thị tại
-          đây sau khi Cultural Knowledge Base được đội ngũ chuyên môn duyệt.
-        </p>
-        <Link className="mt-8 inline-block font-semibold text-emerald-700" href="/create">
-          ← Tạo bản phối khác
+      {/* Breadcrumb */}
+      <nav className="mb-8 flex items-center gap-2 text-sm text-slate-500">
+        <Link href="/results" className="hover:text-emerald-700 transition-colors">
+          ← Bản phối
         </Link>
+        <span>/</span>
+        <span className="text-slate-900 font-medium">{look.name}</span>
+      </nav>
+
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+        {/* Header */}
+        <div className="mb-8 border-b border-slate-100 pb-6">
+          <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
+            Cultural Passport
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold text-slate-950">
+            {look.name}
+          </h1>
+          <p className="mt-2 text-sm text-slate-500 font-mono">{look.id}</p>
+        </div>
+
+        <CulturalPassport look={look} />
+
+        {/* Actions */}
+        <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+          <Link
+            href="/results"
+            className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            ← Xem tất cả bản phối
+          </Link>
+          <Link
+            href="/create"
+            className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
+            Tạo bản phối mới
+          </Link>
+        </div>
       </div>
     </main>
   );
