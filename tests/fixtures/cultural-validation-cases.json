@@ -1,0 +1,73 @@
+{
+  "cases": [
+    {
+      "id": "CV_01_NGU_THAN_BUTTONS",
+      "description": "Áo ngũ thân tay chẽn được tạo với ba cúc và hàng cúc ở giữa thân trước.",
+      "garment": "ao_ngu_than",
+      "input": {
+        "items": ["Áo ngũ thân tay chẽn ba cúc giữa thân"],
+        "occasion": "cultural_visit"
+      },
+      "expected": {
+        "status": "warning",
+        "ruleIds": ["ANT_STRUCTURE_FIVE_BUTTONS"]
+      },
+      "rationale": "Rule vẫn advisory và chưa review chéo, vì vậy không tự động nâng thành revise."
+    },
+    {
+      "id": "CV_02_NGU_THAN_SLEEVES",
+      "description": "Một look gọi là áo ngũ thân tay chẽn nhưng mô tả tay áo rất rộng như áo tấc.",
+      "garment": "ao_ngu_than",
+      "input": {
+        "items": ["Áo ngũ thân tay chẽn với ống tay rất rộng"],
+        "occasion": "photoshoot"
+      },
+      "expected": {
+        "status": "warning",
+        "ruleIds": ["ANT_STRUCTURE_NARROW_SLEEVES"]
+      },
+      "rationale": "Critic cần nêu rõ rule chỉ áp dụng cho biến thể tay chẽn."
+    },
+    {
+      "id": "CV_03_TU_THAN_STRUCTURE",
+      "description": "Look áo tứ thân ghép kín hai thân trước và không còn hai vạt trước.",
+      "garment": "ao_tu_than",
+      "input": {
+        "items": ["Áo liền thân trước, không có hai vạt"],
+        "occasion": "festival"
+      },
+      "expected": {
+        "status": "warning",
+        "ruleIds": ["ATT_STRUCTURE_FOUR_PANELS"]
+      },
+      "rationale": "Nguồn cấu trúc có confidence medium và chưa review chéo."
+    },
+    {
+      "id": "CV_04_CONTEXT_NOT_UNIVERSAL",
+      "description": "Look áo tứ thân không dùng yếm trắng trong một buổi chụp ảnh hiện đại.",
+      "garment": "ao_tu_than",
+      "input": {
+        "items": ["Áo tứ thân", "Áo lót màu xanh"],
+        "occasion": "photoshoot"
+      },
+      "expected": {
+        "status": "pass",
+        "ruleIds": []
+      },
+      "rationale": "Yếm trắng trong nguồn thuộc một ngữ cảnh lễ hội cụ thể, không phải hard rule phổ quát."
+    },
+    {
+      "id": "CV_05_UNKNOWN_SOURCE",
+      "description": "Look đưa ra source ID không tồn tại trong references.json.",
+      "garment": "ao_ngu_than",
+      "input": {
+        "sourceIds": ["SOURCE_DOES_NOT_EXIST"]
+      },
+      "expected": {
+        "status": "revise",
+        "ruleIds": ["SOURCE_ID_NOT_FOUND"]
+      },
+      "rationale": "Toàn vẹn citation là invariant kỹ thuật và có thể chặn dù cultural facts chưa review."
+    }
+  ]
+}
