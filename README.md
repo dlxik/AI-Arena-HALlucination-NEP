@@ -2,7 +2,7 @@
 
 AI Arena là nền tảng thử nghiệm gợi ý bản phối trang phục văn hóa Việt. Người dùng mô tả dịp, loại trang phục, phong cách, màu sắc và mức độ remix; pipeline dự kiến truy xuất tri thức có nguồn, tạo đề xuất, kiểm tra văn hóa rồi mới tạo hình ảnh.
 
-> Trạng thái: scaffold + mock contracts. Chưa tích hợp Gemini và chưa có dữ liệu văn hóa đã được phê duyệt.
+> Trạng thái: intent parser đã tích hợp Gemini; recommendation, cultural critic và image generation vẫn là mock. Chưa có dữ liệu văn hóa đã được phê duyệt.
 
 ## Bài toán sản phẩm
 
@@ -29,7 +29,7 @@ Các công cụ tạo ảnh có thể tạo ra kết quả hấp dẫn nhưng th
 ```text
 src/app/          Pages và Route Handlers
 src/components/   UI theo feature
-src/lib/          Gemini stubs, cultural retrieval, validation
+src/lib/          Gemini integration, cultural retrieval, validation
 src/types/        Data contracts
 data/             Cultural Knowledge Base dạng JSON
 prompts/          Prompt versioning
@@ -48,10 +48,12 @@ Copy-Item .env.example .env.local # PowerShell
 npm run dev
 ```
 
-Mở `http://localhost:3000`. Scaffold hiện tại không cần Gemini key để chạy. Khi tích hợp Gemini, điền key chỉ trong `.env.local`:
+Mở `http://localhost:3000`. Các màn hình mock vẫn chạy khi chưa có key; endpoint `/api/parse-intent` cần key trong `.env.local`:
 
 ```env
 GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.8-flash
+GEMINI_TIMEOUT_MS=15000
 ```
 
 Không commit `.env`, `.env.local`, API key hay secret dưới bất kỳ hình thức nào.
@@ -63,6 +65,8 @@ Không commit `.env`, `.env.local`, API key hay secret dưới bất kỳ hình 
 | `npm run dev` | Chạy development server |
 | `npm run lint` | Chạy ESLint |
 | `npm run typecheck` | Kiểm tra TypeScript, không emit |
+| `npm test` | Chạy contract test cục bộ, không gọi Gemini |
+| `npm run evaluate:intent` | Chạy 5 golden cases qua Gemini thật; cần API key |
 | `npm run build` | Tạo production build |
 | `npm run start` | Chạy production server đã build |
 | `npm run validate:data` | Kiểm tra cấu trúc garment JSON tối thiểu |

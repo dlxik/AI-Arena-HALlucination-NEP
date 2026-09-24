@@ -2,13 +2,13 @@ export const PROJECT_NAME = "AI Arena";
 export const MOCK_SOURCE_ID = "SOURCE_PLACEHOLDER";
 export const RECOMMENDATION_COUNT = 3;
 
-/** Danh sách lựa chọn cho form — dùng chung ở UI và fixture */
+/** Danh sách lựa chọn dùng chung giữa UI và structured intent validation. */
 export const OCCASIONS = [
   { value: "tet", label: "Tết Nguyên Đán" },
   { value: "cultural_visit", label: "Tham quan di tích / không gian văn hóa" },
   { value: "festival", label: "Lễ hội truyền thống" },
-  { value: "graduation", label: "Chụp ảnh kỷ yếu / kỷ niệm" },
-  { value: "casual_outing", label: "Đi chơi thường ngày" },
+  { value: "photoshoot", label: "Chụp ảnh kỷ yếu / kỷ niệm" },
+  { value: "casual", label: "Đi chơi thường ngày" },
 ] as const;
 
 export const GARMENTS = [
@@ -26,6 +26,10 @@ export const STYLES = [
   { value: "romantic", label: "Romantic — Lãng mạn, dịu dàng" },
   { value: "street", label: "Street — Phong cách đường phố" },
 ] as const;
+
+export const OCCASION_IDS = OCCASIONS.map(({ value }) => value);
+export const GARMENT_IDS = GARMENTS.map(({ value }) => value);
+export const STYLE_IDS = STYLES.map(({ value }) => value);
 
 export const COLORS = [
   { value: "pastel_blue", label: "Xanh pastel" },
@@ -79,3 +83,6 @@ export const VALIDATION_BADGE: Record<
     className: "bg-red-100 text-red-800 border border-red-200",
   },
 };
+
+export const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
+export const DEFAULT_GEMINI_TIMEOUT_MS = 15_000;

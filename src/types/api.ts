@@ -13,6 +13,10 @@ export type RecommendationOutput = {
   looks: OutfitLook[];
 };
 
+export type IntentParseRequest = {
+  description: string;
+};
+
 export type ValidationOutput = {
   status: "pass" | "warning" | "revise";
   warnings: ValidationWarning[];
