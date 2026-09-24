@@ -1,0 +1,74 @@
+{
+  "records": [
+    {
+      "id": "ANT_STRUCTURE_FIVE_BUTTONS",
+      "garment": "ao_ngu_than",
+      "category": "structure",
+      "fact": "Hiện vật áo ngũ thân tay chẽn được mô tả có hàng năm cúc chạy theo vạt bên phải, phía trước, từ cổ xuống eo.",
+      "rule_type": "preserve",
+      "source_id": "VNMH_AO_NGU_THAN_2021",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "url": "https://baotanglichsu.vn/vi/Articles/3090/72685/bao-tang-lich-su-quoc-gia-tiep-nhan-ao-dai-ngu-than-truyen-thong.html",
+      "confidence": "high",
+      "reviewed": false,
+      "enforcement": "advisory",
+      "notes": "Đặc điểm lấy từ một hiện vật bảo tàng; cần reviewer xác nhận phạm vi khái quát trước khi thành hard rule."
+    },
+    {
+      "id": "ANT_STRUCTURE_NARROW_SLEEVES",
+      "garment": "ao_ngu_than",
+      "category": "structure",
+      "fact": "Ống tay của kiểu áo ngũ thân tay chẽn được mô tả nhỏ gọn hơn ống tay áo tấc và áo giao lĩnh.",
+      "rule_type": "preserve",
+      "source_id": "VNMH_AO_NGU_THAN_2021",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "url": "https://baotanglichsu.vn/vi/Articles/3090/72685/bao-tang-lich-su-quoc-gia-tiep-nhan-ao-dai-ngu-than-truyen-thong.html",
+      "confidence": "high",
+      "reviewed": false,
+      "enforcement": "advisory",
+      "notes": "Chỉ áp dụng cho biến thể tay chẽn được nguồn mô tả."
+    },
+    {
+      "id": "ANT_CONTEXT_NGUYEN_STYLE",
+      "garment": "ao_ngu_than",
+      "category": "history",
+      "fact": "Các bộ được trao tặng bảo tàng năm 2021 được giới thiệu là thường phục áo ngũ thân tay chẽn theo phong cách trang phục thời Nguyễn.",
+      "rule_type": "context",
+      "source_id": "VNMH_AO_NGU_THAN_2021",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "url": "https://baotanglichsu.vn/vi/Articles/3090/72685/bao-tang-lich-su-quoc-gia-tiep-nhan-ao-dai-ngu-than-truyen-thong.html",
+      "confidence": "high",
+      "reviewed": false,
+      "enforcement": "advisory",
+      "notes": "Không suy rộng thành tuyên bố duy nhất về nguồn gốc hoặc niên đại của mọi áo ngũ thân."
+    },
+    {
+      "id": "ATT_STRUCTURE_FOUR_PANELS",
+      "garment": "ao_tu_than",
+      "category": "structure",
+      "fact": "Mô tả trang phục Kinh Bắc cho biết hai thân sau nối dọc giữa lưng và hai thân trước tạo thành hai vạt có thể buông hoặc buộc.",
+      "rule_type": "preserve",
+      "source_id": "VHTT_AO_TU_THAN_KINH_BAC",
+      "publisher": "Tạp chí Văn hóa Nghệ thuật",
+      "url": "https://vanhoanghethuat.vn/tao-hinh-trang-phuc-phu-nu-kinh-bac-truyen-thong-77748003.html",
+      "confidence": "medium",
+      "reviewed": false,
+      "enforcement": "advisory",
+      "notes": "Cần đối chiếu thêm hiện vật hoặc nghiên cứu chuyên khảo trước khi áp dụng như hard rule."
+    },
+    {
+      "id": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+      "garment": "ao_tu_than",
+      "category": "occasion",
+      "fact": "Trong một hội thi nấu cơm mùa xuân được phục dựng ở Bắc Ninh, trang phục nữ được mô tả gồm áo tứ thân, váy lụa đen, yếm trắng, khăn mỏ quạ và dải lụa thắt lưng.",
+      "rule_type": "context",
+      "source_id": "VNMH_AO_TU_THAN_CONTEXT_2016",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "url": "https://baotanglichsu.vn/vi/Articles/1508/48878/thi-nau-com-net-van-hoa-ngay-xuan-o-mien-que-quan-ho.html",
+      "confidence": "high",
+      "reviewed": false,
+      "enforcement": "advisory",
+      "notes": "Đây là ngữ cảnh lễ hội cụ thể, không phải quy tắc phối bắt buộc cho mọi cách mặc áo tứ thân."
+    }
+  ]
+}

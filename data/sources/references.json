@@ -1,11 +1,73 @@
 {
   "sources": [
     {
-      "id": "SOURCE_PLACEHOLDER",
-      "publisher": "",
-      "title": "",
-      "url": "",
-      "accessed_at": "",
+      "id": "VNMH_AO_NGU_THAN_2021",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "title": "Bảo tàng Lịch sử quốc gia tiếp nhận áo dài ngũ thân truyền thống",
+      "url": "https://baotanglichsu.vn/vi/Articles/3090/72685/bao-tang-lich-su-quoc-gia-tiep-nhan-ao-dai-ngu-than-truyen-thong.html",
+      "accessed_at": "2026-09-24",
+      "source_type": "museum",
+      "garment_ids": ["ao_ngu_than"],
+      "status": "needs_review"
+    },
+    {
+      "id": "VHTT_AO_TU_THAN_KINH_BAC",
+      "publisher": "Tạp chí Văn hóa Nghệ thuật",
+      "title": "Tạo hình trang phục phụ nữ Kinh Bắc truyền thống",
+      "url": "https://vanhoanghethuat.vn/tao-hinh-trang-phuc-phu-nu-kinh-bac-truyen-thong-77748003.html",
+      "accessed_at": "2026-09-24",
+      "source_type": "academic_journal",
+      "garment_ids": ["ao_tu_than"],
+      "status": "needs_review"
+    },
+    {
+      "id": "VNMH_AO_TU_THAN_CONTEXT_2016",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "title": "Thi nấu cơm - Nét văn hóa ngày xuân ở miền quê quan họ",
+      "url": "https://baotanglichsu.vn/vi/Articles/1508/48878/thi-nau-com-net-van-hoa-ngay-xuan-o-mien-que-quan-ho.html",
+      "accessed_at": "2026-09-24",
+      "source_type": "museum",
+      "garment_ids": ["ao_tu_than"],
+      "status": "needs_review"
+    },
+    {
+      "id": "VNMH_AO_DAI_2015",
+      "publisher": "Bảo tàng Lịch sử Quốc gia",
+      "title": "Nét đẹp văn hóa trong tà áo dài của phụ nữ Việt",
+      "url": "https://baotanglichsu.vn/vi/Articles/3096/18397/net-djep-van-hoa-trong-ta-ao-dai-cua-phu-nu-viet.html",
+      "accessed_at": "2026-09-24",
+      "source_type": "museum",
+      "garment_ids": ["ao_dai"],
+      "status": "needs_review"
+    },
+    {
+      "id": "VWM_AO_DAI",
+      "publisher": "Bảo tàng Phụ nữ Việt Nam",
+      "title": "Thời trang và nghệ thuật tạo hoa văn",
+      "url": "https://baotangphunu.org.vn/thoi-trang-va-nghe-thuat-tao-hoa-van/",
+      "accessed_at": "2026-09-24",
+      "source_type": "museum",
+      "garment_ids": ["ao_dai", "ao_tu_than", "ao_ngu_than"],
+      "status": "needs_review"
+    },
+    {
+      "id": "VJOL_NHAT_BINH_2026",
+      "publisher": "Tạp chí Văn hóa Nghệ thuật trên VJOL",
+      "title": "Hoa văn trang trí trên áo Nhật Bình của Đoan Huy Hoàng thái hậu triều Nguyễn (1802-1945)",
+      "url": "https://vjol.info.vn/tcvanhoanghethuat/vi/article/view/138715/",
+      "accessed_at": "2026-09-24",
+      "source_type": "academic_journal",
+      "garment_ids": ["nhat_binh"],
+      "status": "needs_review"
+    },
+    {
+      "id": "HMCC_NHAT_BINH_2022",
+      "publisher": "Trung tâm Bảo tồn Di tích Cố đô Huế",
+      "title": "Cận cảnh Mũ quan đại thần và áo Nhật Bình cung tần triều Nguyễn",
+      "url": "https://kph2022.huecit.com/Van-hoa/Hue-Kinh-%C4%91o-ao-dai-Viet-Nam/Chi-tiet/tid/Can-canh-Mu-quan-dai-than-va-ao-Nhat-Binh-cung-tan-trieu-Nguyen.html/pid/10711/cid/303",
+      "accessed_at": "2026-09-24",
+      "source_type": "heritage_authority",
+      "garment_ids": ["nhat_binh"],
       "status": "needs_review"
     }
   ]

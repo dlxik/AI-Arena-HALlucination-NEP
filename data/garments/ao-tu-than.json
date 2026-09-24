@@ -1,11 +1,17 @@
 {
   "id": "ao_tu_than",
   "name": "Áo tứ thân",
-  "summary": "",
-  "recognizable_features": [],
+  "summary": "Bản ghi khởi đầu cho áo tứ thân trong ngữ cảnh trang phục nữ Kinh Bắc; chưa được review chéo.",
+  "recognizable_features": [
+    "Hai thân trước tạo thành hai vạt có thể buông hoặc buộc.",
+    "Hai khổ vải phía sau nối dọc giữa lưng trong mô tả cấu trúc truyền thống."
+  ],
   "preserve_rules": [],
   "flexible_elements": [],
-  "compatible_occasions": [],
-  "source_ids": [],
-  "status": "draft"
+  "compatible_occasions": ["festival"],
+  "source_ids": [
+    "VHTT_AO_TU_THAN_KINH_BAC",
+    "VNMH_AO_TU_THAN_CONTEXT_2016"
+  ],
+  "status": "needs_review"
 }
