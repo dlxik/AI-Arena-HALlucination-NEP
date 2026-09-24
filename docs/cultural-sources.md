@@ -1,41 +1,51 @@
 # Cultural sources
 
-Ngày truy cập ban đầu: **2026-09-24**. Danh sách máy đọc được nằm tại `data/sources/references.json`.
+Ngày cập nhật: **2026-09-25**. Danh sách máy đọc được nằm tại `data/sources/references.json`.
 
-Tất cả nguồn hiện mang trạng thái `needs_review`. Chưa nguồn nào được xem là ground truth production cho tới khi một thành viên khác kiểm tra nội dung, phạm vi sử dụng và quyền trích dẫn.
+Tất cả nguồn hiện mang trạng thái `needs_review`. Chưa nguồn nào được xem là ground truth production cho tới khi Diệu Linh hoặc một reviewer khác mở tài liệu, kiểm tra đoạn trích, phạm vi sử dụng và quyền trích dẫn.
 
 ## Danh sách nguồn ban đầu
 
-| Trang phục | Source ID | Publisher | Mục đích |
-| --- | --- | --- | --- |
-| Áo ngũ thân | `VNMH_AO_NGU_THAN_2021` | [Bảo tàng Lịch sử Quốc gia](https://baotanglichsu.vn/vi/Articles/3090/72685/bao-tang-lich-su-quoc-gia-tiep-nhan-ao-dai-ngu-than-truyen-thong.html) | Hiện vật, cấu trúc cúc và tay chẽn |
-| Áo ngũ thân / Áo dài / Áo tứ thân | `VWM_AO_DAI` | [Bảo tàng Phụ nữ Việt Nam](https://baotangphunu.org.vn/thoi-trang-va-nghe-thuat-tao-hoa-van/) | Mối liên hệ trong quá trình phát triển áo dài |
-| Áo tứ thân | `VHTT_AO_TU_THAN_KINH_BAC` | [Tạp chí Văn hóa Nghệ thuật](https://vanhoanghethuat.vn/tao-hinh-trang-phuc-phu-nu-kinh-bac-truyen-thong-77748003.html) | Cấu trúc và ngữ cảnh trang phục Kinh Bắc |
-| Áo tứ thân | `VNMH_AO_TU_THAN_CONTEXT_2016` | [Bảo tàng Lịch sử Quốc gia](https://baotanglichsu.vn/vi/Articles/1508/48878/thi-nau-com-net-van-hoa-ngay-xuan-o-mien-que-quan-ho.html) | Một tổ hợp trang phục trong lễ hội xuân được phục dựng |
-| Áo dài | `VNMH_AO_DAI_2015` | [Bảo tàng Lịch sử Quốc gia](https://baotanglichsu.vn/vi/Articles/3096/18397/net-djep-van-hoa-trong-ta-ao-dai-cua-phu-nu-viet.html) | Diễn tiến và yếu tố tạo hình áo dài thế kỷ XX |
-| Nhật Bình | `VJOL_NHAT_BINH_2026` | [Tạp chí Văn hóa Nghệ thuật trên VJOL](https://vjol.info.vn/tcvanhoanghethuat/vi/article/view/138715/) | Nghiên cứu hoa văn trên một hiện vật Nhật Bình |
-| Nhật Bình | `HMCC_NHAT_BINH_2022` | [Trung tâm Bảo tồn Di tích Cố đô Huế](https://kph2022.huecit.com/Van-hoa/Hue-Kinh-%C4%91o-ao-dai-Viet-Nam/Chi-tiet/tid/Can-canh-Mu-quan-dai-than-va-ao-Nhat-Binh-cung-tan-trieu-Nguyen.html/pid/10711/cid/303) | Hiện vật Nhật Bình cung tần cuối thế kỷ XIX–đầu XX |
+| Garment | Source ID | Type | Reliability | Kiến thức dự kiến sử dụng |
+| --- | --- | --- | --- | --- |
+| Áo ngũ thân | `VNMH_AO_NGU_THAN_2021` | Museum | High | Cấu trúc hàng cúc và tay của hiện vật áo ngũ thân tay chẽn |
+| Áo ngũ thân / Áo dài / Áo tứ thân | `VWM_AO_DAI` | Museum | High | Mối liên hệ trong tiến trình hình thành áo dài hiện đại |
+| Áo tứ thân | `VHTT_AO_TU_THAN_KINH_BAC` | Academic journal | Medium | Cấu trúc thân/vạt trong ngữ cảnh trang phục nữ Kinh Bắc |
+| Áo tứ thân | `VNMH_AO_TU_THAN_CONTEXT_2016` | Museum | High | Tổ hợp trang phục của một hội thi mùa xuân được phục dựng |
+| Áo dài | `VNMH_AO_DAI_2015` | Museum | High | Diễn tiến và yếu tố tạo hình áo dài thế kỷ XX |
+| Nhật Bình | `VJOL_NHAT_BINH_2026` | Academic journal | High | Hoa văn trên một hiện vật Nhật Bình cụ thể |
+| Nhật Bình | `HMCC_NHAT_BINH_2022` | Heritage authority | High | Hiện vật Nhật Bình cung tần cuối thế kỷ XIX–đầu XX |
 
-Shop, dịch vụ cho thuê, blog thương mại, Pinterest và nội dung AI-generated không được đưa vào `references.json` làm ground truth.
+Chi tiết title, URL, categories, usable knowledge và giới hạn của từng nguồn được lưu trực tiếp trong `references.json` để validator kiểm tra.
 
-## Phạm vi dữ liệu vòng đầu
+## Nguyên tắc sử dụng
 
-- Áo ngũ thân: 3 records về cấu trúc tay chẽn và ngữ cảnh hiện vật.
-- Áo tứ thân: 2 records về cấu trúc và tổ hợp trang phục trong một lễ hội Kinh Bắc.
-- Áo dài và Nhật Bình: mới lập danh sách nguồn; chưa trích facts vào KB.
-- Không có hard rule; mọi record hiện là `advisory` và chờ review chéo.
+- Ưu tiên bảo tàng, cơ quan di sản, bài nghiên cứu và tài liệu chuyên môn.
+- Shop, dịch vụ cho thuê, blog thương mại và Pinterest không được dùng làm ground truth.
+- Mô tả một hiện vật không tự động trở thành quy tắc cho toàn bộ loại trang phục.
+- Fact chưa chắc chắn chỉ được giữ ở `needs_review` và `advisory`.
+- Mọi `source_ids` trong knowledge/rule phải tồn tại trong `references.json`.
+- `reliability: high` mô tả loại/độ trực tiếp của nguồn, không đồng nghĩa record đã được team phê duyệt.
 
-## Checklist review nguồn
+## Checklist kiểm chứng thủ công
 
 1. Mở URL và xác nhận publisher/title khớp metadata.
-2. Đối chiếu câu diễn giải với đoạn nguồn, tránh biến mô tả một hiện vật thành quy tắc phổ quát.
-3. Xác định nguồn độc lập thứ hai cho các `preserve` candidate.
-4. Ghi reviewer và ngày review trước khi chuyển nguồn sang `approved`.
-5. Chỉ chuyển record sang `hard` khi nguồn đã approved, `reviewed: true` và phạm vi áp dụng rõ ràng.
+2. Lưu đoạn hoặc số trang hỗ trợ từng fact nếu tài liệu có phân trang.
+3. Kiểm tra câu diễn giải không vượt quá phạm vi hiện vật, vùng, thời kỳ hoặc sự kiện.
+4. Tìm nguồn độc lập thứ hai cho các `preserve` candidates.
+5. Xác nhận quyền trích dẫn/hình ảnh trước khi dùng trong Cultural Passport hoặc submission.
+6. Ghi reviewer/ngày review trước khi chuyển source sang `approved`.
 
-## Điểm cần đội review
+## Nguồn cần ưu tiên review
 
-- Năm cúc có phải đặc điểm bắt buộc của mọi biến thể áo ngũ thân trong phạm vi MVP hay chỉ của kiểu tay chẽn đang mô tả?
-- Cần tách schema theo vùng, thời kỳ và biến thể trang phục ở mức nào?
-- Tổ hợp yếm/váy/khăn của áo tứ thân nên là gợi ý theo context hay rule cho riêng persona Kinh Bắc?
-- Ai là reviewer văn hóa có thẩm quyền để phê duyệt các rule `preserve`?
+- `VNMH_AO_NGU_THAN_2021`: xác nhận năm cúc và tay chẽn có thể áp dụng tới biến thể nào.
+- `VHTT_AO_TU_THAN_KINH_BAC`: đối chiếu cấu trúc tứ thân với một hiện vật hoặc nghiên cứu độc lập.
+- `VJOL_NHAT_BINH_2026`: đọc toàn văn để không khái quát hoa văn của một hiện vật.
+- `HMCC_NHAT_BINH_2022`: xác nhận metadata và phạm vi mô tả hiện vật trên trang lưu trữ.
+
+## Điểm mang sang Meeting 02
+
+- Chọn reviewer văn hóa và quy tắc chuyển `needs_review` → `approved`.
+- Chốt phạm vi garment theo vùng/thời kỳ/biến thể.
+- Quyết định preserve candidate nào đủ bằng chứng để thử nghiệm trong Cultural Critic.
+- Bổ sung facts cho Áo dài và Nhật Bình sau khi review nguồn toàn văn.

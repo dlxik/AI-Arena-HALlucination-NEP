@@ -8,6 +8,13 @@
       "accessed_at": "2026-09-24",
       "source_type": "museum",
       "garment_ids": ["ao_ngu_than"],
+      "categories": ["structure", "history"],
+      "usable_knowledge": [
+        "Hàng năm cúc chạy theo vạt bên phải từ cổ xuống eo trên hiện vật được mô tả.",
+        "Ống tay của biến thể tay chẽn nhỏ gọn hơn áo tấc và áo giao lĩnh."
+      ],
+      "reliability": "high",
+      "notes": "Nguồn bảo tàng mô tả trực tiếp một hiện vật; cần review trước khi khái quát thành quy tắc cho mọi biến thể áo ngũ thân.",
       "status": "needs_review"
     },
     {
@@ -18,6 +25,12 @@
       "accessed_at": "2026-09-24",
       "source_type": "academic_journal",
       "garment_ids": ["ao_tu_than"],
+      "categories": ["structure", "accessory"],
+      "usable_knowledge": [
+        "Hai thân sau nối dọc giữa lưng và hai thân trước tạo thành hai vạt có thể buông hoặc buộc trong mô tả trang phục Kinh Bắc."
+      ],
+      "reliability": "medium",
+      "notes": "Nguồn chuyên môn phù hợp để tạo candidate rule; cần đối chiếu thêm hiện vật hoặc nghiên cứu độc lập trước khi dùng như hard rule.",
       "status": "needs_review"
     },
     {
@@ -28,6 +41,12 @@
       "accessed_at": "2026-09-24",
       "source_type": "museum",
       "garment_ids": ["ao_tu_than"],
+      "categories": ["occasion", "accessory"],
+      "usable_knowledge": [
+        "Một tổ hợp trang phục trong hội thi nấu cơm xuân ở Bắc Ninh gồm áo tứ thân, váy lụa đen, yếm trắng, khăn mỏ quạ và dải lụa thắt lưng."
+      ],
+      "reliability": "high",
+      "notes": "Chỉ chứng minh một ngữ cảnh lễ hội cụ thể; không dùng tổ hợp này như quy tắc phổ quát cho mọi dịp.",
       "status": "needs_review"
     },
     {
@@ -38,6 +57,13 @@
       "accessed_at": "2026-09-24",
       "source_type": "museum",
       "garment_ids": ["ao_dai"],
+      "categories": ["history", "structure"],
+      "usable_knowledge": [
+        "Áo dài tân thời thế kỷ XX được trình bày trong tiến trình cải biến từ áo dài năm thân.",
+        "Kiểu dáng áo dài tiếp tục thay đổi về cổ, tay, vật liệu và trang trí trong đời sống hiện đại."
+      ],
+      "reliability": "high",
+      "notes": "Dùng làm nguồn lịch sử và bối cảnh; các chi tiết đang có tranh luận cần nguồn học thuật độc lập trước khi tạo rule.",
       "status": "needs_review"
     },
     {
@@ -48,6 +74,12 @@
       "accessed_at": "2026-09-24",
       "source_type": "museum",
       "garment_ids": ["ao_dai", "ao_tu_than", "ao_ngu_than"],
+      "categories": ["history", "structure"],
+      "usable_knowledge": [
+        "Nguồn bảo tàng trình bày mối liên hệ giữa áo tứ thân, áo ngũ thân và quá trình hình thành áo dài hiện đại."
+      ],
+      "reliability": "high",
+      "notes": "Nguồn tổng quan của bảo tàng; cần trích đúng phạm vi và không suy diễn thành niên đại tuyệt đối.",
       "status": "needs_review"
     },
     {
@@ -58,6 +90,12 @@
       "accessed_at": "2026-09-24",
       "source_type": "academic_journal",
       "garment_ids": ["nhat_binh"],
+      "categories": ["history", "decoration"],
+      "usable_knowledge": [
+        "Phân tích hoa văn trên một áo Nhật Bình gắn với Đoan Huy Hoàng thái hậu triều Nguyễn."
+      ],
+      "reliability": "high",
+      "notes": "Phạm vi là một hiện vật/nghiên cứu trường hợp; cần đọc toàn văn và xác nhận quyền truy cập trước khi trích chi tiết hoa văn.",
       "status": "needs_review"
     },
     {
@@ -68,6 +106,12 @@
       "accessed_at": "2026-09-24",
       "source_type": "heritage_authority",
       "garment_ids": ["nhat_binh"],
+      "categories": ["history", "artifact"],
+      "usable_knowledge": [
+        "Hiện vật áo Nhật Bình cung tần được hội đồng thẩm định niên đại cuối thế kỷ XIX đến đầu thế kỷ XX."
+      ],
+      "reliability": "high",
+      "notes": "Nguồn cơ quan bảo tồn về hiện vật cụ thể; chưa đủ để suy rộng mọi đặc điểm thành rule cho toàn bộ Nhật Bình.",
       "status": "needs_review"
     }
   ]
