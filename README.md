@@ -67,4 +67,4 @@ Không commit `.env`, `.env.local`, API key hay secret dưới bất kỳ hình 
 | `npm run start` | Chạy production server đã build |
 | `npm run validate:data` | Kiểm tra cấu trúc garment JSON tối thiểu |
 
-Xem thêm [API contract](docs/api-contract.md), [kiến trúc](docs/architecture.md) và [quy tắc đóng góp](CONTRIBUTING.md).
+Xem thêm [kế hoạch dự án](docs/planning/README.md), [API contract](docs/api-contract.md), [kiến trúc](docs/architecture.md) và [quy tắc đóng góp](CONTRIBUTING.md).
