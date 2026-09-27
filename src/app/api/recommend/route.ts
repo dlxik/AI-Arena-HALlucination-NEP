@@ -52,7 +52,7 @@ export async function handleRecommendation(
     if (error instanceof CulturalContextNotFoundError) {
       return fail(
         "NO_CULTURAL_CONTEXT",
-        "No eligible cultural context is available for this request.",
+        "No approved cultural context is available for this request.",
         422,
       );
     }

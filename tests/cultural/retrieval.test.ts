@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  CulturalContextNotFoundError,
   MAX_CULTURAL_RECORDS,
   MAX_CULTURAL_SOURCES,
   retrieveCulturalContext,
 } from "../../src/lib/cultural/retrieval";
+import { createApprovedKnowledgeBase } from "../fixtures/approved-cultural-kb";
 import type { RecommendationInput } from "../../src/types/api";
 
 const BASE_INPUT: RecommendationInput = {
@@ -15,8 +17,18 @@ const BASE_INPUT: RecommendationInput = {
   remixLevel: 40,
 };
 
-test("retrieval keeps explicit garment context relevant and advisory", () => {
-  const context = retrieveCulturalContext(BASE_INPUT);
+test("repository seed data is blocked until cultural review is approved", () => {
+  assert.throws(
+    () => retrieveCulturalContext(BASE_INPUT),
+    CulturalContextNotFoundError,
+  );
+});
+
+test("retrieval keeps approved explicit garment context relevant", () => {
+  const context = retrieveCulturalContext(
+    BASE_INPUT,
+    createApprovedKnowledgeBase(),
+  );
 
   assert.deepEqual(
     context.garmentCandidates.map(({ garment }) => garment.id),
@@ -27,16 +39,68 @@ test("retrieval keeps explicit garment context relevant and advisory", () => {
     context.records.every(
       (record) =>
         record.garment === "ao_ngu_than" &&
-        (record.reviewed || record.enforcement === "advisory"),
+        record.reviewed &&
+        record.verification_status === "verified",
+    ),
+  );
+  assert.ok(
+    context.garmentCandidates.every(
+      ({ garment }) => garment.status === "approved",
     ),
   );
   assert.ok(
     context.sources.every((source) =>
+      source.status === "approved" &&
       source.garment_ids.includes("ao_ngu_than"),
     ),
   );
+  assert.deepEqual(context.policy.eligibleGarmentStatuses, ["approved"]);
+  assert.deepEqual(context.policy.eligibleSourceStatuses, ["approved"]);
+  assert.equal(context.policy.requiredRecordVerificationStatus, "verified");
+  assert.equal(context.policy.requireReviewedRecords, true);
   assert.ok(context.records.length <= MAX_CULTURAL_RECORDS);
   assert.ok(context.sources.length <= MAX_CULTURAL_SOURCES);
+});
+
+test("retrieval excludes unverified records from otherwise approved context", () => {
+  const knowledgeBase = createApprovedKnowledgeBase();
+  knowledgeBase.records = knowledgeBase.records.map((record) => ({
+    ...record,
+    verification_status: "needs_review",
+    reviewed: false,
+  }));
+
+  const context = retrieveCulturalContext(BASE_INPUT, knowledgeBase);
+  assert.deepEqual(context.records, []);
+  assert.ok(context.sources.length > 0);
+});
+
+test("retrieval rejects a garment whose only source is not approved", () => {
+  const knowledgeBase = createApprovedKnowledgeBase();
+  knowledgeBase.sources = knowledgeBase.sources.map((source) =>
+    source.id === "VNMH_AO_NGU_THAN_2021"
+      ? { ...source, status: "needs_review" }
+      : source,
+  );
+
+  assert.throws(
+    () => retrieveCulturalContext(BASE_INPUT, knowledgeBase),
+    CulturalContextNotFoundError,
+  );
+});
+
+test("retrieval rejects a garment that is still awaiting review", () => {
+  const knowledgeBase = createApprovedKnowledgeBase();
+  knowledgeBase.garments = knowledgeBase.garments.map((garment) =>
+    garment.id === "ao_ngu_than"
+      ? { ...garment, status: "needs_review" }
+      : garment,
+  );
+
+  assert.throws(
+    () => retrieveCulturalContext(BASE_INPUT, knowledgeBase),
+    CulturalContextNotFoundError,
+  );
 });
 
 test("auto retrieval is deterministic and prioritizes an occasion match", () => {
@@ -45,8 +109,9 @@ test("auto retrieval is deterministic and prioritizes an occasion match", () => 
     occasion: "festival",
     garment: "auto",
   };
-  const first = retrieveCulturalContext(input);
-  const second = retrieveCulturalContext(input);
+  const knowledgeBase = createApprovedKnowledgeBase();
+  const first = retrieveCulturalContext(input, knowledgeBase);
+  const second = retrieveCulturalContext(input, knowledgeBase);
 
   assert.deepEqual(first, second);
   assert.equal(first.garmentCandidates[0].garment.id, "ao_tu_than");
@@ -66,10 +131,13 @@ test("auto retrieval is deterministic and prioritizes an occasion match", () => 
 });
 
 test("retrieval excludes an occasion record outside its declared garment occasion", () => {
-  const context = retrieveCulturalContext({
-    ...BASE_INPUT,
-    garment: "ao_tu_than",
-  });
+  const context = retrieveCulturalContext(
+    {
+      ...BASE_INPUT,
+      garment: "ao_tu_than",
+    },
+    createApprovedKnowledgeBase(),
+  );
 
   assert.ok(
     !context.records.some(

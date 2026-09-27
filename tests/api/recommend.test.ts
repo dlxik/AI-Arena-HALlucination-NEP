@@ -12,6 +12,7 @@ import {
   StylistOutputError,
 } from "../../src/lib/gemini/stylist";
 import { PENDING_CRITIC_WARNING } from "../../src/lib/validation/recommendation-output";
+import { createApprovedKnowledgeBase } from "../fixtures/approved-cultural-kb";
 import type {
   RecommendationInput,
   RecommendationOutput,
@@ -60,11 +61,18 @@ function request(body: unknown = INPUT): Request {
 function dependencies(
   recommend: RecommendationHandlerDependencies["recommend"],
 ): RecommendationHandlerDependencies {
-  return { retrieve: retrieveCulturalContext, recommend };
+  return {
+    retrieve: (input) =>
+      retrieveCulturalContext(input, createApprovedKnowledgeBase()),
+    recommend,
+  };
 }
 
 test("Gemini Stylist receives grounded context and returns three validated looks", async () => {
-  const context = retrieveCulturalContext(INPUT);
+  const context = retrieveCulturalContext(
+    INPUT,
+    createApprovedKnowledgeBase(),
+  );
   const expected = makeOutput();
 
   const result = await recommendWithGemini(
@@ -89,7 +97,10 @@ test("Gemini Stylist receives grounded context and returns three validated looks
 });
 
 test("Gemini Stylist rejects an invented source ID", async () => {
-  const context = retrieveCulturalContext(INPUT);
+  const context = retrieveCulturalContext(
+    INPUT,
+    createApprovedKnowledgeBase(),
+  );
   const invalid = makeOutput();
   invalid.looks[0].sourceIds = ["MADE_UP_SOURCE"];
 
@@ -100,7 +111,10 @@ test("Gemini Stylist rejects an invented source ID", async () => {
 });
 
 test("Gemini Stylist rejects output with fewer than three looks", async () => {
-  const context = retrieveCulturalContext(INPUT);
+  const context = retrieveCulturalContext(
+    INPUT,
+    createApprovedKnowledgeBase(),
+  );
   const invalid = makeOutput();
   invalid.looks.pop();
 
@@ -151,12 +165,22 @@ test("recommend route returns 422 for unsupported input IDs", async () => {
   assert.equal((await response.json()).error.code, "INVALID_INPUT");
 });
 
+test("recommend route returns 422 when the repository has no approved context", async () => {
+  const response = await POST(request());
+
+  assert.equal(response.status, 422);
+  assert.equal((await response.json()).error.code, "NO_CULTURAL_CONTEXT");
+});
+
 test("recommend route returns 503 when the Gemini key is missing", async () => {
   const previousKey = process.env.GEMINI_API_KEY;
   delete process.env.GEMINI_API_KEY;
 
   try {
-    const response = await POST(request());
+    const response = await handleRecommendation(
+      request(),
+      dependencies(recommendWithGemini),
+    );
     assert.equal(response.status, 503);
     assert.equal(
       (await response.json()).error.code,

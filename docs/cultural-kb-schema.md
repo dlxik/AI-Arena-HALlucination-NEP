@@ -72,13 +72,23 @@ Mỗi entry trong `data/knowledge/records.json` có:
 - Record chưa review phải có `verification_status: needs_review`, `reviewed: false` và `enforcement: advisory`.
 - `hard` chỉ hợp lệ khi record đã `verified`, `reviewed: true`, mọi nguồn liên quan đã `approved`, và phạm vi condition rõ ràng.
 
+## Policy retrieval cho Gemini Stylist
+
+Checkpoint 2 áp dụng policy fail-closed trước khi đưa context vào prompt:
+
+- Garment phải có `status: approved` và có ít nhất một source approved liên quan.
+- Source phải có `status: approved`.
+- Knowledge record phải có `verification_status: verified`, `reviewed: true` và mọi `source_ids` liên kết đều approved.
+- Garment/source `needs_review` và record chưa verified vẫn được giữ trong KB để review, nhưng không được đưa vào prompt kể cả dưới dạng advisory.
+- Khi không có context đạt policy, `/api/recommend` trả `422 NO_CULTURAL_CONTEXT`; không fallback sang fixture và không tự nâng trạng thái dữ liệu.
+
 ## Cách thêm dữ liệu
 
 1. Thêm source thật vào `data/sources/references.json`; không dùng shop, blog thương mại, Pinterest hoặc nội dung AI-generated làm ground truth.
 2. Ghi rõ `usable_knowledge`, reliability và giới hạn trong `notes`.
 3. Thêm knowledge/rule record với condition hẹp nhất mà nguồn hỗ trợ.
 4. Liên kết bằng `source_ids`; không tự tạo citation hoặc source ID.
-5. Giữ record ở `needs_review`/`advisory` cho tới khi một thành viên khác review.
+5. Giữ record ở `needs_review`/`advisory` cho tới khi một thành viên khác review; record này chưa được retrieval production sử dụng.
 6. Chạy `npm run validate:data` trước khi đưa artefact đi review.
 
 ## Trạng thái Meeting 01

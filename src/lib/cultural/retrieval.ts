@@ -11,11 +11,11 @@ import type {
 export const MAX_CULTURAL_RECORDS = 6;
 export const MAX_CULTURAL_SOURCES = 8;
 
-const ELIGIBLE_GARMENT_STATUSES = ["needs_review", "approved"] as const;
-const ELIGIBLE_SOURCE_STATUSES = ["needs_review", "approved"] as const;
+const ELIGIBLE_GARMENT_STATUSES = ["approved"] as const;
+const ELIGIBLE_SOURCE_STATUSES = ["approved"] as const;
 
 export class CulturalContextNotFoundError extends Error {
-  constructor(message = "No eligible cultural context was found.") {
+  constructor(message = "No approved cultural context was found.") {
     super(message);
     this.name = "CulturalContextNotFoundError";
   }
@@ -34,28 +34,26 @@ function isEligibleRecord(
   sourcesById: ReadonlyMap<string, CulturalSource>,
 ): boolean {
   const sources = record.source_ids.map((sourceId) => sourcesById.get(sourceId));
-  if (
-    sources.some((source) => !source || !isEligibleSource(source)) ||
-    sources.length === 0
-  ) {
-    return false;
-  }
+  return (
+    record.reviewed &&
+    record.verification_status === "verified" &&
+    sources.length > 0 &&
+    sources.every((source) => source?.status === "approved")
+  );
+}
 
-  if (!record.reviewed) {
+function garmentHasEligibleSource(
+  garment: CulturalGarment,
+  sourcesById: ReadonlyMap<string, CulturalSource>,
+): boolean {
+  return garment.source_ids.some((sourceId) => {
+    const source = sourcesById.get(sourceId);
     return (
-      record.verification_status === "needs_review" &&
-      record.enforcement === "advisory"
+      source !== undefined &&
+      isEligibleSource(source) &&
+      source.garment_ids.includes(garment.id)
     );
-  }
-
-  if (record.enforcement === "hard") {
-    return (
-      record.verification_status === "verified" &&
-      sources.every((source) => source?.status === "approved")
-    );
-  }
-
-  return true;
+  });
 }
 
 function garmentScore(
@@ -184,6 +182,7 @@ export function retrieveCulturalContext(
     .filter(
       (garment) =>
         isEligibleGarment(garment) &&
+        garmentHasEligibleSource(garment, sourcesById) &&
         (input.garment === "auto" || garment.id === input.garment),
     )
     .sort((left, right) => {
@@ -227,13 +226,10 @@ export function retrieveCulturalContext(
         source.garment_ids.some((garmentId) => candidateIds.has(garmentId)),
     )
     .sort((left, right) => {
-      const reviewDifference =
-        Number(right.status === "approved") - Number(left.status === "approved");
       const reliabilityRank = { low: 0, medium: 1, high: 2 } as const;
       const reliabilityDifference =
         reliabilityRank[right.reliability] - reliabilityRank[left.reliability];
       return (
-        reviewDifference ||
         reliabilityDifference ||
         left.id.localeCompare(right.id, "en")
       );
@@ -265,7 +261,7 @@ export function retrieveCulturalContext(
 
   if (sources.length === 0) {
     throw new CulturalContextNotFoundError(
-      "Eligible garments were found, but none had an eligible source.",
+      "Approved garments were found, but none had an approved source.",
     );
   }
 
@@ -276,9 +272,10 @@ export function retrieveCulturalContext(
     policy: {
       eligibleGarmentStatuses: [...ELIGIBLE_GARMENT_STATUSES],
       eligibleSourceStatuses: [...ELIGIBLE_SOURCE_STATUSES],
+      requiredRecordVerificationStatus: "verified",
+      requireReviewedRecords: true,
       maxRecords: MAX_CULTURAL_RECORDS,
       maxSources: MAX_CULTURAL_SOURCES,
-      unreviewedRecordsAreAdvisoryOnly: true,
     },
   };
 }
