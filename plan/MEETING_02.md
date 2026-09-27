@@ -240,7 +240,7 @@ Không đánh giá chất lượng chỉ bằng việc JSON parse được. Linh
 - [x] Hoàn thiện loading, error, retry và back-to-form states.
 - [x] Render response thật trên Results page, không import fixture trong production flow.
 - [x] Hiển thị source/cultural note rõ ràng trên card hoặc Cultural Passport.
-- [ ] Kiểm tra responsive và ba cards không vỡ layout với nội dung dài.
+- [x] Kiểm tra responsive và ba cards không vỡ layout với nội dung dài.
 - [x] Bổ sung kiểm tra frontend phù hợp cho success/error flow.
 
 #### Definition of Done
