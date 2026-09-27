@@ -5,7 +5,7 @@
       "publisher": "Bảo tàng Lịch sử Quốc gia",
       "title": "Bảo tàng Lịch sử quốc gia tiếp nhận áo dài ngũ thân truyền thống",
       "url": "https://baotanglichsu.vn/vi/Articles/3090/72685/bao-tang-lich-su-quoc-gia-tiep-nhan-ao-dai-ngu-than-truyen-thong.html",
-      "accessed_at": "2026-09-24",
+      "accessed_at": "2026-09-27",
       "source_type": "museum",
       "garment_ids": ["ao_ngu_than"],
       "categories": ["structure", "history"],
@@ -14,31 +14,35 @@
         "Ống tay của biến thể tay chẽn nhỏ gọn hơn áo tấc và áo giao lĩnh."
       ],
       "reliability": "high",
-      "notes": "Nguồn bảo tàng mô tả trực tiếp một hiện vật; cần review trước khi khái quát thành quy tắc cho mọi biến thể áo ngũ thân.",
-      "status": "needs_review"
+      "notes": "Đã đối chiếu trực tiếp nội dung ngày 2026-09-27. Nguồn mô tả một hiện vật/nhóm hiện vật; chỉ các claim được giới hạn đúng phạm vi mới đủ điều kiện retrieval.",
+      "status": "approved",
+      "reviewed_by": "Diệu Linh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "id": "VHTT_AO_TU_THAN_KINH_BAC",
       "publisher": "Tạp chí Văn hóa Nghệ thuật",
       "title": "Tạo hình trang phục phụ nữ Kinh Bắc truyền thống",
       "url": "https://vanhoanghethuat.vn/tao-hinh-trang-phuc-phu-nu-kinh-bac-truyen-thong-77748003.html",
-      "accessed_at": "2026-09-24",
+      "accessed_at": "2026-09-27",
       "source_type": "academic_journal",
       "garment_ids": ["ao_tu_than"],
       "categories": ["structure", "accessory"],
       "usable_knowledge": [
-        "Hai thân sau nối dọc giữa lưng và hai thân trước tạo thành hai vạt có thể buông hoặc buộc trong mô tả trang phục Kinh Bắc."
+        "Áo dài tứ thân trong ngữ cảnh Kinh Bắc được mô tả có bốn khổ vải, gồm hai tà trước và hai tà sau; tà xẻ có thể buộc gọn khi lao động."
       ],
       "reliability": "medium",
-      "notes": "Nguồn chuyên môn phù hợp để tạo candidate rule; cần đối chiếu thêm hiện vật hoặc nghiên cứu độc lập trước khi dùng như hard rule.",
-      "status": "needs_review"
+      "notes": "Đã đối chiếu trực tiếp đoạn mô tả áo dài tứ thân ngày 2026-09-27. Không dùng chi tiết cấu tạo của áo cánh ở đoạn liền trước cho áo tứ thân; vẫn cần nguồn độc lập trước khi nâng thành hard rule.",
+      "status": "approved",
+      "reviewed_by": "Diệu Linh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "id": "VNMH_AO_TU_THAN_CONTEXT_2016",
       "publisher": "Bảo tàng Lịch sử Quốc gia",
       "title": "Thi nấu cơm - Nét văn hóa ngày xuân ở miền quê quan họ",
       "url": "https://baotanglichsu.vn/vi/Articles/1508/48878/thi-nau-com-net-van-hoa-ngay-xuan-o-mien-que-quan-ho.html",
-      "accessed_at": "2026-09-24",
+      "accessed_at": "2026-09-27",
       "source_type": "museum",
       "garment_ids": ["ao_tu_than"],
       "categories": ["occasion", "accessory"],
@@ -46,15 +50,17 @@
         "Một tổ hợp trang phục trong hội thi nấu cơm xuân ở Bắc Ninh gồm áo tứ thân, váy lụa đen, yếm trắng, khăn mỏ quạ và dải lụa thắt lưng."
       ],
       "reliability": "high",
-      "notes": "Chỉ chứng minh một ngữ cảnh lễ hội cụ thể; không dùng tổ hợp này như quy tắc phổ quát cho mọi dịp.",
-      "status": "needs_review"
+      "notes": "Đã đối chiếu trực tiếp nội dung ngày 2026-09-27. Chỉ chứng minh quy định của hội thi nấu cơm được phục dựng ở Bắc Ninh; không dùng tổ hợp này như quy tắc phổ quát.",
+      "status": "approved",
+      "reviewed_by": "Diệu Linh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "id": "VNMH_AO_DAI_2015",
       "publisher": "Bảo tàng Lịch sử Quốc gia",
       "title": "Nét đẹp văn hóa trong tà áo dài của phụ nữ Việt",
       "url": "https://baotanglichsu.vn/vi/Articles/3096/18397/net-djep-van-hoa-trong-ta-ao-dai-cua-phu-nu-viet.html",
-      "accessed_at": "2026-09-24",
+      "accessed_at": "2026-09-27",
       "source_type": "museum",
       "garment_ids": ["ao_dai"],
       "categories": ["history", "structure"],
@@ -63,8 +69,10 @@
         "Kiểu dáng áo dài tiếp tục thay đổi về cổ, tay, vật liệu và trang trí trong đời sống hiện đại."
       ],
       "reliability": "high",
-      "notes": "Dùng làm nguồn lịch sử và bối cảnh; các chi tiết đang có tranh luận cần nguồn học thuật độc lập trước khi tạo rule.",
-      "status": "needs_review"
+      "notes": "Đã đối chiếu trực tiếp nội dung ngày 2026-09-27. Dùng cho tiến trình cải biến thế kỷ XX và sự đa dạng kiểu dáng/chất liệu; không dùng các nhận định đang tranh luận làm hard rule.",
+      "status": "approved",
+      "reviewed_by": "Diệu Linh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "id": "VWM_AO_DAI",
@@ -83,27 +91,49 @@
       "status": "needs_review"
     },
     {
-      "id": "VJOL_NHAT_BINH_2026",
-      "publisher": "Tạp chí Văn hóa Nghệ thuật trên VJOL",
+      "id": "VHNT_NHAT_BINH_MOTIF_2025",
+      "publisher": "Tạp chí Văn hóa Nghệ thuật",
       "title": "Hoa văn trang trí trên áo Nhật Bình của Đoan Huy Hoàng thái hậu triều Nguyễn (1802-1945)",
-      "url": "https://vjol.info.vn/tcvanhoanghethuat/vi/article/view/138715/",
-      "accessed_at": "2026-09-24",
+      "url": "https://vanhoanghethuat.vn/hoa-van-trang-tri-tren-ao-nhat-binh-cua-doan-huy-hoang-thai-hau-trieu-nguyen-1802-1945-77758106.html",
+      "accessed_at": "2026-09-27",
       "source_type": "academic_journal",
       "garment_ids": ["nhat_binh"],
       "categories": ["history", "decoration"],
       "usable_knowledge": [
-        "Phân tích hoa văn trên một áo Nhật Bình gắn với Đoan Huy Hoàng thái hậu triều Nguyễn."
+        "Bài nghiên cứu mô tả Nhật Bình thuộc hệ thống trang phục cung đình hậu phi triều Nguyễn và cổ áo đối khâm hình chữ nhật.",
+        "Phân tích hoa văn trên riêng hiện vật Nhật Bình của Đoan Huy Hoàng thái hậu, niên đại 1926-1945."
       ],
       "reliability": "high",
-      "notes": "Phạm vi là một hiện vật/nghiên cứu trường hợp; cần đọc toàn văn và xác nhận quyền truy cập trước khi trích chi tiết hoa văn.",
-      "status": "needs_review"
+      "notes": "Đã đọc toàn văn bài ở Tạp chí VHNT số 593 (01/2025) ngày 2026-09-27. Đặc điểm cổ áo/bối cảnh cung đình được dùng ở phạm vi bài nêu; hệ hoa văn và màu vàng chỉ thuộc hiện vật nghiên cứu, không khái quát cho mọi Nhật Bình.",
+      "status": "approved",
+      "reviewed_by": "Diệu Linh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "id": "VHNT_NHAT_BINH_CONTEXT_2022",
+      "publisher": "Tạp chí Văn hóa Nghệ thuật",
+      "title": "Áo Nhật Bình: Một di sản văn hóa quý của Cố đô Huế",
+      "url": "https://vanhoanghethuat.vn/ao-nhat-binh-mot-di-san-van-hoa-quy-cua-co-do-hue-77752065.html",
+      "accessed_at": "2026-09-27",
+      "source_type": "academic_journal",
+      "garment_ids": ["nhat_binh"],
+      "categories": ["history", "occasion", "structure"],
+      "usable_knowledge": [
+        "Cuối thế kỷ XIX trở về sau, bài viết mô tả Nhật Bình phối với quần trắng và khăn vành to bản.",
+        "Sau năm 1945, bài viết ghi nhận Nhật Bình lan tỏa ra dân gian và được dùng trong hôn lễ/lễ trang trọng; màu sắc và hoa văn đương đại đa dạng hơn."
+      ],
+      "reliability": "medium",
+      "notes": "Đã đọc trực tiếp ngày 2026-09-27. Dùng làm context lịch sử/đương đại và candidate flexible rule; không dùng như căn cứ duy nhất cho quy chế cung đình theo phẩm cấp.",
+      "status": "approved",
+      "reviewed_by": "Diệu Linh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "id": "HMCC_NHAT_BINH_2022",
       "publisher": "Trung tâm Bảo tồn Di tích Cố đô Huế",
       "title": "Cận cảnh Mũ quan đại thần và áo Nhật Bình cung tần triều Nguyễn",
-      "url": "https://kph2022.huecit.com/Van-hoa/Hue-Kinh-%C4%91o-ao-dai-Viet-Nam/Chi-tiet/tid/Can-canh-Mu-quan-dai-than-va-ao-Nhat-Binh-cung-tan-trieu-Nguyen.html/pid/10711/cid/303",
-      "accessed_at": "2026-09-24",
+      "url": "https://www.baotangcungdinh.vn/baotang.aspx?KenhID=0&TieuDeID=127&TinTucID=21215&l=vn",
+      "accessed_at": "2026-09-27",
       "source_type": "heritage_authority",
       "garment_ids": ["nhat_binh"],
       "categories": ["history", "artifact"],
@@ -111,7 +141,7 @@
         "Hiện vật áo Nhật Bình cung tần được hội đồng thẩm định niên đại cuối thế kỷ XIX đến đầu thế kỷ XX."
       ],
       "reliability": "high",
-      "notes": "Nguồn cơ quan bảo tồn về hiện vật cụ thể; chưa đủ để suy rộng mọi đặc điểm thành rule cho toàn bộ Nhật Bình.",
+      "notes": "Đã thay URL microsite khó truy cập bằng trang chính thức của Bảo tàng Cổ vật Cung đình Huế. Công cụ review chưa tải được toàn văn nên nguồn vẫn needs_review; chưa dùng để tạo knowledge record.",
       "status": "needs_review"
     }
   ]

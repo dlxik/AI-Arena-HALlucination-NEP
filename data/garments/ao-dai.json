@@ -1,11 +1,13 @@
 {
   "id": "ao_dai",
   "name": "Áo dài",
-  "summary": "",
-  "recognizable_features": [],
+  "summary": "Hồ sơ retrieval cho áo dài phụ nữ trong tiến trình cải biến thế kỷ XX; nguồn ghi nhận hình thức hai vạt trước/sau và sự đa dạng về cổ, tay, chất liệu, trang trí ở các thiết kế hiện đại.",
+  "recognizable_features": [
+    "Dạng áo dài hai vạt trước và sau được nguồn ghi nhận trong bước cải biến Cát Tường năm 1934."
+  ],
   "preserve_rules": [],
-  "flexible_elements": [],
+  "flexible_elements": ["AD_FLEX_NECK_SLEEVE_DECORATION"],
   "compatible_occasions": [],
-  "source_ids": ["VNMH_AO_DAI_2015", "VWM_AO_DAI"],
-  "status": "needs_review"
+  "source_ids": ["VNMH_AO_DAI_2015"],
+  "status": "approved"
 }

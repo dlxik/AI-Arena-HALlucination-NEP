@@ -267,12 +267,12 @@ Không đánh giá chất lượng chỉ bằng việc JSON parse được. Linh
 
 #### Công việc
 
-- [ ] Rà soát source/record đủ điều kiện dùng cho retrieval; ghi rõ record nào vẫn `needs_review`.
-- [ ] Bổ sung knowledge context tối thiểu cho Áo dài và Nhật Bình để cân bằng 4 trang phục MVP.
-- [ ] Đối chiếu record của Áo ngũ thân và Áo tứ thân với nguồn gốc; sửa phạm vi condition nếu đang khái quát quá mức.
-- [ ] Tạo 5 acceptance cases cho recommendation flow, bao phủ 4 trang phục và `auto`.
-- [ ] Kiểm tra cultural note/source IDs trong output thử nghiệm; ghi pass/warning/fail và lý do.
-- [ ] Cập nhật `docs/cultural-sources.md`, `docs/cultural-kb-schema.md` nếu trạng thái review hoặc cách retrieval thay đổi.
+- [x] Rà soát source/record đủ điều kiện dùng cho retrieval; ghi rõ record nào vẫn `needs_review`.
+- [x] Bổ sung knowledge context tối thiểu cho Áo dài và Nhật Bình để cân bằng 4 trang phục MVP.
+- [x] Đối chiếu record của Áo ngũ thân và Áo tứ thân với nguồn gốc; sửa phạm vi condition nếu đang khái quát quá mức.
+- [x] Tạo 5 acceptance cases cho recommendation flow, bao phủ 4 trang phục và `auto`.
+- [x] Kiểm tra cultural note/source IDs trong output thử nghiệm; ghi pass/warning/fail và lý do.
+- [x] Cập nhật `docs/cultural-sources.md`, `docs/cultural-kb-schema.md` nếu trạng thái review hoặc cách retrieval thay đổi.
 
 #### Definition of Done
 
@@ -282,6 +282,13 @@ Không đánh giá chất lượng chỉ bằng việc JSON parse được. Linh
 - Có artefact đánh giá 5 cases để cả đội review trước Meeting 03.
 
 Linh không triển khai Gemini, backend endpoint, frontend hoặc Cultural Guardrail trong checkpoint này.
+
+Artefact hoàn thành ngày 2026-09-27:
+
+- `data/knowledge/records.json`: 14 record cho đủ 4 trang phục, tất cả `advisory`.
+- `tests/prompt-evaluation/recommendation-cultural-cases.json`: 5 acceptance cases và baseline review.
+- `docs/meeting-02-cultural-acceptance.md`: báo cáo baseline và điều kiện rerun.
+- Hai source `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`; không được đưa vào retrieval.
 
 ## 7. Việc chung trước Meeting 03
 
