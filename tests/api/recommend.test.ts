@@ -38,7 +38,7 @@ function makeOutput(): RecommendationOutput {
       accessories: [`Phụ kiện tiết chế ${index}`],
       reason: `Phương án ${index} bám phong cách tối giản và dịp tham quan văn hóa.`,
       culturalNote:
-        "Nguồn bảo tàng hiện có mô tả một nhóm hiện vật áo ngũ thân tay chẽn; thông tin này đang chờ rà soát chéo.",
+        "Nguồn bảo tàng mô tả một nhóm hiện vật áo ngũ thân tay chẽn trong phạm vi cụ thể.",
       sourceIds: ["VNMH_AO_NGU_THAN_2021"],
       validation: {
         status: "warning",
@@ -127,6 +127,52 @@ test("recommend route returns a successful envelope", async () => {
   assert.deepEqual(await response.json(), { success: true, data: expected });
 });
 
+test("recommend route keeps frontend response invariants", async () => {
+  const response = await handleRecommendation(
+    request(),
+    dependencies(async () => makeOutput()),
+  );
+  const body = await response.json();
+
+  assert.equal(body.success, true);
+  assert.equal(body.data.looks.length, 3);
+  assert.equal(new Set(body.data.looks.map((look: { id: string }) => look.id)).size, 3);
+  for (const look of body.data.looks) {
+    assert.ok(["pass", "warning", "revise"].includes(look.validation.status));
+    assert.equal(typeof look.imagePrompt, "string");
+  }
+});
+
+test("recommend route accepts garment auto with grounded candidates", async () => {
+  const response = await handleRecommendation(
+    request({ ...INPUT, garment: "auto" }),
+    dependencies(async (_input, context) => {
+      assert.equal(context.garmentCandidates.length, 4);
+      return makeOutput();
+    }),
+  );
+
+  assert.equal(response.status, 200);
+});
+
+for (const [label, invalidInput] of [
+  ["missing required fields", {}],
+  ["missing occasion", { ...INPUT, occasion: undefined }],
+  ["colors is not an array", { ...INPUT, colors: "pastel_blue" }],
+  ["remixLevel is below zero", { ...INPUT, remixLevel: -1 }],
+  ["remixLevel is above one hundred", { ...INPUT, remixLevel: 101 }],
+] as const) {
+  test(`recommend route returns 422 when ${label}`, async () => {
+    const response = await handleRecommendation(
+      request(invalidInput),
+      dependencies(async () => makeOutput()),
+    );
+
+    assert.equal(response.status, 422);
+    assert.equal((await response.json()).error.code, "INVALID_INPUT");
+  });
+}
+
 test("recommend route returns 400 for invalid JSON", async () => {
   const response = await handleRecommendation(
     new Request("http://localhost/api/recommend", {
@@ -158,10 +204,7 @@ test("recommend route returns 503 when the Gemini key is missing", async () => {
   try {
     const response = await POST(request());
     assert.equal(response.status, 503);
-    assert.equal(
-      (await response.json()).error.code,
-      "GEMINI_NOT_CONFIGURED",
-    );
+    assert.equal((await response.json()).error.code, "GEMINI_NOT_CONFIGURED");
   } finally {
     if (previousKey === undefined) {
       delete process.env.GEMINI_API_KEY;

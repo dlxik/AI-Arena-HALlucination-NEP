@@ -28,6 +28,7 @@ export default function CreatePage() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [parsing, setParsing] = useState(false);
 
   function handleColorToggle(value: string) {
     setForm((prev) => ({
@@ -183,20 +184,56 @@ export default function CreatePage() {
         </div>
 
         {/* Mô tả tự do */}
-        <label className={`${labelClass} sm:col-span-2`}>
-          Mô tả thêm{" "}
-          <span className="text-slate-400 font-normal">(không bắt buộc)</span>
-          <textarea
-            id="field-description"
-            className={`${fieldClass} resize-none`}
-            rows={3}
-            placeholder="VD: Đi Văn Miếu, thích nữ tính nhưng không quá cổ điển."
-            value={form.description ?? ""}
-            onChange={(e) =>
-              setForm((p) => ({ ...p, description: e.target.value }))
-            }
-          />
-        </label>
+        <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="field-description">
+            Mô tả bằng văn bản tự nhiên{" "}
+            <span className="text-slate-400 font-normal">(không bắt buộc)</span>
+          </label>
+          <div className="mt-2 relative">
+            <textarea
+              id="field-description"
+              className={`${fieldClass} resize-none pr-32 mt-0`}
+              rows={3}
+              placeholder="VD: Mình sắp đi Văn Miếu dịp Tết, thích phong cách nữ tính, nhẹ nhàng nhưng không quá cổ điển..."
+              value={form.description ?? ""}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, description: e.target.value }))
+              }
+            />
+            <button
+              type="button"
+              onClick={async () => {
+                if (!form.description) return;
+                setParsing(true);
+                try {
+                  const res = await fetch("/api/parse-intent", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ description: form.description }),
+                  });
+                  const json = await res.json();
+                  if (res.ok && json.success) {
+                    setForm((prev) => ({
+                      ...prev,
+                      ...json.data,
+                      description: prev.description,
+                    }));
+                  } else {
+                    alert(json.error?.message || "Lỗi phân tích tự động");
+                  }
+                } catch (e) {
+                  alert("Lỗi kết nối tới server");
+                } finally {
+                  setParsing(false);
+                }
+              }}
+              disabled={parsing || !form.description}
+              className="absolute bottom-3 right-3 rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800 disabled:opacity-50"
+            >
+              {parsing ? "Đang xử lý..." : "✨ Tự động điền"}
+            </button>
+          </div>
+        </div>
 
         {/* Submit */}
         <div className="sm:col-span-2">
