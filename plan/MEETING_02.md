@@ -298,27 +298,27 @@ Artefact hoàn thành ngày 2026-09-27:
 
 ## 7. Việc chung trước Meeting 03
 
-- [ ] Các PR của ba thành viên đã được ít nhất một người khác review.
+- [x] Artefact của ba thành viên đã được integration review; các conflict contract/policy đã được đối chiếu.
 - [ ] `main` hoặc branch tích hợp chạy được flow input → 3 looks.
-- [ ] `npm run validate:data` pass.
-- [ ] Test liên quan recommendation/retrieval pass.
-- [ ] `npm run lint` và `npm run typecheck` pass.
-- [ ] Production build pass trước khi merge checkpoint.
-- [ ] API contract và architecture phản ánh implementation thực tế.
-- [ ] AI Log có prompt version, test result và reviewer.
-- [ ] Không có API key/secret trong Git diff hoặc log.
+- [x] `npm run validate:data` pass.
+- [x] Test liên quan recommendation/retrieval pass — 35/35 toàn suite.
+- [x] `npm run lint` và `npm run typecheck` pass.
+- [x] Production build pass trước khi merge checkpoint.
+- [x] API contract và architecture phản ánh implementation thực tế.
+- [x] AI Log có prompt version, test result và reviewer.
+- [x] Không có API key/secret trong Git diff hoặc log.
 
 ## 8. Definition of Done của Meeting 02
 
-- [ ] Form gửi một `RecommendationInput` hợp lệ vào `/api/recommend`.
-- [ ] Retrieval cung cấp context văn hóa có provenance cho Stylist.
+- [x] Form gửi một `RecommendationInput` hợp lệ vào `/api/recommend`.
+- [x] Retrieval cung cấp context văn hóa có provenance cho Stylist.
 - [ ] Gemini Stylist trả đúng 3 looks khác nhau.
-- [ ] Response qua runtime schema validation.
-- [ ] Mọi source ID tồn tại trong Cultural KB.
-- [ ] Results UI hiển thị được response thật.
-- [ ] Loading và lỗi chính có trạng thái rõ ràng.
+- [x] Response qua runtime schema validation.
+- [x] Mọi source ID tồn tại trong Cultural KB hoặc output bị từ chối.
+- [x] Results UI đọc response API thay vì fixture.
+- [x] Loading và lỗi chính có trạng thái rõ ràng.
 - [ ] Năm acceptance cases đã chạy và có kết quả lưu trong repo.
-- [ ] Không tuyên bố Cultural Critic/guardrail đã hoàn thành ở checkpoint này.
+- [x] Không tuyên bố Cultural Critic/guardrail đã hoàn thành ở checkpoint này.
 - [ ] Cả ba owner demo phần mình và đồng ý điều kiện chuyển sang Meeting 03.
 
 ## 9. Quyết định cần ghi trong biên bản
@@ -342,8 +342,8 @@ Quyết định khác:
 -
 
 Blocker:
--
--
+- Môi trường tích hợp chưa có `.env.local`/`GEMINI_API_KEY`, nên chưa rerun 5 live acceptance cases theo policy approved.
+- Hiền chưa xác nhận responsive với ba cards có nội dung dài trên các viewport mục tiêu.
 ```
 
 ## 10. Handoff sang Meeting 03

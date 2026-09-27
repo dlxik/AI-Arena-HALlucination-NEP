@@ -17,6 +17,10 @@ const BASE_INPUT: RecommendationInput = {
   remixLevel: 40,
 };
 
+function knowledgeBaseSnapshot() {
+  return structuredClone(loadCulturalKnowledgeBase());
+}
+
 test("repository data provides approved cultural context", () => {
   const context = retrieveCulturalContext(BASE_INPUT);
   assert.deepEqual(
@@ -63,7 +67,7 @@ test("retrieval keeps approved explicit garment context relevant", () => {
 });
 
 test("retrieval excludes unverified records from otherwise approved context", () => {
-  const knowledgeBase = loadCulturalKnowledgeBase();
+  const knowledgeBase = knowledgeBaseSnapshot();
   knowledgeBase.records = knowledgeBase.records.map((record) => ({
     ...record,
     verification_status: "needs_review",
@@ -76,7 +80,7 @@ test("retrieval excludes unverified records from otherwise approved context", ()
 });
 
 test("retrieval rejects a garment whose only source is not approved", () => {
-  const knowledgeBase = loadCulturalKnowledgeBase();
+  const knowledgeBase = knowledgeBaseSnapshot();
   knowledgeBase.sources = knowledgeBase.sources.map((source) =>
     source.id === "VNMH_AO_NGU_THAN_2021"
       ? { ...source, status: "needs_review" }
@@ -90,7 +94,7 @@ test("retrieval rejects a garment whose only source is not approved", () => {
 });
 
 test("retrieval rejects a garment that is still awaiting review", () => {
-  const knowledgeBase = loadCulturalKnowledgeBase();
+  const knowledgeBase = knowledgeBaseSnapshot();
   knowledgeBase.garments = knowledgeBase.garments.map((garment) =>
     garment.id === "ao_ngu_than"
       ? { ...garment, status: "needs_review" }
@@ -109,7 +113,7 @@ test("auto retrieval is deterministic and prioritizes an occasion match", () => 
     occasion: "festival",
     garment: "auto",
   };
-  const knowledgeBase = loadCulturalKnowledgeBase();
+  const knowledgeBase = knowledgeBaseSnapshot();
   const first = retrieveCulturalContext(input, knowledgeBase);
   const second = retrieveCulturalContext(input, knowledgeBase);
 

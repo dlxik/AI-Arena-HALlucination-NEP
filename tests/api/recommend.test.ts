@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   handleRecommendation,
-  POST,
   type RecommendationHandlerDependencies,
 } from "../../src/app/api/recommend/route";
 import { retrieveCulturalContext } from "../../src/lib/cultural/retrieval";
@@ -199,7 +198,7 @@ test("recommend route returns 422 for unsupported input IDs", async () => {
 });
 
 test("recommend route returns 422 when no approved context exists", async () => {
-  const blockedKnowledgeBase = loadCulturalKnowledgeBase();
+  const blockedKnowledgeBase = structuredClone(loadCulturalKnowledgeBase());
   blockedKnowledgeBase.garments = blockedKnowledgeBase.garments.map(
     (garment) => ({ ...garment, status: "needs_review" as const }),
   );

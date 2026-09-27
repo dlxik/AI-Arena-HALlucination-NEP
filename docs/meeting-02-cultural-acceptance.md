@@ -15,7 +15,7 @@ Năm case bao phủ Áo dài, Áo ngũ thân, Áo tứ thân, Nhật Bình và c
 
 ## Kết quả baseline
 
-Baseline được đánh giá bằng kiểm tra tĩnh implementation hiện tại: `POST /api/recommend` trả cùng `tests/fixtures/recommendation-output.json` cho mọi input. Đây không phải kết quả Gemini live.
+Baseline lịch sử được đánh giá ngày 2026-09-27 khi `POST /api/recommend` còn trả cùng `tests/fixtures/recommendation-output.json` cho mọi input. Đây không phải kết quả Gemini live và không phản ánh implementation đã tích hợp ngày 2026-09-28.
 
 | Case | Garment | Cultural note | Source IDs | Overall | Lý do chính |
 | --- | --- | --- | --- | --- | --- |
@@ -26,6 +26,13 @@ Baseline được đánh giá bằng kiểm tra tĩnh implementation hiện tạ
 | `RC_05_AUTO_TET` | Auto | Warning | Fail | **Fail** | Không giải thích lựa chọn garment; cả ba look dùng source không tồn tại |
 
 `Warning` ở cột Cultural note nghĩa là fixture tự thừa nhận nội dung chưa được kiểm chứng; không đồng nghĩa cultural note đã đạt acceptance.
+
+## Trạng thái rerun ngày 2026-09-28
+
+- Retrieval + Gemini Stylist + runtime validation đã thay fixture trong `/api/recommend`.
+- Automated tests dùng KB thật đã pass và xác nhận chặn source ID bịa, output thiếu look và context chưa approved.
+- Chưa rerun được 5 case live vì môi trường tích hợp không có `.env.local`/`GEMINI_API_KEY`.
+- Không chuyển baseline `fail` thành `pass` bằng mock output; cần lưu và review output Gemini thật cho từng case.
 
 ## Điều kiện rerun
 

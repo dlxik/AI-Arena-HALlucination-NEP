@@ -25,6 +25,6 @@ User Input
 
 `POST /api/recommend` chạy Cultural Retrieval → Gemini Stylist → runtime validation. Retrieval fail-closed, giới hạn 6 records và 8 sources, giữ thứ tự ổn định, lọc theo garment/input và không fallback sang fixture. Với `garment: auto`, context chỉ gồm các ứng viên đã approved, ưu tiên ứng viên khớp occasion. Output bị từ chối nếu không có đúng 3 looks khác nhau hoặc dùng source ngoài context/không liên quan garment.
 
-Seed data hiện vẫn ở `needs_review`, nên endpoint trả `422 NO_CULTURAL_CONTEXT` cho tới khi owner dữ liệu hoàn tất review và cập nhật trạng thái. Automated success tests dùng KB synthetic approved chỉ trong test; không thay đổi hoặc hợp thức hóa dữ liệu thật.
+KB tích hợp hiện có bốn garment profile, sáu source và 14 record đạt policy retrieval. Hai source còn `needs_review` được giữ trong catalog nhưng bị loại khỏi prompt. Automated tests dùng chính dữ liệu repository và hạ trạng thái trên bản sao cô lập để kiểm tra fail-closed; test không tự nâng trạng thái dữ liệu.
 
 Cultural Critic và image generator vẫn là scaffold. Do đó recommendation hiện trả cảnh báo `CULTURAL_CRITIC_PENDING`, không tuyên bố `pass` hoặc kết quả guardrail hoàn chỉnh.
