@@ -76,15 +76,17 @@ Mỗi entry trong `data/knowledge/records.json` có:
 - Record chưa review phải có `verification_status: needs_review`, `reviewed: false` và `enforcement: advisory`.
 - `hard` chỉ hợp lệ khi record đã `verified`, `reviewed: true`, mọi nguồn liên quan đã `approved`, và phạm vi condition rõ ràng.
 
-## Eligibility cho retrieval Meeting 02
+## Policy retrieval cho Gemini Stylist
 
-Một context chỉ đủ điều kiện đưa vào Stylist khi đồng thời thỏa:
+Checkpoint 2 áp dụng policy fail-closed trước khi đưa context vào prompt:
 
-1. Garment profile có `status: approved`.
-2. Knowledge record có `verification_status: verified` và `reviewed: true`.
-3. Tất cả source trong `source_ids` có `status: approved`.
-4. Record được lọc đúng garment và condition; `garment: auto` không được trộn claim của garment không được chọn.
-5. `enforcement` vẫn được truyền nguyên trạng. Stylist không được biến `advisory` thành hard constraint.
+- Garment phải có `status: approved` và có ít nhất một source approved liên quan.
+- Source phải có `status: approved`.
+- Knowledge record phải có `verification_status: verified`, `reviewed: true` và mọi `source_ids` liên kết đều approved.
+- Garment/source `needs_review` và record chưa verified vẫn được giữ trong KB để review, nhưng không được đưa vào prompt kể cả dưới dạng advisory.
+- Record được lọc đúng garment và condition; `garment: auto` không được trộn claim của garment không được chọn.
+- `enforcement` được truyền nguyên trạng; Stylist không được biến `advisory` thành hard constraint.
+- Khi không có context đạt policy, `/api/recommend` trả `422 NO_CULTURAL_CONTEXT`; không fallback sang fixture và không tự nâng trạng thái dữ liệu.
 
 Hai nguồn `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`, vì vậy không đủ điều kiện retrieval. Chúng được giữ trong source catalog để review tiếp, không được truyền vào prompt production.
 
@@ -94,7 +96,7 @@ Hai nguồn `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`, vì v�
 2. Ghi rõ `usable_knowledge`, reliability và giới hạn trong `notes`.
 3. Thêm knowledge/rule record với condition hẹp nhất mà nguồn hỗ trợ.
 4. Liên kết bằng `source_ids`; không tự tạo citation hoặc source ID.
-5. Giữ record ở `needs_review`/`advisory` cho tới khi một thành viên khác review.
+5. Giữ record ở `needs_review`/`advisory` cho tới khi một thành viên khác review; record này chưa được retrieval production sử dụng.
 6. Khi chuyển source sang `approved` hoặc record sang `verified`, ghi `reviewed_by` và `reviewed_at`.
 7. Chạy `npm run validate:data` trước khi đưa artefact đi review.
 

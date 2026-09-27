@@ -163,6 +163,12 @@ Giới hạn số record/context:
 Cách xử lý khi không có context phù hợp:
 ```
 
+Policy implementation đã chốt sau review:
+
+- Chỉ garment/source `approved` và record `verified` + `reviewed` được retrieval đưa vào prompt.
+- Dữ liệu `needs_review` không được dùng advisory trong Gemini Stylist.
+- Khi không có context approved, trả `422 NO_CULTURAL_CONTEXT`; không dùng fixture fallback và không tự nâng trạng thái.
+
 ### 5.5. Chốt Gemini Stylist
 
 Stylist nhận input người dùng và cultural context đã retrieval. Prompt phải yêu cầu:
@@ -357,4 +363,4 @@ Không bắt đầu image generation hoặc remix nâng cao trước khi flow Me
 - [ ] Chưa bắt đầu triển khai.
 - [x] Đang thực hiện.
 - [ ] Hoàn thành.
-- [ ] Có blocker cần xử lý.
+- [x] Có blocker cần xử lý.

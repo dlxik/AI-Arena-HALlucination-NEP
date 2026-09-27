@@ -11,6 +11,7 @@ import {
   recommendWithGemini,
   StylistOutputError,
 } from "../../src/lib/gemini/stylist";
+import { loadCulturalKnowledgeBase } from "../../src/lib/cultural/loader";
 import { PENDING_CRITIC_WARNING } from "../../src/lib/validation/recommendation-output";
 import type {
   RecommendationInput,
@@ -197,12 +198,29 @@ test("recommend route returns 422 for unsupported input IDs", async () => {
   assert.equal((await response.json()).error.code, "INVALID_INPUT");
 });
 
+test("recommend route returns 422 when no approved context exists", async () => {
+  const blockedKnowledgeBase = loadCulturalKnowledgeBase();
+  blockedKnowledgeBase.garments = blockedKnowledgeBase.garments.map(
+    (garment) => ({ ...garment, status: "needs_review" as const }),
+  );
+  const response = await handleRecommendation(request(), {
+    retrieve: (input) => retrieveCulturalContext(input, blockedKnowledgeBase),
+    recommend: async () => makeOutput(),
+  });
+
+  assert.equal(response.status, 422);
+  assert.equal((await response.json()).error.code, "NO_CULTURAL_CONTEXT");
+});
+
 test("recommend route returns 503 when the Gemini key is missing", async () => {
   const previousKey = process.env.GEMINI_API_KEY;
   delete process.env.GEMINI_API_KEY;
 
   try {
-    const response = await POST(request());
+    const response = await handleRecommendation(
+      request(),
+      dependencies(recommendWithGemini),
+    );
     assert.equal(response.status, 503);
     assert.equal((await response.json()).error.code, "GEMINI_NOT_CONFIGURED");
   } finally {

@@ -73,10 +73,11 @@ export type CulturalContext = {
   records: CulturalKnowledgeRecord[];
   sources: CulturalSource[];
   policy: {
-    eligibleGarmentStatuses: Array<"needs_review" | "approved">;
-    eligibleSourceStatuses: SourceReviewStatus[];
+    eligibleGarmentStatuses: Array<"approved">;
+    eligibleSourceStatuses: Array<"approved">;
+    requiredRecordVerificationStatus: "verified";
+    requireReviewedRecords: true;
     maxRecords: number;
     maxSources: number;
-    unreviewedRecordsAreAdvisoryOnly: true;
   };
 };

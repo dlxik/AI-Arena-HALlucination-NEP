@@ -88,7 +88,7 @@ type ValidationWarning = {
 - `looks` có đúng 3 phần tử, ID và tên không trùng.
 - `garment` và `style` là ID hợp lệ từ input/context đã retrieval.
 - Mỗi palette có ít nhất một màu người dùng yêu cầu.
-- Mỗi `sourceId` phải thuộc context đã retrieval và liên quan đến garment của look.
+- Mỗi `sourceId` phải thuộc context approved đã retrieval và liên quan đến garment của look.
 - Ba looks phải khác nhau về nội dung phối đồ.
 - Vì Cultural Critic chưa được tích hợp, `validation` luôn là cảnh báo tạm `CULTURAL_CRITIC_PENDING`, không phải kết quả kiểm duyệt hoàn chỉnh.
 
@@ -98,7 +98,7 @@ Lỗi của endpoint recommendation:
 | --- | --- | --- |
 | `400` | `INVALID_JSON` | Body không phải JSON hợp lệ. |
 | `422` | `INVALID_INPUT` | Request không đúng `RecommendationInput` hoặc dùng ID không hỗ trợ. |
-| `422` | `NO_CULTURAL_CONTEXT` | Không có garment/source đủ điều kiện cho request; không fallback sang fixture. |
+| `422` | `NO_CULTURAL_CONTEXT` | Không có garment/source approved hoặc record verified/reviewed đủ điều kiện; không fallback sang fixture. |
 | `500` | `CULTURAL_DATA_ERROR` | Cultural KB không tải/validate an toàn được. |
 | `500` | `INTERNAL_ERROR` | Lỗi nội bộ không thuộc các trường hợp đã phân loại. |
 | `502` | `GEMINI_UPSTREAM_ERROR` | Gemini không phản hồi thành công. |
