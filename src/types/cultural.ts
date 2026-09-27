@@ -1,4 +1,6 @@
 export type ReviewStatus = "draft" | "needs_review" | "approved";
+export type SourceReviewStatus = Exclude<ReviewStatus, "draft">;
+export type CulturalConfidence = "low" | "medium" | "high";
 
 export type CulturalGarment = {
   id: string;
@@ -20,23 +22,61 @@ export type CulturalSource = {
   accessed_at: string;
   source_type: "museum" | "heritage_authority" | "academic_journal";
   garment_ids: string[];
-  status: "needs_review" | "approved";
+  categories: string[];
+  usable_knowledge: string[];
+  reliability: CulturalConfidence;
+  notes: string;
+  status: SourceReviewStatus;
 };
 
-export type CulturalRuleType = "preserve" | "flexible" | "context" | "note";
-export type CulturalConfidence = "low" | "medium" | "high";
+export type CulturalRuleType =
+  | "preserve"
+  | "flexible"
+  | "context"
+  | "warning";
 
 export type CulturalKnowledgeRecord = {
   id: string;
   garment: string;
   category: "history" | "structure" | "accessory" | "occasion" | "warning";
+  component: string;
+  attribute: string;
   fact: string;
   rule_type: CulturalRuleType;
-  source_id: string;
+  condition: string;
+  constraint: "allowed" | "discouraged" | "forbidden" | "contextual";
+  action: string;
+  explanation: string;
+  source_ids: string[];
   publisher: string;
   url: string;
   confidence: CulturalConfidence;
+  verification_status: "needs_review" | "verified";
   reviewed: boolean;
   enforcement: "advisory" | "hard";
   notes: string;
+};
+
+export type CulturalKnowledgeBase = {
+  garments: CulturalGarment[];
+  sources: CulturalSource[];
+  records: CulturalKnowledgeRecord[];
+};
+
+export type CulturalGarmentCandidate = {
+  garment: CulturalGarment;
+  selectionReason: string;
+};
+
+export type CulturalContext = {
+  garmentCandidates: CulturalGarmentCandidate[];
+  records: CulturalKnowledgeRecord[];
+  sources: CulturalSource[];
+  policy: {
+    eligibleGarmentStatuses: Array<"needs_review" | "approved">;
+    eligibleSourceStatuses: SourceReviewStatus[];
+    maxRecords: number;
+    maxSources: number;
+    unreviewedRecordsAreAdvisoryOnly: true;
+  };
 };

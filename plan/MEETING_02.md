@@ -248,13 +248,13 @@ Không đánh giá chất lượng chỉ bằng việc JSON parse được. Linh
 
 #### Công việc
 
-- [ ] Hoàn thiện loader/retrieval cho cultural context liên quan.
-- [ ] Hoàn thiện `prompts/stylist/stylist-v1.md` và `recommendWithGemini`.
-- [ ] Thêm runtime validation cho `RecommendationOutput`, gồm đúng 3 looks và source ID hợp lệ.
-- [ ] Thay fixture trong `POST /api/recommend` bằng retrieval + Gemini Stylist.
-- [ ] Chuẩn hóa timeout/error envelope theo API contract.
-- [ ] Viết test cho success path, invalid model output, missing key và upstream failure.
-- [ ] Ghi prompt iteration/evaluation vào `docs/ai-log.md`.
+- [x] Hoàn thiện loader/retrieval cho cultural context liên quan.
+- [x] Hoàn thiện `prompts/stylist/stylist-v1.md` và `recommendWithGemini`.
+- [x] Thêm runtime validation cho `RecommendationOutput`, gồm đúng 3 looks và source ID hợp lệ.
+- [x] Thay fixture trong `POST /api/recommend` bằng retrieval + Gemini Stylist.
+- [x] Chuẩn hóa timeout/error envelope theo API contract.
+- [x] Viết test cho success path, invalid model output, missing key và upstream failure.
+- [x] Ghi prompt iteration/evaluation vào `docs/ai-log.md`.
 
 #### Definition of Done
 
@@ -355,6 +355,6 @@ Không bắt đầu image generation hoặc remix nâng cao trước khi flow Me
 
 - [x] Đã lập kế hoạch.
 - [ ] Chưa bắt đầu triển khai.
-- [ ] Đang thực hiện.
+- [x] Đang thực hiện.
 - [ ] Hoàn thành.
 - [ ] Có blocker cần xử lý.

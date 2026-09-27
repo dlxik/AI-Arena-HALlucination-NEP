@@ -33,6 +33,7 @@ export type StructuredJsonRequest = {
   systemInstruction: string;
   input: string;
   responseSchema: Record<string, unknown>;
+  maxOutputTokens?: number;
 };
 
 export type StructuredJsonGenerator = (
@@ -82,9 +83,15 @@ export function createGeminiClient(): GoogleGenAI {
 }
 
 function isTimeoutError(error: unknown): boolean {
+  if (error instanceof ApiError && [408, 504].includes(error.status)) {
+    return true;
+  }
+
+  if (!(error instanceof Error)) return false;
+
   return (
-    error instanceof Error &&
-    (error.name === "RequestTimeoutError" || error.name === "AbortError")
+    ["RequestTimeoutError", "TimeoutError", "AbortError"].includes(error.name) ||
+    ("cause" in error && isTimeoutError(error.cause))
   );
 }
 
@@ -92,6 +99,7 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
   systemInstruction,
   input,
   responseSchema,
+  maxOutputTokens = 256,
 }) => {
   try {
     const response = await createGeminiClient().interactions.create(
@@ -105,7 +113,7 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
           schema: responseSchema,
         },
         generation_config: {
-          max_output_tokens: 256,
+          max_output_tokens: maxOutputTokens,
         },
         store: false,
       },
