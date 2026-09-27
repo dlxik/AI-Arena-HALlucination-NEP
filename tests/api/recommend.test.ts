@@ -83,7 +83,7 @@ test("returns 422 when remixLevel is out of range (> 100)", async () => {
   assert.equal(json.success, false);
 });
 
-test("returns 422 when body is invalid JSON (null body)", async () => {
+test("returns 400 INVALID_JSON when body is malformed JSON", async () => {
   const response = await POST(
     new Request("http://localhost/api/recommend", {
       method: "POST",
@@ -91,10 +91,11 @@ test("returns 422 when body is invalid JSON (null body)", async () => {
       body: "{invalid",
     }),
   );
-  // readJsonBody returns null → parseRecommendationInput sẽ reject
+  // readJsonBody returns null → route trả 400 INVALID_JSON (không phải 422)
   const json = (await response.json()) as ApiResponse<never>;
-  assert.equal(response.status, 422);
+  assert.equal(response.status, 400);
   assert.equal(json.success, false);
+  assert.equal(!json.success && json.error.code, "INVALID_JSON");
 });
 
 // ─────────────────────────────────────────────────────────
