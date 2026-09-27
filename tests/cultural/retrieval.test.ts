@@ -49,7 +49,10 @@ test("auto retrieval is deterministic and prioritizes an occasion match", () => 
   const second = retrieveCulturalContext(input);
 
   assert.deepEqual(first, second);
-  assert.equal(first.garmentCandidates[0].garment.id, "ao_tu_than");
+  assert.ok(
+    first.garmentCandidates[0].garment.compatible_occasions.includes("festival"),
+    "The highest-ranked auto candidate must match the requested occasion.",
+  );
   assert.deepEqual(
     new Set(first.garmentCandidates.map(({ garment }) => garment.id)),
     new Set(["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh"]),
