@@ -4,7 +4,14 @@
     "created_at": "2026-09-27",
     "purpose": "Acceptance cases for Meeting 02 recommendation grounding",
     "baseline_artifact": "tests/fixtures/recommendation-output.json",
-    "baseline_note": "POST /api/recommend still returns the same fixture for every input. Re-run each case after Cultural Retrieval and Gemini Stylist replace the fixture."
+    "baseline_note": "Historical fixture review retained for comparison with the integrated pipeline.",
+    "live_evaluation": {
+      "executed_at": "2026-09-28",
+      "endpoint": "POST /api/recommend",
+      "model_mode": "Gemini live via local .env.local",
+      "result": "4_pass_1_warning",
+      "summary": "All five requests returned success with exactly three looks and only known source IDs. The Nhat Binh case remains a warning because two looks did not explicitly restate the defining rectangular opposing collar."
+    }
   },
   "cases": [
     {
@@ -35,6 +42,15 @@
         "source_ids": "fail",
         "overall": "fail",
         "reason": "Fixture returns ao_ngu_than for all looks and cites SOURCE_PLACEHOLDER, so it neither follows the requested garment nor grounds the note in an existing source."
+      },
+      "live_review": {
+        "look_count": 3,
+        "output_garments": ["ao_dai"],
+        "observed_source_ids": ["VNMH_AO_DAI_2015"],
+        "cultural_note": "pass",
+        "source_ids": "pass",
+        "overall": "pass",
+        "reason": "All looks keep the requested garment, cite the approved museum source and frame collar, sleeve and decoration as historically variable rather than universal."
       }
     },
     {
@@ -65,6 +81,15 @@
         "source_ids": "fail",
         "overall": "fail",
         "reason": "Fixture matches the garment label but provides only a generic unreviewed note and the nonexistent SOURCE_PLACEHOLDER citation."
+      },
+      "live_review": {
+        "look_count": 3,
+        "output_garments": ["ao_ngu_than"],
+        "observed_source_ids": ["VNMH_AO_NGU_THAN_2021"],
+        "cultural_note": "pass",
+        "source_ids": "pass",
+        "overall": "pass",
+        "reason": "All looks stay within the tay chen variant described by the source and avoid presenting one artifact palette or motif as universal."
       }
     },
     {
@@ -97,6 +122,18 @@
         "source_ids": "fail",
         "overall": "fail",
         "reason": "Fixture ignores the requested ao_tu_than garment and has no valid source for either structure or festival context."
+      },
+      "live_review": {
+        "look_count": 3,
+        "output_garments": ["ao_tu_than"],
+        "observed_source_ids": [
+          "VHTT_AO_TU_THAN_KINH_BAC",
+          "VNMH_AO_TU_THAN_CONTEXT_2016"
+        ],
+        "cultural_note": "pass",
+        "source_ids": "pass",
+        "overall": "pass",
+        "reason": "The output describes the four-panel structure correctly and scopes the skirt, yem and mo qua ensemble to the reconstructed Kinh Bac festival context."
       }
     },
     {
@@ -131,6 +168,18 @@
         "source_ids": "fail",
         "overall": "fail",
         "reason": "Fixture ignores the requested nhat_binh garment and cites no valid source for structure, court context or contemporary variation."
+      },
+      "live_review": {
+        "look_count": 3,
+        "output_garments": ["nhat_binh"],
+        "observed_source_ids": [
+          "VHNT_NHAT_BINH_CONTEXT_2022",
+          "VHNT_NHAT_BINH_MOTIF_2025"
+        ],
+        "cultural_note": "warning",
+        "source_ids": "pass",
+        "overall": "warning",
+        "reason": "All citations are valid and the output avoids inferring court rank, but two looks do not explicitly retain or discuss the defining rectangular opposing collar. Owner Lan Anh will make the Cultural Critic enforce or flag this record in Meeting 03; Linh will review the resulting severity and fix."
       }
     },
     {
@@ -163,6 +212,19 @@
         "source_ids": "fail",
         "overall": "fail",
         "reason": "Fixture always selects ao_ngu_than without explaining auto selection and all three looks cite SOURCE_PLACEHOLDER, which is absent from references.json."
+      },
+      "live_review": {
+        "look_count": 3,
+        "output_garments": ["ao_ngu_than", "nhat_binh", "ao_dai"],
+        "observed_source_ids": [
+          "VNMH_AO_NGU_THAN_2021",
+          "VHNT_NHAT_BINH_CONTEXT_2022",
+          "VNMH_AO_DAI_2015"
+        ],
+        "cultural_note": "pass",
+        "source_ids": "pass",
+        "overall": "pass",
+        "reason": "The three looks explain different garment choices for the Tet request and every citation belongs to the selected garment; no universal Tet rule is invented."
       }
     }
   ]

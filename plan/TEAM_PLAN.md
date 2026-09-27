@@ -288,8 +288,8 @@ Không tạo lịch sử hội thoại giả vào ngày cuối.
 ## 13. Trạng thái hiện tại
 
 - [x] Repository đã được tạo.
-- [ ] Hoàn thành checkpoint buổi 1.
-- [ ] Hoàn thành checkpoint buổi 2.
+- [x] Hoàn thành checkpoint buổi 1.
+- [x] Hoàn thành checkpoint buổi 2.
 - [ ] Hoàn thành checkpoint buổi 3.
 - [ ] Hoàn thành checkpoint buổi 4.
 - [ ] Hoàn thành checkpoint buổi 5.

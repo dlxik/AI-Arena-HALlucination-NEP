@@ -2,7 +2,7 @@
 
 AI Arena là nền tảng thử nghiệm gợi ý bản phối trang phục văn hóa Việt. Người dùng mô tả dịp, loại trang phục, phong cách, màu sắc và mức độ remix; pipeline dự kiến truy xuất tri thức có nguồn, tạo đề xuất, kiểm tra văn hóa rồi mới tạo hình ảnh.
 
-> Trạng thái: intent parser đã tích hợp Gemini; recommendation, cultural critic và image generation vẫn là mock. Chưa có dữ liệu văn hóa đã được phê duyệt.
+> Trạng thái: intent parser và recommendation flow đã tích hợp Gemini; Cultural Retrieval chỉ dùng dữ liệu đã duyệt và response được validate trước khi hiển thị. Cultural Critic và image generation thật thuộc các checkpoint tiếp theo.
 
 ## Bài toán sản phẩm
 
@@ -14,7 +14,7 @@ Các công cụ tạo ảnh có thể tạo ra kết quả hấp dẫn nhưng th
 - Trả ba bản phối có cấu trúc để frontend phát triển độc lập với AI.
 - Hiển thị Cultural Passport và cảnh báo kiểm chứng.
 - Cung cấp API contract cho intent, recommendation, validation và image generation.
-- Chuẩn bị Cultural Knowledge Base dạng JSON, chỉ dùng record được duyệt khi tích hợp thật.
+- Cultural Knowledge Base dạng JSON có provenance và policy chỉ retrieval record/source đã duyệt.
 
 ## Tech stack
 
@@ -48,7 +48,7 @@ Copy-Item .env.example .env.local # PowerShell
 npm run dev
 ```
 
-Mở `http://localhost:3000`. Các màn hình mock vẫn chạy khi chưa có key; endpoint `/api/parse-intent` cần key trong `.env.local`:
+Mở `http://localhost:3000`. Các endpoint `/api/parse-intent` và `/api/recommend` cần key trong `.env.local`:
 
 ```env
 GEMINI_API_KEY=

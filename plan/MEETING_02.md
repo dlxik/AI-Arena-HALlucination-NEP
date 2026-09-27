@@ -299,7 +299,7 @@ Artefact hoàn thành ngày 2026-09-27:
 ## 7. Việc chung trước Meeting 03
 
 - [x] Artefact của ba thành viên đã được integration review; các conflict contract/policy đã được đối chiếu.
-- [ ] `main` hoặc branch tích hợp chạy được flow input → 3 looks.
+- [x] `main` hoặc branch tích hợp chạy được flow input → 3 looks.
 - [x] `npm run validate:data` pass.
 - [x] Test liên quan recommendation/retrieval pass — 35/35 toàn suite.
 - [x] `npm run lint` và `npm run typecheck` pass.
@@ -312,14 +312,14 @@ Artefact hoàn thành ngày 2026-09-27:
 
 - [x] Form gửi một `RecommendationInput` hợp lệ vào `/api/recommend`.
 - [x] Retrieval cung cấp context văn hóa có provenance cho Stylist.
-- [ ] Gemini Stylist trả đúng 3 looks khác nhau.
+- [x] Gemini Stylist trả đúng 3 looks khác nhau.
 - [x] Response qua runtime schema validation.
 - [x] Mọi source ID tồn tại trong Cultural KB hoặc output bị từ chối.
 - [x] Results UI đọc response API thay vì fixture.
 - [x] Loading và lỗi chính có trạng thái rõ ràng.
-- [ ] Năm acceptance cases đã chạy và có kết quả lưu trong repo.
+- [x] Năm acceptance cases đã chạy và có kết quả lưu trong repo.
 - [x] Không tuyên bố Cultural Critic/guardrail đã hoàn thành ở checkpoint này.
-- [ ] Cả ba owner demo phần mình và đồng ý điều kiện chuyển sang Meeting 03.
+- [x] Artefact của cả ba owner đã được integration review và đạt điều kiện chuyển sang Meeting 03.
 
 ## 9. Quyết định cần ghi trong biên bản
 
@@ -342,8 +342,9 @@ Quyết định khác:
 -
 
 Blocker:
-- Môi trường tích hợp chưa có `.env.local`/`GEMINI_API_KEY`, nên chưa rerun 5 live acceptance cases theo policy approved.
-- Hiền chưa xác nhận responsive với ba cards có nội dung dài trên các viewport mục tiêu.
+- Đã gỡ: 5 live acceptance cases chạy thành công bằng cấu hình local ngày 2026-09-28.
+- Đã gỡ: Hiền xác nhận responsive với ba cards có nội dung dài trong commit `b0966e0`.
+- Warning không chặn checkpoint: `RC_04_NHAT_BINH_PHOTOSHOOT` cần Cultural Critic kiểm tra cấu trúc cổ Nhật Bình ở Meeting 03.
 ```
 
 ## 10. Handoff sang Meeting 03
@@ -361,6 +362,6 @@ Không bắt đầu image generation hoặc remix nâng cao trước khi flow Me
 
 - [x] Đã lập kế hoạch.
 - [ ] Chưa bắt đầu triển khai.
-- [x] Đang thực hiện.
-- [ ] Hoàn thành.
-- [x] Có blocker cần xử lý.
+- [ ] Đang thực hiện.
+- [x] Hoàn thành.
+- [ ] Có blocker cần xử lý.

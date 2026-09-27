@@ -31,12 +31,22 @@ Baseline lịch sử được đánh giá ngày 2026-09-27 khi `POST /api/recomm
 
 - Retrieval + Gemini Stylist + runtime validation đã thay fixture trong `/api/recommend`.
 - Automated tests dùng KB thật đã pass và xác nhận chặn source ID bịa, output thiếu look và context chưa approved.
-- Chưa rerun được 5 case live vì môi trường tích hợp không có `.env.local`/`GEMINI_API_KEY`.
-- Không chuyển baseline `fail` thành `pass` bằng mock output; cần lưu và review output Gemini thật cho từng case.
+- Đã chạy lại cả 5 case qua Gemini thật bằng `POST /api/recommend` với cấu hình local; cả 5 request trả HTTP 200 và đúng 3 looks.
+- Kết quả review có cấu trúc được lưu trong `live_review` của từng case và được `npm run validate:data` kiểm tra.
 
-## Điều kiện rerun
+| Case | Garment trả về | Cultural note | Source IDs | Overall | Nhận xét |
+| --- | --- | --- | --- | --- | --- |
+| `RC_01_AO_DAI_FESTIVAL` | Áo dài | Pass | Pass | **Pass** | Biến thể được đặt trong tiến trình lịch sử, không biến một kiểu cổ/tay thành chuẩn duy nhất |
+| `RC_02_AO_NGU_THAN_CULTURAL_VISIT` | Áo ngũ thân | Pass | Pass | **Pass** | Claim năm khuy, tay hẹp được giới hạn ở biến thể tay chẽn |
+| `RC_03_AO_TU_THAN_FESTIVAL` | Áo tứ thân | Pass | Pass | **Pass** | Giữ cấu trúc bốn thân và giới hạn tổ hợp yếm/váy/khăn ở bối cảnh lễ hội Kinh Bắc phục dựng |
+| `RC_04_NHAT_BINH_PHOTOSHOOT` | Nhật Bình | Warning | Pass | **Warning** | Hai look chưa nói rõ cấu trúc cổ đối khâm hình chữ nhật; không có lỗi nguồn hay suy diễn phẩm cấp |
+| `RC_05_AUTO_TET` | Áo ngũ thân, Nhật Bình, Áo dài | Pass | Pass | **Pass** | Mỗi lựa chọn được giải thích riêng và chỉ dùng source thuộc garment tương ứng |
 
-Lan Anh rerun sau khi `/api/recommend` đã thay fixture bằng Cultural Retrieval + Gemini Stylist và lưu output của từng case. Linh cập nhật đánh giá theo thang:
+Kết luận: **4 pass, 1 warning, 0 fail**. Warning `RC_04` có owner và hướng xử lý: Lan Anh nối rule `NB_STRUCTURE_RECTANGULAR_COLLAR` vào Cultural Critic ở Meeting 03; Linh review severity và suggested fix. Vì không còn source ID lỗi, sai garment hoặc output thiếu look, checkpoint cultural grounding của Meeting 02 đạt điều kiện chuyển tiếp.
+
+## Thang đánh giá đã dùng
+
+Linh đánh giá theo thang:
 
 - `pass`: claim nằm trong record được retrieval và source hỗ trợ đúng phạm vi.
 - `warning`: có nguồn thật nhưng diễn đạt rộng hơn condition, thiếu context hoặc dùng record advisory như quy tắc chắc chắn.

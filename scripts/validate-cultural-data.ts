@@ -341,6 +341,40 @@ for (const testCase of recommendationCasesDocument.cases as JsonObject[]) {
     requireEnum(baselineReview, key, ["pass", "warning", "fail"], `${id}.baseline_review`);
   }
   requireText(baselineReview, "reason", `${id}.baseline_review`);
+
+  if (
+    !testCase.live_review ||
+    typeof testCase.live_review !== "object" ||
+    Array.isArray(testCase.live_review)
+  ) {
+    throw new Error(`${id}.live_review must be an object.`);
+  }
+  const liveReview = testCase.live_review as JsonObject;
+  if (typeof liveReview.look_count !== "number" || liveReview.look_count !== 3) {
+    throw new Error(`${id}.live_review.look_count must equal 3.`);
+  }
+  for (const outputGarment of requireStrings(
+    liveReview.output_garments,
+    `${id}.live_review.output_garments`,
+    false,
+  )) {
+    if (!garmentIds.has(outputGarment)) {
+      throw new Error(`${id}.live_review uses unknown output garment: ${outputGarment}`);
+    }
+  }
+  for (const sourceId of requireStrings(
+    liveReview.observed_source_ids,
+    `${id}.live_review.observed_source_ids`,
+    false,
+  )) {
+    if (!sourceIds.has(sourceId)) {
+      throw new Error(`${id}.live_review references unknown source: ${sourceId}`);
+    }
+  }
+  for (const key of ["cultural_note", "source_ids", "overall"] as const) {
+    requireEnum(liveReview, key, ["pass", "warning", "fail"], `${id}.live_review`);
+  }
+  requireText(liveReview, "reason", `${id}.live_review`);
 }
 
 for (const requiredGarment of ["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh", "auto"]) {
