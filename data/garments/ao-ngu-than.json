@@ -1,14 +1,17 @@
 {
   "id": "ao_ngu_than",
   "name": "Áo ngũ thân",
-  "summary": "Bản ghi khởi đầu cho áo ngũ thân tay chẽn theo phong cách trang phục thời Nguyễn; cần reviewer văn hóa xác nhận trước khi dùng làm ground truth.",
+  "summary": "Hồ sơ retrieval giới hạn ở áo ngũ thân tay chẽn theo nhóm hiện vật được Bảo tàng Lịch sử Quốc gia mô tả; không đại diện cho mọi biến thể áo ngũ thân.",
   "recognizable_features": [
     "Hàng năm cúc chạy theo vạt bên phải, từ cổ xuống eo.",
     "Ống tay nhỏ gọn hơn ống tay áo tấc và áo giao lĩnh."
   ],
-  "preserve_rules": [],
-  "flexible_elements": [],
+  "preserve_rules": [
+    "ANT_STRUCTURE_FIVE_BUTTONS",
+    "ANT_STRUCTURE_NARROW_SLEEVES"
+  ],
+  "flexible_elements": ["ANT_FLEX_MATERIAL_AND_PALETTE"],
   "compatible_occasions": [],
   "source_ids": ["VNMH_AO_NGU_THAN_2021"],
-  "status": "needs_review"
+  "status": "approved"
 }

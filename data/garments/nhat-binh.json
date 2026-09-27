@@ -1,11 +1,17 @@
 {
   "id": "nhat_binh",
   "name": "Nhật Bình",
-  "summary": "",
-  "recognizable_features": [],
-  "preserve_rules": [],
-  "flexible_elements": [],
-  "compatible_occasions": [],
-  "source_ids": ["VJOL_NHAT_BINH_2026", "HMCC_NHAT_BINH_2022"],
-  "status": "needs_review"
+  "summary": "Hồ sơ retrieval cho Nhật Bình trong bối cảnh trang phục cung đình hậu phi triều Nguyễn và cách dùng đương đại; phải phân biệt phục dựng theo phẩm cấp với thiết kế lấy cảm hứng.",
+  "recognizable_features": [
+    "Cổ đối khâm tạo hình chữ nhật.",
+    "Áo khoác ngoài với cúc cài chính giữa theo mô tả của nguồn nghiên cứu."
+  ],
+  "preserve_rules": ["NB_STRUCTURE_RECTANGULAR_COLLAR"],
+  "flexible_elements": ["NB_FLEX_CONTEMPORARY_VARIATION"],
+  "compatible_occasions": ["festival", "photoshoot", "cultural_visit"],
+  "source_ids": [
+    "VHNT_NHAT_BINH_MOTIF_2025",
+    "VHNT_NHAT_BINH_CONTEXT_2022"
+  ],
+  "status": "approved"
 }

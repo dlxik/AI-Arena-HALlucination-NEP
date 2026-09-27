@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 type JsonObject = Record<string, unknown>;
@@ -8,6 +8,12 @@ const garmentsDirectory = join(root, "data", "garments");
 const referencesPath = join(root, "data", "sources", "references.json");
 const recordsPath = join(root, "data", "knowledge", "records.json");
 const casesPath = join(root, "tests", "fixtures", "cultural-validation-cases.json");
+const recommendationCasesPath = join(
+  root,
+  "tests",
+  "prompt-evaluation",
+  "recommendation-cultural-cases.json",
+);
 
 function readJson(path: string): JsonObject {
   return JSON.parse(readFileSync(path, "utf8")) as JsonObject;
@@ -63,10 +69,15 @@ for (const source of sources) {
   if (!URL.canParse(url)) throw new Error(`${id}.url is invalid.`);
   requireEnum(source, "source_type", ["museum", "heritage_authority", "academic_journal"], id);
   requireEnum(source, "reliability", ["low", "medium", "high"], id);
-  requireEnum(source, "status", ["needs_review", "approved"], id);
+  const status = requireEnum(source, "status", ["needs_review", "approved"], id);
+  if (status === "approved") {
+    requireText(source, "reviewed_by", id);
+    requireText(source, "reviewed_at", id);
+  }
 }
 
 const garmentIds = new Set<string>();
+const garmentProfiles: JsonObject[] = [];
 const requiredGarmentKeys = [
   "id",
   "name",
@@ -87,6 +98,7 @@ for (const file of readdirSync(garmentsDirectory).filter((name) => name.endsWith
   const id = requireText(record, "id", file);
   if (garmentIds.has(id)) throw new Error(`Duplicate garment ID: ${id}`);
   garmentIds.add(id);
+  garmentProfiles.push(record);
 
   for (const key of [
     "recognizable_features",
@@ -116,9 +128,10 @@ if (!Array.isArray(recordsDocument.records)) {
   throw new Error("records.json must contain a records array.");
 }
 
+const knowledgeRecords = recordsDocument.records as JsonObject[];
 const ruleIds = new Set<string>();
 const presentRuleTypes = new Set<string>();
-for (const record of recordsDocument.records as JsonObject[]) {
+for (const record of knowledgeRecords) {
   const id = requireText(record, "id", "knowledge record");
   if (ruleIds.has(id)) throw new Error(`Duplicate knowledge record ID: ${id}`);
   ruleIds.add(id);
@@ -144,6 +157,11 @@ for (const record of recordsDocument.records as JsonObject[]) {
   const enforcement = requireEnum(record, "enforcement", ["advisory", "hard"], id);
 
   if (typeof record.reviewed !== "boolean") throw new Error(`${id}.reviewed must be boolean.`);
+  if (verificationStatus === "verified") {
+    if (!record.reviewed) throw new Error(`${id} cannot be verified before review.`);
+    requireText(record, "reviewed_by", id);
+    requireText(record, "reviewed_at", id);
+  }
 
   const recordSourceIds = requireStrings(record.source_ids, `${id}.source_ids`, false);
   const linkedSources = recordSourceIds.map((sourceId) => {
@@ -167,6 +185,32 @@ for (const record of recordsDocument.records as JsonObject[]) {
   }
   if (!record.reviewed && (verificationStatus !== "needs_review" || enforcement !== "advisory")) {
     throw new Error(`${id} must remain needs_review/advisory until reviewed.`);
+  }
+}
+
+for (const garment of garmentProfiles) {
+  const garmentId = String(garment.id);
+  const linkedSourceIds = garment.source_ids as string[];
+  if (
+    garment.status === "approved" &&
+    linkedSourceIds.some(
+      (sourceId) => sources.find((source) => source.id === sourceId)?.status !== "approved",
+    )
+  ) {
+    throw new Error(`${garmentId} cannot be approved while a linked source still needs review.`);
+  }
+
+  for (const key of ["preserve_rules", "flexible_elements"] as const) {
+    for (const ruleId of garment[key] as string[]) {
+      const linkedRecord = knowledgeRecords.find((record) => record.id === ruleId);
+      if (!linkedRecord) throw new Error(`${garmentId}.${key} references unknown record: ${ruleId}`);
+      if (linkedRecord.garment !== garmentId) {
+        throw new Error(`${garmentId}.${key} references a record for another garment: ${ruleId}`);
+      }
+      if (linkedRecord.verification_status !== "verified") {
+        throw new Error(`${garmentId}.${key} references an unverified record: ${ruleId}`);
+      }
+    }
   }
 }
 
@@ -200,6 +244,111 @@ for (const testCase of casesDocument.cases as JsonObject[]) {
   }
 }
 
+const recommendationCasesDocument = readJson(recommendationCasesPath);
+if (
+  !Array.isArray(recommendationCasesDocument.cases) ||
+  recommendationCasesDocument.cases.length < 5
+) {
+  throw new Error("At least five recommendation cultural acceptance cases are required.");
+}
+
+const metadata = recommendationCasesDocument.metadata;
+if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+  throw new Error("Recommendation cultural cases must include metadata.");
+}
+const baselineArtifact = requireText(metadata as JsonObject, "baseline_artifact", "metadata");
+if (!existsSync(join(root, baselineArtifact))) {
+  throw new Error(`Recommendation baseline artifact does not exist: ${baselineArtifact}`);
+}
+
+const recommendationCaseIds = new Set<string>();
+const coveredGarments = new Set<string>();
+for (const testCase of recommendationCasesDocument.cases as JsonObject[]) {
+  const id = requireText(testCase, "id", "recommendation cultural case");
+  if (recommendationCaseIds.has(id)) throw new Error(`Duplicate recommendation case ID: ${id}`);
+  recommendationCaseIds.add(id);
+
+  if (!testCase.input || typeof testCase.input !== "object" || Array.isArray(testCase.input)) {
+    throw new Error(`${id}.input must be an object.`);
+  }
+  const input = testCase.input as JsonObject;
+  const garment = requireText(input, "garment", `${id}.input`);
+  if (garment !== "auto" && !garmentIds.has(garment)) {
+    throw new Error(`${id} uses unknown garment: ${garment}`);
+  }
+  coveredGarments.add(garment);
+  requireText(input, "occasion", `${id}.input`);
+  requireText(input, "style", `${id}.input`);
+  requireStrings(input.colors, `${id}.input.colors`, false);
+  if (
+    typeof input.remixLevel !== "number" ||
+    input.remixLevel < 0 ||
+    input.remixLevel > 100
+  ) {
+    throw new Error(`${id}.input.remixLevel must be between 0 and 100.`);
+  }
+
+  if (
+    !testCase.expected_grounding ||
+    typeof testCase.expected_grounding !== "object" ||
+    Array.isArray(testCase.expected_grounding)
+  ) {
+    throw new Error(`${id}.expected_grounding must be an object.`);
+  }
+  const expected = testCase.expected_grounding as JsonObject;
+  for (const eligibleGarment of requireStrings(
+    expected.eligible_garments,
+    `${id}.expected_grounding.eligible_garments`,
+    false,
+  )) {
+    if (!garmentIds.has(eligibleGarment)) {
+      throw new Error(`${id} expects unknown eligible garment: ${eligibleGarment}`);
+    }
+  }
+  const requiredSourceIds = requireStrings(
+    expected.required_source_ids,
+    `${id}.expected_grounding.required_source_ids`,
+  );
+  for (const sourceId of requiredSourceIds) {
+    if (!sourceIds.has(sourceId)) throw new Error(`${id} expects unknown source: ${sourceId}`);
+  }
+  for (const ruleId of requireStrings(
+    expected.required_record_ids,
+    `${id}.expected_grounding.required_record_ids`,
+  )) {
+    const linkedRecord = knowledgeRecords.find((record) => record.id === ruleId);
+    if (!linkedRecord) throw new Error(`${id} expects unknown record: ${ruleId}`);
+    if (garment !== "auto" && linkedRecord.garment !== garment) {
+      throw new Error(`${id} expects a record for another garment: ${ruleId}`);
+    }
+    for (const sourceId of linkedRecord.source_ids as string[]) {
+      if (!requiredSourceIds.includes(sourceId)) {
+        throw new Error(`${id} omits source ${sourceId} required by record ${ruleId}.`);
+      }
+    }
+  }
+  requireStrings(expected.assertions, `${id}.expected_grounding.assertions`, false);
+
+  if (
+    !testCase.baseline_review ||
+    typeof testCase.baseline_review !== "object" ||
+    Array.isArray(testCase.baseline_review)
+  ) {
+    throw new Error(`${id}.baseline_review must be an object.`);
+  }
+  const baselineReview = testCase.baseline_review as JsonObject;
+  for (const key of ["cultural_note", "source_ids", "overall"] as const) {
+    requireEnum(baselineReview, key, ["pass", "warning", "fail"], `${id}.baseline_review`);
+  }
+  requireText(baselineReview, "reason", `${id}.baseline_review`);
+}
+
+for (const requiredGarment of ["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh", "auto"]) {
+  if (!coveredGarments.has(requiredGarment)) {
+    throw new Error(`Recommendation cases do not cover garment: ${requiredGarment}`);
+  }
+}
+
 console.log(
-  `Cultural data valid: ${garmentIds.size} garments, ${sourceIds.size} sources, ${ruleIds.size} knowledge records, ${presentRuleTypes.size} rule types, ${caseIds.size} test cases.`,
+  `Cultural data valid: ${garmentIds.size} garments, ${sourceIds.size} sources, ${ruleIds.size} knowledge records, ${presentRuleTypes.size} rule types, ${caseIds.size} validation cases, ${recommendationCaseIds.size} recommendation cases.`,
 );

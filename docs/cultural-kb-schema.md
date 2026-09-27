@@ -29,6 +29,8 @@ Mỗi entry trong `data/sources/references.json` có:
 | `reliability` | `high`, `medium` hoặc `low` |
 | `notes` | Giới hạn phạm vi và việc cần review |
 | `status` | `needs_review` hoặc `approved` |
+| `reviewed_by` | Người đối chiếu metadata và phạm vi claim; bắt buộc khi `approved` |
+| `reviewed_at` | Ngày review `YYYY-MM-DD`; bắt buộc khi `approved` |
 
 `usable_knowledge` không thay thế việc đọc nguồn. Nó giúp reviewer biết đoạn nào cần kiểm chứng và ngăn team suy diễn vượt quá phạm vi tài liệu.
 
@@ -53,7 +55,9 @@ Mỗi entry trong `data/knowledge/records.json` có:
 | `publisher`, `url` | Provenance chính được lặp lại để sheet dễ review |
 | `confidence` | `high`, `medium` hoặc `low` |
 | `verification_status` | `needs_review` hoặc `verified` |
-| `reviewed` | Đã có người khác kiểm tra hay chưa |
+| `reviewed` | Claim đã được người ghi trong `reviewed_by` đối chiếu với nguồn hay chưa |
+| `reviewed_by` | Người đã kiểm tra claim so với nguồn; bắt buộc khi `verified` |
+| `reviewed_at` | Ngày kiểm tra claim `YYYY-MM-DD`; bắt buộc khi `verified` |
 | `enforcement` | `advisory` hoặc `hard` |
 | `notes` | Giới hạn, mâu thuẫn hoặc việc cần xác minh |
 
@@ -72,6 +76,18 @@ Mỗi entry trong `data/knowledge/records.json` có:
 - Record chưa review phải có `verification_status: needs_review`, `reviewed: false` và `enforcement: advisory`.
 - `hard` chỉ hợp lệ khi record đã `verified`, `reviewed: true`, mọi nguồn liên quan đã `approved`, và phạm vi condition rõ ràng.
 
+## Eligibility cho retrieval Meeting 02
+
+Một context chỉ đủ điều kiện đưa vào Stylist khi đồng thời thỏa:
+
+1. Garment profile có `status: approved`.
+2. Knowledge record có `verification_status: verified` và `reviewed: true`.
+3. Tất cả source trong `source_ids` có `status: approved`.
+4. Record được lọc đúng garment và condition; `garment: auto` không được trộn claim của garment không được chọn.
+5. `enforcement` vẫn được truyền nguyên trạng. Stylist không được biến `advisory` thành hard constraint.
+
+Hai nguồn `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`, vì vậy không đủ điều kiện retrieval. Chúng được giữ trong source catalog để review tiếp, không được truyền vào prompt production.
+
 ## Cách thêm dữ liệu
 
 1. Thêm source thật vào `data/sources/references.json`; không dùng shop, blog thương mại, Pinterest hoặc nội dung AI-generated làm ground truth.
@@ -79,8 +95,11 @@ Mỗi entry trong `data/knowledge/records.json` có:
 3. Thêm knowledge/rule record với condition hẹp nhất mà nguồn hỗ trợ.
 4. Liên kết bằng `source_ids`; không tự tạo citation hoặc source ID.
 5. Giữ record ở `needs_review`/`advisory` cho tới khi một thành viên khác review.
-6. Chạy `npm run validate:data` trước khi đưa artefact đi review.
+6. Khi chuyển source sang `approved` hoặc record sang `verified`, ghi `reviewed_by` và `reviewed_at`.
+7. Chạy `npm run validate:data` trước khi đưa artefact đi review.
 
-## Trạng thái Meeting 01
+## Trạng thái Meeting 02
 
-KB hiện có dữ liệu khởi đầu cho Áo ngũ thân và Áo tứ thân, đồng thời có danh sách nguồn cho đủ 4 trang phục MVP. Chưa có record nào là ground truth production hoặc hard rule.
+KB hiện có 14 record cho đủ bốn trang phục MVP và bốn garment profile đã sẵn sàng cho retrieval thử nghiệm. Sáu nguồn đã được đối chiếu, hai nguồn còn `needs_review`. Không có hard rule; mọi record vẫn `advisory` và cần review chéo trước khi dùng cho Cultural Critic production.
+
+Năm acceptance cases cho recommendation grounding nằm tại `tests/prompt-evaluation/recommendation-cultural-cases.json`. Baseline ngày 2026-09-27 đang `fail` vì `/api/recommend` vẫn trả fixture chứa `SOURCE_PLACEHOLDER`; đây là bằng chứng cần rerun sau khi Lan Anh tích hợp Retrieval + Stylist.

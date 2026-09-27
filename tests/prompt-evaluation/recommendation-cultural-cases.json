@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "owner": "Diệu Linh",
+    "created_at": "2026-09-27",
+    "purpose": "Acceptance cases for Meeting 02 recommendation grounding",
+    "baseline_artifact": "tests/fixtures/recommendation-output.json",
+    "baseline_note": "POST /api/recommend still returns the same fixture for every input. Re-run each case after Cultural Retrieval and Gemini Stylist replace the fixture."
+  },
+  "cases": [
+    {
+      "id": "RC_01_AO_DAI_FESTIVAL",
+      "input": {
+        "occasion": "festival",
+        "garment": "ao_dai",
+        "style": "elegant",
+        "colors": ["deep_burgundy", "soft_white"],
+        "remixLevel": 45,
+        "description": "Áo dài dự lễ hội, thanh lịch và có chi tiết hiện đại vừa phải."
+      },
+      "expected_grounding": {
+        "eligible_garments": ["ao_dai"],
+        "required_record_ids": [
+          "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+          "AD_FLEX_NECK_SLEEVE_DECORATION",
+          "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+        ],
+        "required_source_ids": ["VNMH_AO_DAI_2015"],
+        "assertions": [
+          "Cultural note must distinguish historical context from contemporary variation.",
+          "Output must not claim one collar, sleeve or decoration is mandatory for every ao dai."
+        ]
+      },
+      "baseline_review": {
+        "cultural_note": "warning",
+        "source_ids": "fail",
+        "overall": "fail",
+        "reason": "Fixture returns ao_ngu_than for all looks and cites SOURCE_PLACEHOLDER, so it neither follows the requested garment nor grounds the note in an existing source."
+      }
+    },
+    {
+      "id": "RC_02_AO_NGU_THAN_CULTURAL_VISIT",
+      "input": {
+        "occasion": "cultural_visit",
+        "garment": "ao_ngu_than",
+        "style": "minimal",
+        "colors": ["pastel_blue", "soft_white"],
+        "remixLevel": 30,
+        "description": "Tham quan di tích, ưu tiên áo ngũ thân tay chẽn gọn gàng."
+      },
+      "expected_grounding": {
+        "eligible_garments": ["ao_ngu_than"],
+        "required_record_ids": [
+          "ANT_STRUCTURE_FIVE_BUTTONS",
+          "ANT_STRUCTURE_NARROW_SLEEVES",
+          "ANT_FLEX_MATERIAL_AND_PALETTE"
+        ],
+        "required_source_ids": ["VNMH_AO_NGU_THAN_2021"],
+        "assertions": [
+          "Claims about five buttons and narrow sleeves must be limited to the tay chen variant described by the source.",
+          "Color or motif from one artifact must not be presented as universal."
+        ]
+      },
+      "baseline_review": {
+        "cultural_note": "warning",
+        "source_ids": "fail",
+        "overall": "fail",
+        "reason": "Fixture matches the garment label but provides only a generic unreviewed note and the nonexistent SOURCE_PLACEHOLDER citation."
+      }
+    },
+    {
+      "id": "RC_03_AO_TU_THAN_FESTIVAL",
+      "input": {
+        "occasion": "festival",
+        "garment": "ao_tu_than",
+        "style": "traditional",
+        "colors": ["forest_green", "terracotta"],
+        "remixLevel": 15,
+        "description": "Bản phối áo tứ thân theo bối cảnh lễ hội Kinh Bắc."
+      },
+      "expected_grounding": {
+        "eligible_garments": ["ao_tu_than"],
+        "required_record_ids": [
+          "ATT_STRUCTURE_FOUR_PANELS",
+          "ATT_CONTEXT_KINH_BAC_FESTIVAL"
+        ],
+        "required_source_ids": [
+          "VHTT_AO_TU_THAN_KINH_BAC",
+          "VNMH_AO_TU_THAN_CONTEXT_2016"
+        ],
+        "assertions": [
+          "Structure must be described as four fabric panels/tails, without borrowing the joined-back detail of the inner ao canh.",
+          "The black skirt, white yem and mo qua scarf ensemble must be labeled as a specific reconstructed festival context, not a universal requirement."
+        ]
+      },
+      "baseline_review": {
+        "cultural_note": "warning",
+        "source_ids": "fail",
+        "overall": "fail",
+        "reason": "Fixture ignores the requested ao_tu_than garment and has no valid source for either structure or festival context."
+      }
+    },
+    {
+      "id": "RC_04_NHAT_BINH_PHOTOSHOOT",
+      "input": {
+        "occasion": "photoshoot",
+        "garment": "nhat_binh",
+        "style": "romantic",
+        "colors": ["lavender", "gold_accent"],
+        "remixLevel": 55,
+        "description": "Chụp ảnh với Nhật Bình lấy cảm hứng đương đại, không giả định phẩm cấp cung đình."
+      },
+      "expected_grounding": {
+        "eligible_garments": ["nhat_binh"],
+        "required_record_ids": [
+          "NB_STRUCTURE_RECTANGULAR_COLLAR",
+          "NB_CONTEXT_NGUYEN_COURT_USE",
+          "NB_FLEX_CONTEMPORARY_VARIATION",
+          "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+        ],
+        "required_source_ids": [
+          "VHNT_NHAT_BINH_MOTIF_2025",
+          "VHNT_NHAT_BINH_CONTEXT_2022"
+        ],
+        "assertions": [
+          "The look must retain or explicitly discuss the rectangular opposing collar when calling itself Nhat Binh.",
+          "Motifs and yellow color from Empress Dowager Doan Huy's artifact must not be generalized to every Nhat Binh or rank."
+        ]
+      },
+      "baseline_review": {
+        "cultural_note": "warning",
+        "source_ids": "fail",
+        "overall": "fail",
+        "reason": "Fixture ignores the requested nhat_binh garment and cites no valid source for structure, court context or contemporary variation."
+      }
+    },
+    {
+      "id": "RC_05_AUTO_TET",
+      "input": {
+        "occasion": "tet",
+        "garment": "auto",
+        "style": "elegant",
+        "colors": ["deep_burgundy", "gold_accent"],
+        "remixLevel": 35,
+        "description": "Đi chúc Tết gia đình, cần trang trọng vừa phải và giải thích rõ lý do chọn loại Việt phục."
+      },
+      "expected_grounding": {
+        "eligible_garments": [
+          "ao_dai",
+          "ao_ngu_than",
+          "ao_tu_than",
+          "nhat_binh"
+        ],
+        "required_record_ids": [],
+        "required_source_ids": [],
+        "assertions": [
+          "Each selected garment must cite only records and sources linked to that garment.",
+          "The recommendation must explain the garment choice without inventing a universal Tet rule.",
+          "All returned source IDs must exist in references.json."
+        ]
+      },
+      "baseline_review": {
+        "cultural_note": "warning",
+        "source_ids": "fail",
+        "overall": "fail",
+        "reason": "Fixture always selects ao_ngu_than without explaining auto selection and all three looks cite SOURCE_PLACEHOLDER, which is absent from references.json."
+      }
+    }
+  ]
+}
