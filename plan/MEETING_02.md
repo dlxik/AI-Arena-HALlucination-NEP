@@ -236,12 +236,12 @@ Không đánh giá chất lượng chỉ bằng việc JSON parse được. Linh
 
 #### Công việc
 
-- [ ] Nối form với `POST /api/recommend`.
-- [ ] Hoàn thiện loading, error, retry và back-to-form states.
-- [ ] Render response thật trên Results page, không import fixture trong production flow.
-- [ ] Hiển thị source/cultural note rõ ràng trên card hoặc Cultural Passport.
+- [x] Nối form với `POST /api/recommend`.
+- [x] Hoàn thiện loading, error, retry và back-to-form states.
+- [x] Render response thật trên Results page, không import fixture trong production flow.
+- [x] Hiển thị source/cultural note rõ ràng trên card hoặc Cultural Passport.
 - [ ] Kiểm tra responsive và ba cards không vỡ layout với nội dung dài.
-- [ ] Bổ sung kiểm tra frontend phù hợp cho success/error flow.
+- [x] Bổ sung kiểm tra frontend phù hợp cho success/error flow.
 
 #### Definition of Done
 

@@ -221,7 +221,7 @@ export default function CreatePage() {
                   } else {
                     alert(json.error?.message || "Lỗi phân tích tự động");
                   }
-                } catch (e) {
+                } catch {
                   alert("Lỗi kết nối tới server");
                 } finally {
                   setParsing(false);
