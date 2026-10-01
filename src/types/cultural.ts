@@ -68,6 +68,12 @@ export type CulturalGarmentCandidate = {
   selectionReason: string;
 };
 
+export type CulturalRuleContext = {
+  garment: CulturalGarment;
+  rules: CulturalKnowledgeRecord[];
+  sources: CulturalSource[];
+};
+
 export type CulturalContext = {
   garmentCandidates: CulturalGarmentCandidate[];
   records: CulturalKnowledgeRecord[];

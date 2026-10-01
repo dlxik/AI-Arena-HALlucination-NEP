@@ -1,0 +1,58 @@
+[
+  {
+    "id": "CC_01_AO_DAI_VALID", "garment": "ao_dai", "occasion": "photoshoot",
+    "items": ["Áo dài đương đại hai vạt, cổ tròn, tay ngắn", "Quần dài trắng"],
+    "culturalNote": "Đây là thiết kế đương đại; nguồn bảo tàng ghi nhận nhiều biến đổi cổ, tay và trang trí của áo dài.",
+    "imagePrompt": "Contemporary Vietnamese ao dai, two panels, round neckline, short sleeves, blue and white",
+    "expectedStatus": "pass", "expectedRuleIds": []
+  },
+  {
+    "id": "CC_02_AO_DAI_GENERALIZATION", "garment": "ao_dai", "occasion": "photoshoot",
+    "items": ["Áo dài cổ cao tay dài", "Quần dài trắng"],
+    "culturalNote": "Cổ cao và tay dài là hình thức lịch sử duy nhất và bắt buộc cho mọi áo dài Việt Nam ở mọi thời kỳ.",
+    "imagePrompt": "Vietnamese ao dai, high collar and long sleeves, blue and white",
+    "expectedStatus": "warning", "expectedRuleIds": ["AD_WARNING_SINGLE_FORM_GENERALIZATION"]
+  },
+  {
+    "id": "CC_03_NGU_THAN_VALID", "garment": "ao_ngu_than", "occasion": "cultural_visit",
+    "items": ["Áo ngũ thân tay chẽn, năm thân, năm khuy bên phải và ống tay hẹp", "Quần dài trắng"],
+    "culturalNote": "Năm khuy và tay hẹp được nêu cho biến thể tay chẽn trong nhóm hiện vật bảo tàng, không áp dụng cho mọi biến thể áo ngũ thân.",
+    "imagePrompt": "Vietnamese ao ngu than tay chen, five panels, five buttons on right side, narrow sleeves, blue and white",
+    "expectedStatus": "pass", "expectedRuleIds": []
+  },
+  {
+    "id": "CC_04_NGU_THAN_BUTTONS", "garment": "ao_ngu_than", "occasion": "cultural_visit",
+    "items": ["Áo ngũ thân tay chẽn năm thân, chỉ ba khuy đặt giữa thân trước, ống tay hẹp", "Quần dài trắng"],
+    "culturalNote": "Look này được giới thiệu là áo ngũ thân tay chẽn theo nhóm hiện vật bảo tàng.",
+    "imagePrompt": "Vietnamese ao ngu than tay chen, five panels, three central front buttons, narrow sleeves, blue and white",
+    "expectedStatus": "warning", "expectedRuleIds": ["ANT_STRUCTURE_FIVE_BUTTONS"]
+  },
+  {
+    "id": "CC_05_TU_THAN_VALID", "garment": "ao_tu_than", "occasion": "photoshoot",
+    "items": ["Áo tứ thân bốn khổ vải, hai tà trước buộc gọn, hai tà sau", "Áo lót xanh", "Váy đen"],
+    "culturalNote": "Cấu trúc được diễn đạt theo ngữ cảnh Kinh Bắc. Photoshoot hiện đại này không tái hiện hội thi nấu cơm xuân và không bắt buộc yếm trắng.",
+    "imagePrompt": "Vietnamese ao tu than, four panels, two front panels tied together, blue underlayer, black skirt",
+    "expectedStatus": "pass", "expectedRuleIds": []
+  },
+  {
+    "id": "CC_06_TU_THAN_UNIVERSAL_ENSEMBLE", "garment": "ao_tu_than", "occasion": "photoshoot",
+    "items": ["Áo tứ thân bốn khổ vải, hai tà trước và hai tà sau", "Yếm trắng", "Váy đen", "Khăn mỏ quạ"],
+    "culturalNote": "Mọi cách mặc áo tứ thân ở mọi dịp đều bắt buộc yếm trắng, váy đen và khăn mỏ quạ theo quy tắc phổ quát, kể cả chụp ảnh hiện đại.",
+    "imagePrompt": "Vietnamese ao tu than, four panels, white yem, black skirt, mo qua scarf",
+    "expectedStatus": "warning", "expectedRuleIds": ["ATT_CONTEXT_KINH_BAC_FESTIVAL"]
+  },
+  {
+    "id": "CC_07_NHAT_BINH_VALID", "garment": "nhat_binh", "occasion": "photoshoot",
+    "items": ["Nhật Bình đương đại với cổ đối khâm hình chữ nhật, cúc cài chính giữa", "Quần dài trắng"],
+    "culturalNote": "Look Nhật Bình đương đại giữ dấu hiệu cổ đối khâm hình chữ nhật; bảng màu xanh không được dùng để suy ra phẩm cấp cung đình.",
+    "imagePrompt": "Contemporary Vietnamese Nhat Binh robe, rectangular opposing collar, center button closure, blue and white, no rank claim",
+    "expectedStatus": "pass", "expectedRuleIds": []
+  },
+  {
+    "id": "CC_08_RC04_NHAT_BINH_MISSING_COLLAR", "garment": "nhat_binh", "occasion": "photoshoot",
+    "items": ["Nhật Bình xanh với tay rộng", "Quần dài trắng"],
+    "culturalNote": "Bản phối Nhật Bình đương đại cho buổi chụp ảnh, không gán phẩm cấp.",
+    "imagePrompt": "Vietnamese Nhat Binh robe, wide sleeves, blue and white, photo studio",
+    "expectedStatus": "warning", "expectedRuleIds": ["NB_STRUCTURE_RECTANGULAR_COLLAR"]
+  }
+]

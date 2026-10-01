@@ -12,6 +12,7 @@ import {
 } from "../../src/lib/gemini/stylist";
 import { loadCulturalKnowledgeBase } from "../../src/lib/cultural/loader";
 import { PENDING_CRITIC_WARNING } from "../../src/lib/validation/recommendation-output";
+import { critiqueWithGemini, CriticOutputError } from "../../src/lib/gemini/critic";
 import type {
   RecommendationInput,
   RecommendationOutput,
@@ -60,7 +61,11 @@ function request(body: unknown = INPUT): Request {
 function dependencies(
   recommend: RecommendationHandlerDependencies["recommend"],
 ): RecommendationHandlerDependencies {
-  return { retrieve: retrieveCulturalContext, recommend };
+  return {
+    retrieve: retrieveCulturalContext, recommend,
+    critique: async (look, input) => critiqueWithGemini(look, input, async () =>
+      JSON.stringify({ status: "pass", warnings: [] })),
+  };
 }
 
 test("Gemini Stylist receives grounded context and returns three validated looks", async () => {
@@ -124,7 +129,9 @@ test("recommend route returns a successful envelope", async () => {
   );
 
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { success: true, data: expected });
+  assert.deepEqual(await response.json(), { success: true, data: {
+    looks: expected.looks.map((look) => ({ ...look, validation: { status: "pass", warnings: [] } })),
+  } });
 });
 
 test("recommend route keeps frontend response invariants", async () => {
@@ -205,6 +212,7 @@ test("recommend route returns 422 when no approved context exists", async () => 
   const response = await handleRecommendation(request(), {
     retrieve: (input) => retrieveCulturalContext(input, blockedKnowledgeBase),
     recommend: async () => makeOutput(),
+    critique: dependencies(async () => makeOutput()).critique,
   });
 
   assert.equal(response.status, 422);
@@ -270,3 +278,37 @@ test("recommend route maps Gemini timeouts to 504", async () => {
   assert.equal(response.status, 504);
   assert.equal((await response.json()).error.code, "GEMINI_TIMEOUT");
 });
+
+test("recommend pipeline runs independent Critic on all three looks and replaces pending", async () => {
+  const seen: string[] = [];
+  const deps = dependencies(async () => makeOutput());
+  const originalCritique = deps.critique;
+  deps.critique = async (look, input) => {
+    seen.push(look.id);
+    return originalCritique(look, input);
+  };
+  const response = await handleRecommendation(request(), deps);
+  assert.equal(response.status, 200);
+  assert.deepEqual(seen.sort(), ["look-1", "look-2", "look-3"]);
+  const result = await response.json();
+  assert.doesNotMatch(JSON.stringify(result), /CULTURAL_CRITIC_PENDING/);
+});
+
+for (const [label, error, code, status] of [
+  ["invalid output", new CriticOutputError("private model detail"), "INVALID_MODEL_OUTPUT", 502],
+  ["timeout", new GeminiRequestError("timeout"), "GEMINI_TIMEOUT", 504],
+] as const) {
+  test(`recommend does not return partial or pending results on Critic ${label}`, async () => {
+    const deps = dependencies(async () => makeOutput());
+    deps.critique = async (look) => {
+      if (look.id === "look-2") throw error;
+      return { status: "pass", warnings: [] };
+    };
+    const response = await handleRecommendation(request(), deps);
+    const body = await response.json();
+    assert.equal(response.status, status);
+    assert.equal(body.error.code, code);
+    assert.equal(body.data, undefined);
+    assert.doesNotMatch(JSON.stringify(body), /private model detail|CULTURAL_CRITIC_PENDING/);
+  });
+}

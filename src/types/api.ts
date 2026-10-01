@@ -22,6 +22,13 @@ export type ValidationOutput = {
   warnings: ValidationWarning[];
 };
 
+export type ValidationLook = Omit<OutfitLook, "validation" | "imageUrl">;
+
+export type ValidationInput = {
+  look: ValidationLook;
+  recommendationInput: RecommendationInput;
+};
+
 export type ApiSuccess<T> = { success: true; data: T };
 export type ApiFailure = {
   success: false;

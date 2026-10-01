@@ -1,0 +1,872 @@
+{
+  "executedAt": "2026-10-01T09:50:25.746Z",
+  "timezone": "Asia/Saigon",
+  "model": "gemini-3.5-flash-lite",
+  "timeoutMs": 60000,
+  "prompt": "prompts/critic/critic-v1.md",
+  "promptSha256": "2219f735a8004af9c1ab83bce5544c0b1c0abaa9f4536bbfb1f85d152a1ae761",
+  "mode": "Live Gemini through API handlers; no browser/UI review",
+  "culturalReviewer": "Pending Diệu Linh review",
+  "critic": [
+    {
+      "id": "CC_01_AO_DAI_VALID",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1330,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "retrievedRules": [
+        {
+          "id": "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ]
+        },
+        {
+          "id": "AD_FLEX_NECK_SLEEVE_DECORATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ]
+        },
+        {
+          "id": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC_02_AO_DAI_GENERALIZATION",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1724,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+      ],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
+            "severity": "medium",
+            "reason": "Phần culturalNote khẳng định cổ cao và tay dài là hình thức lịch sử duy nhất và bắt buộc cho mọi áo dài ở mọi thời kỳ, mâu thuẫn với thực tế nguồn ghi nhận sự biến đổi và đa dạng qua các thời kỳ.",
+            "suggestedFix": "Sửa lại culturalNote để ghi nhận cổ cao và tay dài là một kiểu dáng phổ biến nhưng không phải là hình thức duy nhất bắt buộc cho mọi áo dài."
+          }
+        ]
+      },
+      "retrievedRules": [
+        {
+          "id": "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ]
+        },
+        {
+          "id": "AD_FLEX_NECK_SLEEVE_DECORATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ]
+        },
+        {
+          "id": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC_03_NGU_THAN_VALID",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1241,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "retrievedRules": [
+        {
+          "id": "ANT_CONTEXT_NGUYEN_STYLE",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_FLEX_MATERIAL_AND_PALETTE",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_STRUCTURE_FIVE_BUTTONS",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_STRUCTURE_NARROW_SLEEVES",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_WARNING_ARTIFACT_GENERALIZATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC_04_NGU_THAN_BUTTONS",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 2415,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "ANT_STRUCTURE_FIVE_BUTTONS"
+      ],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "ANT_STRUCTURE_FIVE_BUTTONS",
+            "severity": "medium",
+            "reason": "Mô tả áo ngũ thân tay chẽn có ba khuy đặt giữa thân trước thay vì hàng năm cúc chạy theo vạt bên phải từ cổ xuống eo theo hiện vật được nguồn mô tả.",
+            "suggestedFix": "Đổi mô tả thành hàng năm cúc chạy theo vạt bên phải từ cổ xuống eo hoặc làm rõ thiết kế này chỉ lấy cảm hứng tự do."
+          }
+        ]
+      },
+      "retrievedRules": [
+        {
+          "id": "ANT_CONTEXT_NGUYEN_STYLE",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_FLEX_MATERIAL_AND_PALETTE",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_STRUCTURE_FIVE_BUTTONS",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_STRUCTURE_NARROW_SLEEVES",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        },
+        {
+          "id": "ANT_WARNING_ARTIFACT_GENERALIZATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ]
+        }
+      ],
+      "previousAttempts": [
+        {
+          "result": "fail",
+          "httpStatus": 502,
+          "errorCode": "GEMINI_UPSTREAM_ERROR",
+          "elapsedMs": 13614
+        }
+      ]
+    },
+    {
+      "id": "CC_05_TU_THAN_VALID",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 31434,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "retrievedRules": [
+        {
+          "id": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_TU_THAN_CONTEXT_2016"
+          ]
+        },
+        {
+          "id": "ATT_STRUCTURE_FOUR_PANELS",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHTT_AO_TU_THAN_KINH_BAC"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC_06_TU_THAN_UNIVERSAL_ENSEMBLE",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1740,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "ATT_CONTEXT_KINH_BAC_FESTIVAL"
+      ],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+            "severity": "medium",
+            "reason": "CulturalNote khẳng định yếm trắng, váy đen và khăn mỏ quạ là quy tắc bắt buộc phổ quát cho mọi cách mặc áo tứ thân ở mọi dịp, trong khi quy tắc nguồn chỉ giới hạn tổ hợp này trong ngữ cảnh hội thi nấu cơm xuân.",
+            "suggestedFix": "Điều chỉnh culturalNote để bỏ khẳng định phổ quát, ghi rõ tổ hợp phụ kiện này thuộc về ngữ cảnh lễ hội/truyền thống cụ thể chứ không bắt buộc cho mọi photoshoot hiện đại."
+          }
+        ]
+      },
+      "retrievedRules": [
+        {
+          "id": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VNMH_AO_TU_THAN_CONTEXT_2016"
+          ]
+        },
+        {
+          "id": "ATT_STRUCTURE_FOUR_PANELS",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHTT_AO_TU_THAN_KINH_BAC"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC_07_NHAT_BINH_VALID",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1165,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "retrievedRules": [
+        {
+          "id": "NB_CONTEXT_NGUYEN_COURT_USE",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025"
+          ]
+        },
+        {
+          "id": "NB_FLEX_CONTEMPORARY_VARIATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_CONTEXT_2022"
+          ]
+        },
+        {
+          "id": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025"
+          ]
+        },
+        {
+          "id": "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC_08_RC04_NHAT_BINH_MISSING_COLLAR",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1465,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "NB_STRUCTURE_RECTANGULAR_COLLAR"
+      ],
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+            "severity": "medium",
+            "reason": "Look được gọi là Nhật Bình nhưng phần items, culturalNote và imagePrompt chưa mô tả cổ đối khâm hình chữ nhật nên chưa đủ chi tiết nhận diện.",
+            "suggestedFix": "Bổ sung mô tả cổ đối khâm hình chữ nhật và cúc cài chính giữa vào items và imagePrompt; nếu không giữ đặc điểm này, cần ghi rõ thiết kế chỉ lấy cảm hứng."
+          }
+        ]
+      },
+      "retrievedRules": [
+        {
+          "id": "NB_CONTEXT_NGUYEN_COURT_USE",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025"
+          ]
+        },
+        {
+          "id": "NB_FLEX_CONTEMPORARY_VARIATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_CONTEXT_2022"
+          ]
+        },
+        {
+          "id": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025"
+          ]
+        },
+        {
+          "id": "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION",
+          "enforcement": "advisory",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025"
+          ]
+        }
+      ]
+    }
+  ],
+  "recommendation": [
+    {
+      "id": "RC_01_AO_DAI_FESTIVAL",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 6881,
+      "looks": [
+        {
+          "id": "ao-dai-burgundy-festival-1",
+          "name": "Bản Phối Lễ Hội Nhung Đỏ",
+          "garment": "ao_dai",
+          "style": "elegant",
+          "palette": [
+            "deep_burgundy",
+            "soft_white",
+            "gold"
+          ],
+          "items": [
+            "Áo dài cách tân nhung màu deep_burgundy với hai vạt trước và sau",
+            "Quần lụa ống rộng màu soft_white"
+          ],
+          "accessories": [
+            "Ví cầm tay ánh vàng",
+            "Giày cao gót màu kem"
+          ],
+          "reason": "Thiết kế áo dài đương đại sử dụng sắc đỏ burgundy trầm kết hợp với quần lụa trắng mềm mại, phù hợp cho dịp lễ hội với mức độ cách tân vừa phải.",
+          "culturalNote": "Áo dài phụ nữ trong thế kỷ XX được ghi nhận qua quá trình cải biến liên tục, bao gồm dạng áo dài hai vạt trước và sau được hình thành từ bước cải biến của mẫu Cát Tường năm 1934.",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A graceful Vietnamese woman wearing a modern deep burgundy velvet ao dai with two panels, paired with soft white wide-leg silk pants, elegant festival setting, soft lighting, highly detailed cultural attire."
+        },
+        {
+          "id": "ao-dai-modern-white-burgundy-2",
+          "name": "Bản Phối Tân Thời Thanh Nhã",
+          "garment": "ao_dai",
+          "style": "elegant",
+          "palette": [
+            "soft_white",
+            "deep_burgundy"
+          ],
+          "items": [
+            "Áo dài lụa trơn màu soft_white với chi tiết tay áo cách điệu nhẹ nhàng",
+            "Quần lụa đồng màu deep_burgundy"
+          ],
+          "accessories": [
+            "Khăn lụa thắt nhẹ",
+            "Giày bít mũi nhọn màu trắng"
+          ],
+          "reason": "Bản phối đương đại lấy gam màu trắng mềm mại làm chủ đạo kết hợp điểm nhấn burgundy, tuân thủ tinh thần biến đổi linh hoạt về cổ, tay và chất liệu trong đời sống hiện đại.",
+          "culturalNote": "Theo hồ sơ bảo tàng, trang phục áo dài trong đời sống hiện đại có sự đa dạng về chất liệu, kiểu dáng cổ và tay áo, không bị rập khuôn vào một mẫu duy nhất.",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A soft white silk modern ao dai with stylized sleeves paired with deep burgundy silk trousers, elegant festival ambiance, cinematic lighting, realistic cultural fashion photography."
+        },
+        {
+          "id": "ao-dai-brocade-festival-3",
+          "name": "Bản Phối Gấm Dự Lễ Hội",
+          "garment": "ao_dai",
+          "style": "elegant",
+          "palette": [
+            "deep_burgundy",
+            "soft_white",
+            "bronze"
+          ],
+          "items": [
+            "Áo dài chất liệu gấm dệt hoa văn nhẹ màu deep_burgundy",
+            "Quần lụa phi bóng màu soft_white"
+          ],
+          "accessories": [
+            "Trâm cài tóc tối giản",
+            "Clutch cầm tay màu bronze"
+          ],
+          "reason": "Sử dụng chất liệu gấm sang trọng với sắc độ deep_burgundy đậm nét lễ hội, kết hợp cùng quần trắng tạo nên tổng thể thanh lịch và trang nhã.",
+          "culturalNote": "Tiến trình cải biến áo dài phụ nữ trong thế kỷ XX ghi nhận sự thay đổi phong phú về chất liệu và cách trang trí trong các thiết kế đương đại.",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "An elegant deep burgundy brocade ao dai with subtle woven patterns paired with soft white trousers, festival environment, sophisticated and polished look, detailed textile texture."
+        }
+      ]
+    },
+    {
+      "id": "RC_02_AO_NGU_THAN_CULTURAL_VISIT",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 6319,
+      "looks": [
+        {
+          "id": "ao-ngu-than-pastel-blue-minimal",
+          "name": "Áo Ngũ Thân Xanh Pastel Tối Giản",
+          "garment": "ao_ngu_than",
+          "style": "minimal",
+          "palette": [
+            "pastel_blue",
+            "soft_white"
+          ],
+          "items": [
+            "Áo ngũ thân tay chẽn màu xanh pastel",
+            "Quần lụa trắng ống suông mềm mại",
+            "Hàng năm cúc cài bên vạt phải"
+          ],
+          "accessories": [
+            "Giày búp bê trắng trơn",
+            "Túi vải mộc tối giản"
+          ],
+          "reason": "Bản phối này ưu tiên sự gọn gàng và thanh lịch cho chuyến tham quan di tích, kết hợp màu sắc nhẹ nhàng đúng yêu cầu và giữ nguyên cấu trúc tay chẽn gọn gàng.",
+          "culturalNote": "Theo hồ sơ hiện vật được Bảo tàng Lịch sử Quốc gia mô tả, áo ngũ thân tay chẽn có ống tay nhỏ gọn hơn áo tấc và áo giao lĩnh, cùng hàng năm cúc chạy dọc theo vạt bên phải từ cổ xuống eo.",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A minimalist full-length photograph of a person wearing a pastel blue Vietnamese ao ngu than with narrow sleeves and buttons on the right lapel, paired with soft white trousers, soft lighting, cultural heritage site background."
+        },
+        {
+          "id": "ao-ngu-than-soft-white-minimal",
+          "name": "Áo Ngũ Thân Trắng Mềm Mại Tinh Khôi",
+          "garment": "ao_ngu_than",
+          "style": "minimal",
+          "palette": [
+            "soft_white",
+            "pastel_blue"
+          ],
+          "items": [
+            "Áo ngũ thân tay chẽn màu trắng mềm",
+            "Quần lụa cùng màu thanh thoát",
+            "Năm cúc cài vạt phải tinh tế"
+          ],
+          "accessories": [
+            "Quạt giấy xếp gọn",
+            "Giày vải mộc tối giản"
+          ],
+          "reason": "Bản phối mang sắc trắng chủ đạo kết hợp điểm nhấn xanh pastel giúp người mặc thoải mái di chuyển khi tham quan di tích với phong cách tối giản.",
+          "culturalNote": "Nguồn tài liệu từ Bảo tàng Lịch sử Quốc gia giới thiệu nhóm áo ngũ thân tay chẽn với đặc trưng ống tay nhỏ gọn và hàng cúc vạt phải, đồng thời cho phép linh hoạt về chất liệu và bảng màu giữa các bộ.",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A minimal lifestyle portrait of a person in a soft white ao ngu than with narrow sleeves and right-side button closure, minimal accessories, soft daylight, heritage site setting."
+        },
+        {
+          "id": "ao-ngu-than-harmonious-blue-white",
+          "name": "Áo Ngũ Thân Xanh Trắng Hài Hòa",
+          "garment": "ao_ngu_than",
+          "style": "minimal",
+          "palette": [
+            "pastel_blue",
+            "soft_white"
+          ],
+          "items": [
+            "Áo ngũ thân tay chẽn phối xanh và trắng",
+            "Quần lụa ống suông gọn gàng",
+            "Hàng cúc cài vạt bên phải đặc trưng"
+          ],
+          "accessories": [
+            "Túi vải đeo vai trơn",
+            "Giày bệt đơn giản"
+          ],
+          "reason": "Thiết kế tập trung vào sự tiện dụng, nhẹ nhàng, tôn vinh nét đẹp truyền thống qua phom dáng tay chẽn gọn gàng phù hợp cho hoạt động đi bộ tham quan.",
+          "culturalNote": "Dựa trên mô tả hiện vật của Bảo tàng Lịch sử Quốc gia, biến thể tay chẽn có ống tay nhỏ gọn hơn các dạng áo cổ điển khác và có hàng năm cúc chạy theo vạt bên phải.",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A clean, modern-minimalist photo of a person wearing a pastel blue and soft white ao ngu than with narrow sleeves, right-side buttons, natural outdoor lighting at a historical landmark."
+        }
+      ]
+    },
+    {
+      "id": "RC_03_AO_TU_THAN_FESTIVAL",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 7880,
+      "looks": [
+        {
+          "id": "ao-tu-than-kinh-bac-festival-green",
+          "name": "Bản Phối Lễ Hội Xanh Kinh Bắc",
+          "garment": "ao_tu_than",
+          "style": "traditional",
+          "palette": [
+            "forest_green",
+            "terracotta"
+          ],
+          "items": [
+            "Áo tứ thân bốn khổ vải gồm hai tà trước và hai tà sau màu xanh rêu",
+            "Yếm trắng bên trong",
+            "Váy lụa đen"
+          ],
+          "accessories": [
+            "Khăn mỏ quạ",
+            "Dải lụa thắt lưng màu terracotta"
+          ],
+          "reason": "Bản phối tái hiện tổ hợp trang phục nữ truyền thống trong ngữ cảnh lễ hội mùa xuân ở miền quê quan ho, sử dụng màu xanh rêu chủ đạo kết hợp dải lụa terracotta theo sở thích của người dùng.",
+          "culturalNote": "Dựa trên ngữ cảnh hội thi nấu cơm xuân ở Bắc Ninh được ghi nhận trong nguồn Bảo tàng Lịch sử Quốc gia, tổ hợp gồm áo tứ thân, váy lụa đen, yếm trắng, khăn mỏ quạ và dải lụa thắt lưng là đặc thù của sự kiện được phục dựng này và không dùng làm quy tắc phổ quát.",
+          "sourceIds": [
+            "VNMH_AO_TU_THAN_CONTEXT_2016",
+            "VHTT_AO_TU_THAN_KINH_BAC"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A traditional Vietnamese woman wearing a forest green ao tu than with four panels, a white yem, a black silk skirt, a khan mo qua headdress, and a terracotta silk sash, set against a festive spring background in Kinh Bac."
+        },
+        {
+          "id": "ao-tu-than-terracotta-spring-event",
+          "name": "Bản Phối Sắc Đất Hội Mùa Xuân",
+          "garment": "ao_tu_than",
+          "style": "traditional",
+          "palette": [
+            "terracotta",
+            "forest_green"
+          ],
+          "items": [
+            "Áo tứ thân cấu trúc bốn khổ vải màu terracotta ấm áp",
+            "Yếm trắng",
+            "Váy lụa đen truyền thống"
+          ],
+          "accessories": [
+            "Khăn mỏ quạ",
+            "Dải lụa thắt lưng màu xanh rêu điểm nhấn"
+          ],
+          "reason": "Bản phối mang màu sắc terracotta làm chủ đạo, kết hợp cùng dải lụa thắt lưng màu xanh rêu để tôn vinh không gian lễ hội truyền thống Kinh Bắc.",
+          "culturalNote": "Theo hồ sơ trang phục phụ nữ Kinh Bắc, áo tứ thân được cấu tạo từ bốn khổ vải gồm hai tà trước và hai tà sau. Ngữ cảnh này giới hạn trong nguồn đã review và không suy rộng thành quy chuẩn tuyệt đối cho mọi vùng.",
+          "sourceIds": [
+            "VHTT_AO_TU_THAN_KINH_BAC",
+            "VNMH_AO_TU_THAN_CONTEXT_2016"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A traditional Vietnamese woman in a terracotta ao tu than featuring four panels, paired with a white yem, black silk skirt, khan mo qua, and a forest green silk sash, styled for a spring festival."
+        },
+        {
+          "id": "ao-tu-than-quan-ho-harmony",
+          "name": "Bản Phối Quan Họ Hòa Sắc",
+          "garment": "ao_tu_than",
+          "style": "traditional",
+          "palette": [
+            "forest_green",
+            "terracotta"
+          ],
+          "items": [
+            "Áo tứ thân bốn khổ vải phối màu xanh rêu và điểm xuyết tà áo",
+            "Yếm trắng",
+            "Váy lụa đen"
+          ],
+          "accessories": [
+            "Khăn mỏ quạ truyền thống",
+            "Dải lụa thắt lưng màu terracotta"
+          ],
+          "reason": "Bản phối hòa trộn hai màu sắc yêu thích là xanh rêu và terracotta nhằm tái hiện không khí lễ hội mùa xuân mang đậm dấu ấn văn hóa quan họ.",
+          "culturalNote": "Dựa trên các tư liệu về cấu trúc áo tứ thân gồm hai tà trước và hai tà sau trong vùng văn hóa Kinh Bắc, kết hợp cùng tổ hợp phụ kiện ghi nhận tại sự kiện hội thi nấu xuân.",
+          "sourceIds": [
+            "VNMH_AO_TU_THAN_CONTEXT_2016",
+            "VHTT_AO_TU_THAN_KINH_BAC"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A cultural festival outfit featuring a forest green ao tu than with four cloth panels, a white yem, a black skirt, a khan mo qua, and a terracotta silk sash, inspired by Kinh Bac traditions."
+        }
+      ]
+    },
+    {
+      "id": "RC_04_NHAT_BINH_PHOTOSHOOT",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 7451,
+      "looks": [
+        {
+          "id": "nhat-binh-lavender-dream",
+          "name": "Giấc Mơ Lavender Đương Đại",
+          "garment": "nhat_binh",
+          "style": "romantic",
+          "palette": [
+            "lavender",
+            "gold_accent",
+            "white"
+          ],
+          "items": [
+            "Áo Nhật Bình thiết kế đương đại màu lavender nhẹ nhàng",
+            "Quần lụa trắng suông rộng",
+            "Đai lưng lụa thắt nhẹ"
+          ],
+          "accessories": [
+            "Trâm cài tóc mạ vàng tối giản",
+            "Khuyên tai ngọc trai"
+          ],
+          "reason": "Bản phối mang phong cách lãng mсшта đương đại cho buổi chụp ảnh, sử dụng gam màu lavender nhẹ nhàng kết hợp điểm nhấn ánh vàng theo đúng sở thích người dùng mà không gượng ép áp đặt phẩm cấp cung đình.",
+          "culturalNote": "Theo tư liệu lịch sử, sau năm 1945 trang phục Nhật Bình đã lan tỏa ra đời sống và các dịp lễ trang trọng với sự đa dạng hơn về màu sắc và hoa văn trong đời sống cộng đồng.",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_CONTEXT_2022"
+          ],
+          "validation": {
+            "status": "warning",
+            "warnings": [
+              {
+                "ruleId": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+                "severity": "medium",
+                "reason": "Look gọi tên là Nhật Bình nhưng phần items và imagePrompt chưa mô tả cụ thể cổ đối khâm hình chữ nhật theo yêu cầu nhận diện từ nguồn.",
+                "suggestedFix": "Bổ sung mô tả cổ đối khâm hình chữ nhật vào items hoặc imagePrompt để hoàn thiện chi tiết nhận diện của trang phục."
+              }
+            ]
+          },
+          "imagePrompt": "A romantic contemporary fashion photoshoot in Vietnam featuring a model wearing a soft lavender Nhat Binh garment with subtle gold accents, white silk trousers, minimalist gold hairpins, soft natural lighting."
+        },
+        {
+          "id": "nhat-binh-golden-hour",
+          "name": "Hoàng Hôn Ánh Vàng",
+          "garment": "nhat_binh",
+          "style": "romantic",
+          "palette": [
+            "gold_accent",
+            "lavender",
+            "cream"
+          ],
+          "items": [
+            "Áo Nhật Bình sắc kem nhã nhặn",
+            "Khăn vành to bản phối hiện đại",
+            "Quần lụa trắng dài"
+          ],
+          "accessories": [
+            "Vòng cổ đính hạt tinh tế",
+            "Quạt lụa cầm tay"
+          ],
+          "reason": "Lấy cảm hứng từ lối kết hợp trang phục truyền thống với khăn vành to bản từ cuối thế kỷ XIX, bản phối này đem lại nét lãng mịch, hoài niệm rất phù hợp cho concept chụp ảnh ngoài trời.",
+          "culturalNote": "Tư liệu ghi nhận từ cuối thế kỷ XIX trở về sau, Nhật Bình từng được phối cùng quần trắng và khăn vành to bản trong các dịp trang trọng.",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_CONTEXT_2022"
+          ],
+          "validation": {
+            "status": "warning",
+            "warnings": [
+              {
+                "ruleId": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+                "severity": "medium",
+                "reason": "Look gọi tên trang phục là Áo Nhật Bình nhưng trong phần items, culturalNote và imagePrompt chưa mô tả chi tiết cổ đối khâm hình chữ nhật.",
+                "suggestedFix": "Bổ sung mô tả 'cổ đối khâm hình chữ nhật' vào items hoặc ghi rõ đây là thiết kế lấy cảm hứng đương đại."
+              }
+            ]
+          },
+          "imagePrompt": "An outdoor romantic photoshoot in Hue featuring a model in a cream and gold Nhat Binh garment, paired with a wide traditional-style turban headband and white silk trousers during golden hour."
+        },
+        {
+          "id": "nhat-binh-royal-blossom",
+          "name": "Bông Hoa Cung Đình Cách Tân",
+          "garment": "nhat_binh",
+          "style": "romantic",
+          "palette": [
+            "lavender",
+            "gold_accent",
+            "pink"
+          ],
+          "items": [
+            "Áo Nhật Bình cổ đối khâm hình chữ nhật với cúc cài giữa",
+            "Chân váy dài xếp ly nhẹ",
+            "Đai lụa thắt eo phối màu lavender"
+          ],
+          "accessories": [
+            "Trâm cài tóc chạm khắc hoa lá nhẹ nhàng",
+            "Túi xách vải lụa thêu tay"
+          ],
+          "reason": "Bản phối này giữ lại cấu trúc cổ đối khâm hình chữ nhật đặc trưng được mô tả trong nghiên cứu học thuật, đồng thời kết hợp linh hoạt bảng màu lavender và gold accent cho mục đích chụp ảnh sáng tạo.",
+          "culturalNote": "Bài nghiên cứu mô tả Nhật Bình có cấu trúc áo khoác ngoài với cổ đối khâm hình chữ nhật và cúc cài chính giữa theo lối trực lĩnh, thuộc hệ thống trang phục cung đình triều Nguyễn.",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025",
+            "VHNT_NHAT_BINH_CONTEXT_2022"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A romantic studio photoshoot of a modern Nhat Binh featuring a rectangular opposing collar structure, lavender fabric with subtle gold accents, delicate floral hairpins, elegant posing against a neutral backdrop."
+        }
+      ],
+      "previousAttempts": [
+        {
+          "result": "fail",
+          "httpStatus": 502,
+          "errorCode": "GEMINI_UPSTREAM_ERROR",
+          "elapsedMs": 3466
+        }
+      ]
+    },
+    {
+      "id": "RC_05_AUTO_TET",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 66929,
+      "looks": [
+        {
+          "id": "ao-ngu-than-tet-sang-trong",
+          "name": "Áo Ngũ Thân Tay Chẽn Deep Burgundy",
+          "garment": "ao_ngu_than",
+          "style": "elegant",
+          "palette": [
+            "deep_burgundy",
+            "gold_accent",
+            "ivory"
+          ],
+          "items": [
+            "Áo ngũ thân tay chẽn màu deep burgundy",
+            "Quần lụa trắng ống suông",
+            "Áo lót cổ đứng trắng bên trong"
+          ],
+          "accessories": [
+            "Huy hiệu vàng đồng",
+            "Guốc mộc truyền thống"
+          ],
+          "reason": "Garment candidates were provided via auto selection. Áo ngũ thân tay chẽn was chosen because its documented narrow sleeves and structured five-button right-flap closure offer a dignified, traditional silhouette suitable for visiting family during Tet while matching the requested deep burgundy and gold accent colors.",
+          "culturalNote": "Hồ sơ hiện vật từ Bảo tàng Lịch sử Quốc gia mô tả áo ngũ thân tay chẽn có hàng năm cúc chạy theo vạt bên phải từ cổ xuống eo và ống tay nhỏ gọn hơn áo tấc hay áo giao lĩnh. Phạm vi tuyên bố này được giữ nguyên theo mẫu hiện vật hiện có.",
+          "sourceIds": [
+            "VNMH_AO_NGU_THAN_2021"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A person wearing a deep burgundy ao ngu than tay chẽn with five buttons along the right flap and narrow sleeves, paired with white silk trousers, elegant and respectful atmosphere for Tet celebration, warm golden lighting, photorealistic."
+        },
+        {
+          "id": "nhat-binh-tet-hoang-gia",
+          "name": "Nhật Bình Lấy Cảm Hứng Hoàng Gia",
+          "garment": "nhat_binh",
+          "style": "elegant",
+          "palette": [
+            "gold_accent",
+            "deep_burgundy",
+            "emerald_green"
+          ],
+          "items": [
+            "Áo khoác ngoài Nhật Bình cổ đối khâm hình chữ nhật với điểm nhấn gold accent",
+            "Áo dài mặc trong màu deep burgundy",
+            "Quần lụa trắng trang trọng"
+          ],
+          "accessories": [
+            "Khăn vành to bản",
+            "Trâm cài tóc tối giản"
+          ],
+          "reason": "Garment candidates were provided via auto selection. Nhật Bình was chosen to fulfill the elegant style and holiday mood of Tet by adapting historical court elements into a contemporary festive variation with gold and burgundy tones.",
+          "culturalNote": "Nghiên cứu từ Tạp chí Văn hóa Nghệ thuật mô tả Nhật Bình là áo khoác ngoài có cổ đối khâm tạo hình chữ nhật và cúc cài chính giữa theo lối trực lĩnh, vốn xuất hiện trong hệ thống trang phục cung đình hậu phi triều Nguyễn trước khi lan tỏa ra dân gian.",
+          "sourceIds": [
+            "VHNT_NHAT_BINH_MOTIF_2025",
+            "VHNT_NHAT_BINH_CONTEXT_2022"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A person wearing an elegant nhat binh outer robe with a rectangular opposing collar featuring gold accents over a deep burgundy inner layer and white trousers, festive Tet backdrop, soft natural lighting, editorial style."
+        },
+        {
+          "id": "ao-dai-tet-duong-dai",
+          "name": "Áo Dài Cách Tân Deep Burgundy",
+          "garment": "ao_dai",
+          "style": "elegant",
+          "palette": [
+            "deep_burgundy",
+            "gold_accent",
+            "silk_nude"
+          ],
+          "items": [
+            "Áo dài hai vạt hiện đại màu deep burgundy với họa tiết thêu tay gold accent tinh tế",
+            "Quần lụa ống rộng màu trắng ngà"
+          ],
+          "accessories": [
+            "Vòng ngọc trai",
+            "Giày cao gót thanh lịch"
+          ],
+          "reason": "Garment candidates were provided via auto selection. Áo dài was chosen because museum records document its twentieth-century evolution into contemporary variations of collars, sleeves, and decorations, making it a flexible and sophisticated choice for greeting family during Tet.",
+          "culturalNote": "Nguồn bảo tàng ghi nhận áo dài tân thời thế kỷ XX xuất phát từ tiến trình cải biến năm thân và tiếp tục thay đổi đa dạng về cổ, tay, vật liệu cũng như cách trang trí trong đời sống hiện đại.",
+          "sourceIds": [
+            "VNMH_AO_DAI_2015"
+          ],
+          "validation": {
+            "status": "pass",
+            "warnings": []
+          },
+          "imagePrompt": "A person wearing a modern elegant ao dai in deep burgundy with subtle gold accent embroidery and wide-cut ivory trousers, celebrating Tet indoors with festive decorations, high-end fashion photography."
+        }
+      ]
+    }
+  ]
+}

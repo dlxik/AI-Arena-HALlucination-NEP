@@ -8,5 +8,6 @@ Thư mục này là nguồn chuẩn duy nhất cho kế hoạch phối hợp và
 - [Buổi 1 - Chốt bài toán và dựng nền](MEETING_01.md): quyết định nền tảng và artefact đã tích hợp ở checkpoint đầu tiên.
 - [Buổi 2 - Flow đề xuất đầu tiên](MEETING_02.md): kế hoạch nối form, Cultural KB và Gemini Stylist để trả đúng ba bản phối.
 - [Buổi 3 - Cultural Critic và core flow hoàn chỉnh](MEETING_03.md): kế hoạch kiểm tra văn hóa độc lập và nối validation end-to-end.
+- [Công việc Lan Anh — Meeting 03](LAN_ANH_MEETING_03.md): kế hoạch triển khai backend/Critic, kiểm thử và kết quả handoff.
 
 Khi bổ sung checkpoint, tạo file kế tiếp theo mẫu `MEETING_XX.md`, cập nhật danh sách trên và liên kết từ `README.md` ở root. Không tạo thêm bản sao kế hoạch trong `docs/`.

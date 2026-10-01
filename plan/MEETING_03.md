@@ -101,14 +101,16 @@ Definition of Done của Hiền:
 
 ### Lan Anh - AI và Backend
 
-- [ ] Khóa contract `POST /api/validate` và cập nhật `docs/api-contract.md`.
-- [ ] Cài Rule Retrieval theo garment/context, chỉ dùng record đủ điều kiện review.
-- [ ] Hoàn thiện `prompts/critic/critic-v1.md` với structured output và giới hạn provenance.
-- [ ] Triển khai Cultural Critic độc lập với Stylist; runtime-validate toàn bộ output.
-- [ ] Nối Critic vào recommendation pipeline hoặc orchestration đã thống nhất để mỗi look có validation thật.
-- [ ] Chuẩn hóa lỗi missing key, timeout, upstream error, invalid output, missing context/rule và data error.
-- [ ] Viết test cho pass/warning/revise, rule ID bịa, rule sai garment và model output sai schema.
-- [ ] Ghi prompt iteration, model và evaluation vào `docs/ai-log.md`.
+- [x] Khóa contract `POST /api/validate` và cập nhật `docs/api-contract.md`.
+- [x] Cài Rule Retrieval theo garment/context, chỉ dùng record đủ điều kiện review.
+- [x] Hoàn thiện `prompts/critic/critic-v1.md` với structured output và giới hạn provenance.
+- [x] Triển khai Cultural Critic độc lập với Stylist; runtime-validate toàn bộ output.
+- [x] Nối Critic vào recommendation pipeline hoặc orchestration đã thống nhất để mỗi look có validation thật.
+- [x] Chuẩn hóa lỗi missing key, timeout, upstream error, invalid output, missing context/rule và data error.
+- [x] Viết test cho pass/warning/revise, rule ID bịa, rule sai garment và model output sai schema.
+- [x] Ghi prompt iteration, model và evaluation vào `docs/ai-log.md`.
+
+Kết quả Lan Anh ngày 2026-10-01: [kế hoạch và handoff](LAN_ANH_MEETING_03.md), [live evaluation](../docs/meeting-03-critic-evaluation.json). Backend hoàn tất; UI/cultural review vẫn theo checklist của Hiền/Linh bên dưới.
 
 Definition of Done của Lan Anh:
 
@@ -169,24 +171,31 @@ Chỉ chạy `npm run build` một lần trên branch tích hợp trước khi �
 
 Checklist chung:
 
-- [ ] API contract và architecture khớp implementation.
-- [ ] Rule Retrieval fail-closed với dữ liệu chưa duyệt.
-- [ ] Critic chạy độc lập và trong end-to-end flow.
-- [ ] Tất cả output đều qua runtime validation.
+- [x] API contract và architecture khớp implementation.
+- [x] Rule Retrieval fail-closed với dữ liệu chưa duyệt.
+- [x] Critic chạy độc lập và trong end-to-end flow (backend).
+- [x] Tất cả output đều qua runtime validation.
 - [ ] Acceptance artefact có kết quả review của Linh.
 - [ ] UI thể hiện đúng ba status và các lỗi chính.
 - [ ] Test, lint, typecheck, data validation và production build pass.
-- [ ] Không có secret trong Git diff/history.
+- [x] Không có secret trong Git diff/history được đưa vào đợt push này.
 
 ## 8. Definition of Done của Meeting 03
 
-- [ ] Cultural Critic chạy độc lập với Gemini Stylist.
-- [ ] Input → recommendation → cultural validation chạy end-to-end.
-- [ ] Mỗi look có `pass`, `warning` hoặc `revise` dựa trên rule có provenance.
-- [ ] Mỗi warning có `ruleId`, severity, reason và suggested fix hợp lệ.
-- [ ] Case cố tình sai quan trọng được phát hiện; rule/source bịa bị từ chối.
-- [ ] Warning Nhật Bình của Meeting 02 có test hồi quy và được xử lý đúng.
+- [x] Cultural Critic chạy độc lập với Gemini Stylist.
+- [x] Input → recommendation → cultural validation chạy end-to-end (backend; UI chờ review).
+- [x] Mỗi look có `pass`, `warning` hoặc `revise` dựa trên rule có provenance.
+- [x] Mỗi warning có `ruleId`, severity, reason và suggested fix hợp lệ.
+- [x] Case cố tình sai quan trọng được phát hiện; rule/source bịa bị từ chối.
+- [x] Warning Nhật Bình của Meeting 02 có test hồi quy và được xử lý đúng.
 - [ ] Cả ba owner review artefact và không còn blocker mức checkpoint.
+
+### Đối chiếu trước push — 2026-10-01
+
+- Lan Anh: 8/8 đầu việc hoàn tất. Chạy lại 86/86 tests, lint, typecheck và data validation đều pass; live evidence có 8/8 Critic cases và 5/5 recommendation inputs sau prompt iteration/retry.
+- Hiền: Results/Passport đã có render status và warnings; chưa có flow gọi `/api/validate` độc lập hoặc bộ UI tests Meeting 03. Responsive với warning thật và error/retry validation vẫn cần owner review.
+- Linh: đã có 8 backend evaluation inputs và hồi quy Nhật Bình để review; chưa có ma trận rule, cultural acceptance approval hoặc case riêng về khái quát đặc điểm tay chẽn cho mọi biến thể. Không đánh dấu thay owner.
+- `revise` kiểm tra với snapshot hard cô lập; KB production toàn advisory. Production build giữ cho branch tích hợp trước khi đóng checkpoint, theo mục 7.
 
 ## 9. Handoff sang Meeting 04
 
@@ -202,6 +211,6 @@ Chỉ chuyển sang image generation, Cultural Passport hoàn chỉnh và remix 
 
 - [x] Đã lập kế hoạch.
 - [ ] Chưa bắt đầu triển khai.
-- [ ] Đang thực hiện.
+- [x] Đang thực hiện.
 - [ ] Hoàn thành.
 - [ ] Có blocker cần xử lý.
