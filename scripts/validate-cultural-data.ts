@@ -221,11 +221,72 @@ for (const requiredRuleType of ["preserve", "flexible", "context", "warning"]) {
 }
 
 const casesDocument = readJson(casesPath);
-if (!Array.isArray(casesDocument.cases) || casesDocument.cases.length < 3) {
-  throw new Error("At least three cultural validation cases are required.");
+if (!Array.isArray(casesDocument.cases) || casesDocument.cases.length < 8) {
+  throw new Error("At least eight Cultural Critic acceptance cases are required.");
+}
+
+if (!casesDocument.metadata || typeof casesDocument.metadata !== "object") {
+  throw new Error("Cultural validation cases must include metadata.");
+}
+const criticMetadata = casesDocument.metadata as JsonObject;
+requireText(criticMetadata, "owner", "cultural validation metadata");
+requireText(criticMetadata, "policy_note", "cultural validation metadata");
+requireEnum(
+  criticMetadata,
+  "runtime_status",
+  ["pending_critic_implementation", "ready_for_live_review", "reviewed"],
+  "cultural validation metadata",
+);
+
+if (!Array.isArray(casesDocument.rule_matrix)) {
+  throw new Error("Cultural validation cases must include a rule_matrix array.");
+}
+const matrixRuleIds = new Set<string>();
+for (const row of casesDocument.rule_matrix as JsonObject[]) {
+  const ruleId = requireText(row, "ruleId", "rule matrix row");
+  if (matrixRuleIds.has(ruleId)) throw new Error(`Duplicate rule matrix ID: ${ruleId}`);
+  matrixRuleIds.add(ruleId);
+
+  const linkedRecord = knowledgeRecords.find((record) => record.id === ruleId);
+  if (!linkedRecord) throw new Error(`Rule matrix references unknown rule: ${ruleId}`);
+  const garment = requireText(row, "garment", ruleId);
+  if (garment !== linkedRecord.garment) {
+    throw new Error(`${ruleId} matrix garment does not match its knowledge record.`);
+  }
+  const expectedStatus = requireEnum(row, "expected_status", ["pass", "warning", "revise"], ruleId);
+  const severity = row.expected_severity;
+  if (
+    !(
+      (expectedStatus === "pass" && severity === null) ||
+      (expectedStatus !== "pass" && ["low", "medium", "high"].includes(String(severity)))
+    )
+  ) {
+    throw new Error(`${ruleId}.expected_severity is inconsistent with expected_status.`);
+  }
+  if (linkedRecord.enforcement === "advisory" && expectedStatus === "revise") {
+    throw new Error(`${ruleId} is advisory and cannot map directly to revise.`);
+  }
+  requireText(row, "trigger", ruleId);
+  requireText(row, "suggested_action", ruleId);
+  for (const sourceId of requireStrings(row.sourceIds, `${ruleId}.sourceIds`, false)) {
+    if (!(linkedRecord.source_ids as string[]).includes(sourceId)) {
+      throw new Error(`${ruleId} matrix uses a source not linked to the knowledge record: ${sourceId}`);
+    }
+    const linkedSource = sources.find((source) => source.id === sourceId);
+    if (linkedSource?.status !== "approved") {
+      throw new Error(`${ruleId} matrix uses an unapproved source: ${sourceId}`);
+    }
+  }
+}
+
+for (const recordId of ruleIds) {
+  if (!matrixRuleIds.has(recordId)) {
+    throw new Error(`Critic rule matrix is missing knowledge record: ${recordId}`);
+  }
 }
 
 const caseIds = new Set<string>();
+const criticCoverage = new Map<string, Set<string>>();
 for (const testCase of casesDocument.cases as JsonObject[]) {
   const id = requireText(testCase, "id", "test case");
   if (caseIds.has(id)) throw new Error(`Duplicate cultural validation case ID: ${id}`);
@@ -233,14 +294,106 @@ for (const testCase of casesDocument.cases as JsonObject[]) {
 
   const garment = requireText(testCase, "garment", id);
   if (!garmentIds.has(garment)) throw new Error(`${id} references unknown garment: ${garment}`);
+  requireText(testCase, "description", id);
+  if (!testCase.input || typeof testCase.input !== "object" || Array.isArray(testCase.input)) {
+    throw new Error(`${id}.input must be an object.`);
+  }
+  const criticInput = testCase.input as JsonObject;
+  requireStrings(criticInput.items, `${id}.input.items`, false);
+  requireText(criticInput, "occasion", `${id}.input`);
+  requireText(criticInput, "culturalNote", `${id}.input`);
+  for (const sourceId of requireStrings(criticInput.sourceIds, `${id}.input.sourceIds`, false)) {
+    const linkedSource = sources.find((source) => source.id === sourceId);
+    if (!linkedSource) throw new Error(`${id} input references unknown source: ${sourceId}`);
+    if (!(linkedSource.garment_ids as string[]).includes(garment)) {
+      throw new Error(`${id} input uses source ${sourceId} for another garment.`);
+    }
+    if (linkedSource.status !== "approved") {
+      throw new Error(`${id} input uses unapproved source: ${sourceId}`);
+    }
+  }
   if (!testCase.expected || typeof testCase.expected !== "object") {
     throw new Error(`${id}.expected must be an object.`);
   }
   const expected = testCase.expected as JsonObject;
-  for (const ruleId of requireStrings(expected.ruleIds, `${id}.expected.ruleIds`)) {
-    if (!ruleIds.has(ruleId) && ruleId !== "SOURCE_ID_NOT_FOUND") {
-      throw new Error(`${id} expects unknown rule: ${ruleId}`);
+  const expectedStatus = requireEnum(expected, "status", ["pass", "warning", "revise"], `${id}.expected`);
+  const expectedRuleIds = requireStrings(expected.ruleIds, `${id}.expected.ruleIds`);
+  for (const ruleId of expectedRuleIds) {
+    const linkedRecord = knowledgeRecords.find((record) => record.id === ruleId);
+    if (!linkedRecord) throw new Error(`${id} expects unknown rule: ${ruleId}`);
+    if (linkedRecord.garment !== garment) {
+      throw new Error(`${id} expects rule ${ruleId} for another garment.`);
     }
+    if (linkedRecord.verification_status !== "verified" || !linkedRecord.reviewed) {
+      throw new Error(`${id} expects rule ${ruleId} that is not verified/reviewed.`);
+    }
+  }
+  for (const sourceId of requireStrings(expected.sourceIds, `${id}.expected.sourceIds`, false)) {
+    const linkedSource = sources.find((source) => source.id === sourceId);
+    if (!linkedSource) throw new Error(`${id} expects unknown source: ${sourceId}`);
+    if (!(linkedSource.garment_ids as string[]).includes(garment)) {
+      throw new Error(`${id} expects source ${sourceId} for another garment.`);
+    }
+    if (linkedSource.status !== "approved") {
+      throw new Error(`${id} expects unapproved source: ${sourceId}`);
+    }
+  }
+  if (!Array.isArray(expected.warnings)) throw new Error(`${id}.expected.warnings must be an array.`);
+  const warningRuleIds = new Set<string>();
+  for (const warning of expected.warnings as JsonObject[]) {
+    const warningRuleId = requireText(warning, "ruleId", `${id}.expected.warning`);
+    if (warningRuleIds.has(warningRuleId)) throw new Error(`${id} has duplicate warning rule: ${warningRuleId}`);
+    warningRuleIds.add(warningRuleId);
+    if (!expectedRuleIds.includes(warningRuleId)) {
+      throw new Error(`${id} warning ${warningRuleId} is missing from expected.ruleIds.`);
+    }
+    requireEnum(warning, "severity", ["low", "medium", "high"], `${id}.${warningRuleId}`);
+    requireText(warning, "suggestedFix", `${id}.${warningRuleId}`);
+    const matrixRow = (casesDocument.rule_matrix as JsonObject[]).find(
+      (row) => row.ruleId === warningRuleId,
+    );
+    if (warning.severity !== matrixRow?.expected_severity) {
+      throw new Error(`${id}.${warningRuleId}.severity does not match the critic rule matrix.`);
+    }
+  }
+  for (const ruleId of expectedRuleIds) {
+    if (!warningRuleIds.has(ruleId)) {
+      throw new Error(`${id} expected rule ${ruleId} has no warning payload.`);
+    }
+  }
+  if (expectedStatus === "pass" && (expectedRuleIds.length > 0 || warningRuleIds.size > 0)) {
+    throw new Error(`${id} pass case cannot contain expected warnings.`);
+  }
+  if (expectedStatus !== "pass" && warningRuleIds.size === 0) {
+    throw new Error(`${id} ${expectedStatus} case must contain at least one warning.`);
+  }
+  if (
+    expectedStatus === "revise" &&
+    expectedRuleIds.some(
+      (ruleId) => knowledgeRecords.find((record) => record.id === ruleId)?.enforcement !== "hard",
+    )
+  ) {
+    throw new Error(`${id} cannot expect revise from advisory-only cultural rules.`);
+  }
+
+  for (const reviewKey of ["case_review", "runtime_review"] as const) {
+    if (!testCase[reviewKey] || typeof testCase[reviewKey] !== "object") {
+      throw new Error(`${id}.${reviewKey} must be an object.`);
+    }
+    const review = testCase[reviewKey] as JsonObject;
+    requireEnum(review, "verdict", ["pass", "warning", "fail", "pending"], `${id}.${reviewKey}`);
+    requireText(review, "reason", `${id}.${reviewKey}`);
+  }
+
+  const statuses = criticCoverage.get(garment) ?? new Set<string>();
+  statuses.add(expectedStatus);
+  criticCoverage.set(garment, statuses);
+}
+
+for (const garment of ["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh"]) {
+  const statuses = criticCoverage.get(garment);
+  if (!statuses?.has("pass") || !statuses.has("warning")) {
+    throw new Error(`Critic cases must cover both pass and warning for ${garment}.`);
   }
 }
 

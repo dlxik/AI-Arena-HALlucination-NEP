@@ -104,4 +104,15 @@ Hai nguồn `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`, vì v�
 
 KB hiện có 14 record cho đủ bốn trang phục MVP và bốn garment profile đã sẵn sàng cho retrieval thử nghiệm. Sáu nguồn đã được đối chiếu, hai nguồn còn `needs_review`. Không có hard rule; mọi record vẫn `advisory` và cần review chéo trước khi dùng cho Cultural Critic production.
 
-Năm acceptance cases cho recommendation grounding nằm tại `tests/prompt-evaluation/recommendation-cultural-cases.json`. Baseline ngày 2026-09-27 đang `fail` vì `/api/recommend` vẫn trả fixture chứa `SOURCE_PLACEHOLDER`; đây là bằng chứng cần rerun sau khi Lan Anh tích hợp Retrieval + Stylist.
+Năm acceptance cases cho recommendation grounding nằm tại `tests/prompt-evaluation/recommendation-cultural-cases.json`. Baseline fixture ngày 2026-09-27 được giữ để đối chiếu; live review ngày 2026-09-28 đạt 4 pass, 1 warning và 0 fail sau khi tích hợp Retrieval + Stylist.
+
+## Policy Cultural Critic cho Meeting 03
+
+Ma trận rule và 8 acceptance cases nằm tại `tests/fixtures/cultural-validation-cases.json`; báo cáo review nằm tại `docs/meeting-03-cultural-acceptance.md`.
+
+- Ma trận phải phủ đủ mọi knowledge record và chỉ tham chiếu source `approved` đúng garment.
+- Rule `advisory` có thể tạo `warning`, không tự động tạo `revise`.
+- `revise` chỉ hợp lệ khi vi phạm hard rule đã được phê duyệt hoặc technical invariant được contract quy định rõ.
+- Rule/source ID bịa phải bị runtime validation từ chối, không được chuyển thành một cultural verdict có vẻ hợp lệ.
+- Mỗi warning cần có `ruleId`, severity, reason và suggested fix nằm trong phạm vi condition/action của record.
+- Actual output chưa chạy phải ghi `pending`; không dùng expected fixture làm bằng chứng Gemini Critic đã pass.

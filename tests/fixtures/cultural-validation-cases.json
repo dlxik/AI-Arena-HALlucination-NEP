@@ -1,73 +1,298 @@
 {
+  "metadata": {
+    "owner": "Diệu Linh",
+    "meeting": "03",
+    "updated_at": "2026-10-01",
+    "purpose": "Cultural Critic rule matrix and acceptance cases for four MVP garments",
+    "policy_note": "All current knowledge records are advisory. A grounded cultural violation expects warning, not revise. Revise requires an approved hard rule or technical invariant.",
+    "runtime_status": "pending_critic_implementation"
+  },
+  "rule_matrix": [
+    {
+      "ruleId": "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+      "garment": "ao_dai",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "One twentieth-century design milestone is presented as the single origin or form of every ao dai.",
+      "suggested_action": "Scope the claim to its period and describe it as one transformation in a longer process.",
+      "sourceIds": ["VNMH_AO_DAI_2015"]
+    },
+    {
+      "ruleId": "AD_FLEX_NECK_SLEEVE_DECORATION",
+      "garment": "ao_dai",
+      "expected_status": "pass",
+      "expected_severity": null,
+      "trigger": "A contemporary look varies collar, sleeve, material or decoration and labels significant changes as adapted.",
+      "suggested_action": "Allow the variation while retaining its contemporary label and occasion context.",
+      "sourceIds": ["VNMH_AO_DAI_2015"]
+    },
+    {
+      "ruleId": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
+      "garment": "ao_dai",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "One collar, sleeve, material or decoration is claimed as mandatory for every Vietnamese ao dai.",
+      "suggested_action": "Narrow the claim to a period/design or present it as a styling suggestion.",
+      "sourceIds": ["VNMH_AO_DAI_2015"]
+    },
+    {
+      "ruleId": "ANT_STRUCTURE_FIVE_BUTTONS",
+      "garment": "ao_ngu_than",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "A sourced tay chen reconstruction changes the documented five-button row on the right flap.",
+      "suggested_action": "Restore five buttons on the right flap or stop claiming reconstruction of the sourced tay chen variant.",
+      "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+    },
+    {
+      "ruleId": "ANT_STRUCTURE_NARROW_SLEEVES",
+      "garment": "ao_ngu_than",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "A sourced tay chen reconstruction uses very wide sleeves as its defining structure.",
+      "suggested_action": "Use narrow fitted sleeves or relabel the garment without claiming the sourced tay chen variant.",
+      "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+    },
+    {
+      "ruleId": "ANT_FLEX_MATERIAL_AND_PALETTE",
+      "garment": "ao_ngu_than",
+      "expected_status": "pass",
+      "expected_severity": null,
+      "trigger": "A non-reconstruction look varies material and palette while preserving the reviewed structure.",
+      "suggested_action": "Allow the variation without making one artifact palette universal.",
+      "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+    },
+    {
+      "ruleId": "ANT_CONTEXT_NGUYEN_STYLE",
+      "garment": "ao_ngu_than",
+      "expected_status": "warning",
+      "expected_severity": "low",
+      "trigger": "One Nguyen-style artifact group is used to claim a single origin for all ao ngu than.",
+      "suggested_action": "Scope the claim to the sourced artifact group and avoid a universal origin statement.",
+      "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+    },
+    {
+      "ruleId": "ANT_WARNING_ARTIFACT_GENERALIZATION",
+      "garment": "ao_ngu_than",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "The black outer layer or motifs of one artifact are made mandatory for every ao ngu than.",
+      "suggested_action": "Label the details artifact-specific or add an independent source for the broader claim.",
+      "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+    },
+    {
+      "ruleId": "ATT_STRUCTURE_FOUR_PANELS",
+      "garment": "ao_tu_than",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "A Kinh Bac ao tu than merges the front so its four-panel structure is no longer recognizable.",
+      "suggested_action": "Restore two front and two back panels/tails or narrow the garment label.",
+      "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC"]
+    },
+    {
+      "ruleId": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+      "garment": "ao_tu_than",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "The black skirt, white yem and mo qua scarf from one festival scene are made mandatory for every ao tu than.",
+      "suggested_action": "Scope the ensemble to the reconstructed spring rice-cooking festival context.",
+      "sourceIds": ["VNMH_AO_TU_THAN_CONTEXT_2016"]
+    },
+    {
+      "ruleId": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+      "garment": "nhat_binh",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "A Nguyen-court Nhat Binh reconstruction removes the rectangular opposing collar or changes its closure without qualification.",
+      "suggested_action": "Restore the rectangular opposing collar and central closure or label the look as loosely inspired.",
+      "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"]
+    },
+    {
+      "ruleId": "NB_CONTEXT_NGUYEN_COURT_USE",
+      "garment": "nhat_binh",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "A specific court rank, color or ceremony is assigned without a retrieved regulation source.",
+      "suggested_action": "Keep a general Nguyen-court context or add an approved rank-specific source.",
+      "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"]
+    },
+    {
+      "ruleId": "NB_FLEX_CONTEMPORARY_VARIATION",
+      "garment": "nhat_binh",
+      "expected_status": "pass",
+      "expected_severity": null,
+      "trigger": "A contemporary formal look varies palette and decoration without an unsupported rank claim.",
+      "suggested_action": "Allow the variation while retaining the contemporary label.",
+      "sourceIds": ["VHNT_NHAT_BINH_CONTEXT_2022"]
+    },
+    {
+      "ruleId": "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION",
+      "garment": "nhat_binh",
+      "expected_status": "warning",
+      "expected_severity": "medium",
+      "trigger": "Details of Doan Huy Empress Dowager's artifact are made mandatory for every Nhat Binh or rank.",
+      "suggested_action": "Identify the details as artifact-specific or add an approved source for the claimed wearer/rank.",
+      "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"]
+    }
+  ],
   "cases": [
     {
-      "id": "CV_01_NGU_THAN_BUTTONS",
-      "description": "Áo ngũ thân tay chẽn được tạo với ba cúc và hàng cúc ở giữa thân trước.",
-      "garment": "ao_ngu_than",
+      "id": "CV_M03_01_AO_DAI_VALID_VARIATION",
+      "description": "Áo dài đương đại đổi cổ và tay, có nhãn cách tân, không khẳng định là hình thức duy nhất.",
+      "garment": "ao_dai",
       "input": {
-        "items": ["Áo ngũ thân tay chẽn ba cúc giữa thân"],
-        "occasion": "cultural_visit"
-      },
-      "expected": {
-        "status": "warning",
-        "ruleIds": ["ANT_STRUCTURE_FIVE_BUTTONS"]
-      },
-      "rationale": "Rule vẫn advisory và chưa review chéo, vì vậy không tự động nâng thành revise."
-    },
-    {
-      "id": "CV_02_NGU_THAN_SLEEVES",
-      "description": "Một look gọi là áo ngũ thân tay chẽn nhưng mô tả tay áo rất rộng như áo tấc.",
-      "garment": "ao_ngu_than",
-      "input": {
-        "items": ["Áo ngũ thân tay chẽn với ống tay rất rộng"],
-        "occasion": "photoshoot"
-      },
-      "expected": {
-        "status": "warning",
-        "ruleIds": ["ANT_STRUCTURE_NARROW_SLEEVES"]
-      },
-      "rationale": "Critic cần nêu rõ rule chỉ áp dụng cho biến thể tay chẽn."
-    },
-    {
-      "id": "CV_03_TU_THAN_STRUCTURE",
-      "description": "Look áo tứ thân ghép kín hai thân trước và không còn hai vạt trước.",
-      "garment": "ao_tu_than",
-      "input": {
-        "items": ["Áo liền thân trước, không có hai vạt"],
-        "occasion": "festival"
-      },
-      "expected": {
-        "status": "warning",
-        "ruleIds": ["ATT_STRUCTURE_FOUR_PANELS"]
-      },
-      "rationale": "Nguồn cấu trúc có confidence medium và chưa review chéo."
-    },
-    {
-      "id": "CV_04_CONTEXT_NOT_UNIVERSAL",
-      "description": "Look áo tứ thân không dùng yếm trắng trong một buổi chụp ảnh hiện đại.",
-      "garment": "ao_tu_than",
-      "input": {
-        "items": ["Áo tứ thân", "Áo lót màu xanh"],
-        "occasion": "photoshoot"
+        "items": ["Áo dài cách tân cổ thuyền, tay lửng"],
+        "occasion": "photoshoot",
+        "culturalNote": "Thiết kế đương đại dựa trên lịch sử biến đổi đa dạng của cổ, tay và trang trí áo dài.",
+        "sourceIds": ["VNMH_AO_DAI_2015"]
       },
       "expected": {
         "status": "pass",
-        "ruleIds": []
+        "ruleIds": [],
+        "sourceIds": ["VNMH_AO_DAI_2015"],
+        "warnings": []
       },
-      "rationale": "Yếm trắng trong nguồn thuộc một ngữ cảnh lễ hội cụ thể, không phải hard rule phổ quát."
+      "case_review": {
+        "verdict": "pass",
+        "reason": "Variation is labeled contemporary and stays within AD_FLEX_NECK_SLEEVE_DECORATION."
+      },
+      "runtime_review": {"verdict": "pending", "reason": "Cultural Critic is not implemented yet."}
     },
     {
-      "id": "CV_05_UNKNOWN_SOURCE",
-      "description": "Look đưa ra source ID không tồn tại trong references.json.",
-      "garment": "ao_ngu_than",
+      "id": "CV_M03_02_AO_DAI_SINGLE_FORM",
+      "description": "Look tuyên bố cổ cao và tay dài là bắt buộc với mọi áo dài Việt Nam.",
+      "garment": "ao_dai",
       "input": {
-        "sourceIds": ["SOURCE_DOES_NOT_EXIST"]
+        "items": ["Áo dài cổ cao, tay dài"],
+        "occasion": "festival",
+        "culturalNote": "Mọi áo dài Việt Nam bắt buộc phải có cổ cao và tay dài mới đúng truyền thống.",
+        "sourceIds": ["VNMH_AO_DAI_2015"]
       },
       "expected": {
-        "status": "revise",
-        "ruleIds": ["SOURCE_ID_NOT_FOUND"]
+        "status": "warning",
+        "ruleIds": ["AD_WARNING_SINGLE_FORM_GENERALIZATION"],
+        "sourceIds": ["VNMH_AO_DAI_2015"],
+        "warnings": [{"ruleId": "AD_WARNING_SINGLE_FORM_GENERALIZATION", "severity": "medium", "suggestedFix": "Thu hẹp mô tả theo thời kỳ hoặc mẫu thiết kế; không coi một kiểu cổ và tay là bắt buộc cho mọi áo dài."}]
       },
-      "rationale": "Toàn vẹn citation là invariant kỹ thuật và có thể chặn dù cultural facts chưa review."
+      "case_review": {"verdict": "pass", "reason": "Expected warning corrects the universal claim without banning the high-collar design."},
+      "runtime_review": {"verdict": "pending", "reason": "Awaiting the independent Cultural Critic."}
+    },
+    {
+      "id": "CV_M03_03_NGU_THAN_TAY_CHEN_VALID",
+      "description": "Áo ngũ thân tay chẽn giữ năm cúc bên phải và tay hẹp, còn màu sắc được remix.",
+      "garment": "ao_ngu_than",
+      "input": {
+        "items": ["Áo ngũ thân tay chẽn năm cúc dọc vạt phải, tay hẹp"],
+        "occasion": "cultural_visit",
+        "culturalNote": "Bảng màu đương đại; cấu trúc tay chẽn bám nhóm hiện vật được nguồn mô tả.",
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+      },
+      "expected": {
+        "status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"],
+        "warnings": []
+      },
+      "case_review": {"verdict": "pass", "reason": "The sourced tay chen structure is kept while palette remains flexible."},
+      "runtime_review": {"verdict": "pending", "reason": "Awaiting the independent Cultural Critic."}
+    },
+    {
+      "id": "CV_M03_04_NGU_THAN_TAY_CHEN_CONFLICT",
+      "description": "Look gọi là tay chẽn nhưng dùng ba cúc giữa thân và tay rất rộng.",
+      "garment": "ao_ngu_than",
+      "input": {
+        "items": ["Áo ngũ thân tay chẽn ba cúc giữa thân, tay rất rộng"],
+        "occasion": "photoshoot",
+        "culturalNote": "Đây là phục dựng biến thể tay chẽn theo hiện vật của nguồn.",
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+      },
+      "expected": {
+        "status": "warning",
+        "ruleIds": ["ANT_STRUCTURE_FIVE_BUTTONS", "ANT_STRUCTURE_NARROW_SLEEVES"],
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"],
+        "warnings": [
+          {"ruleId": "ANT_STRUCTURE_FIVE_BUTTONS", "severity": "medium", "suggestedFix": "Khôi phục năm cúc dọc vạt phải hoặc bỏ nhãn phục dựng tay chẽn của nguồn."},
+          {"ruleId": "ANT_STRUCTURE_NARROW_SLEEVES", "severity": "medium", "suggestedFix": "Dùng tay hẹp hoặc đổi cách gọi để không gán sai biến thể tay chẽn."}
+        ]
+      },
+      "case_review": {"verdict": "pass", "reason": "Both warnings are scoped to the explicitly claimed tay chen variant."},
+      "runtime_review": {"verdict": "pending", "reason": "Awaiting the independent Cultural Critic."}
+    },
+    {
+      "id": "CV_M03_05_TU_THAN_VALID_CONTEXT",
+      "description": "Look giữ bốn thân và giới hạn tổ hợp yếm/váy/khăn ở lễ hội Kinh Bắc phục dựng.",
+      "garment": "ao_tu_than",
+      "input": {
+        "items": ["Áo tứ thân gồm hai tà trước, hai tà sau", "Yếm trắng", "Váy đen", "Khăn mỏ quạ"],
+        "occasion": "festival",
+        "culturalNote": "Tổ hợp tái hiện hội thi nấu cơm xuân được nguồn mô tả, không phải quy tắc cho mọi áo tứ thân.",
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"]
+      },
+      "expected": {
+        "status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"],
+        "warnings": []
+      },
+      "case_review": {"verdict": "pass", "reason": "Structure and event-specific context are both scoped correctly."},
+      "runtime_review": {"verdict": "pending", "reason": "Awaiting the independent Cultural Critic."}
+    },
+    {
+      "id": "CV_M03_06_TU_THAN_CONTEXT_UNIVERSALIZED",
+      "description": "Look coi yếm trắng, váy đen và khăn mỏ quạ là bắt buộc trong mọi hoàn cảnh.",
+      "garment": "ao_tu_than",
+      "input": {
+        "items": ["Áo tứ thân", "Yếm trắng", "Váy đen", "Khăn mỏ quạ"],
+        "occasion": "casual",
+        "culturalNote": "Tổ hợp này là bắt buộc trong mọi hoàn cảnh mặc áo tứ thân.",
+        "sourceIds": ["VNMH_AO_TU_THAN_CONTEXT_2016"]
+      },
+      "expected": {
+        "status": "warning",
+        "ruleIds": ["ATT_CONTEXT_KINH_BAC_FESTIVAL"],
+        "sourceIds": ["VNMH_AO_TU_THAN_CONTEXT_2016"],
+        "warnings": [{"ruleId": "ATT_CONTEXT_KINH_BAC_FESTIVAL", "severity": "medium", "suggestedFix": "Giới hạn tổ hợp vào bối cảnh hội thi nấu cơm xuân Kinh Bắc được nguồn mô tả."}]
+      },
+      "case_review": {"verdict": "pass", "reason": "The fix narrows context and does not call the individual items forbidden."},
+      "runtime_review": {"verdict": "pending", "reason": "Awaiting the independent Cultural Critic."}
+    },
+    {
+      "id": "CV_M03_07_NHAT_BINH_VALID_CONTEMPORARY",
+      "description": "Nhật Bình đương đại giữ cổ đối khâm hình chữ nhật, không gán phẩm cấp.",
+      "garment": "nhat_binh",
+      "input": {
+        "items": ["Áo Nhật Bình cổ đối khâm hình chữ nhật, cúc giữa"],
+        "occasion": "photoshoot",
+        "culturalNote": "Bảng màu lavender là diễn giải đương đại, không đại diện phẩm cấp cung đình.",
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025", "VHNT_NHAT_BINH_CONTEXT_2022"]
+      },
+      "expected": {
+        "status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025", "VHNT_NHAT_BINH_CONTEXT_2022"],
+        "warnings": []
+      },
+      "case_review": {"verdict": "pass", "reason": "The collar is explicit, variation is labeled and no rank claim is made."},
+      "runtime_review": {"verdict": "pending", "reason": "Awaiting the independent Cultural Critic."}
+    },
+    {
+      "id": "CV_M03_08_NHAT_BINH_COLLAR_REGRESSION",
+      "description": "Hồi quy RC_04: look gọi là phục dựng Nhật Bình nhưng bỏ cổ đối khâm hình chữ nhật.",
+      "garment": "nhat_binh",
+      "input": {
+        "items": ["Áo khoác cổ tròn, khóa kéo lệch vai"],
+        "occasion": "photoshoot",
+        "culturalNote": "Phục dựng chính xác Nhật Bình cung đình triều Nguyễn với cấu trúc cổ tròn hiện đại.",
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"]
+      },
+      "expected": {
+        "status": "warning",
+        "ruleIds": ["NB_STRUCTURE_RECTANGULAR_COLLAR"],
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"],
+        "warnings": [{"ruleId": "NB_STRUCTURE_RECTANGULAR_COLLAR", "severity": "medium", "suggestedFix": "Khôi phục cổ đối khâm hình chữ nhật và cúc giữa, hoặc đổi nhãn thành thiết kế lấy cảm hứng."}]
+      },
+      "case_review": {"verdict": "pass", "reason": "This covers RC_04 while keeping the preserve rule advisory."},
+      "runtime_review": {"verdict": "pending", "reason": "Lan Anh must wire this rule into the Critic before rerun."}
     }
   ]
 }
