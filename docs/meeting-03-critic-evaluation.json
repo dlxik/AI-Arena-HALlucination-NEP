@@ -6,7 +6,7 @@
   "prompt": "prompts/critic/critic-v1.md",
   "promptSha256": "2219f735a8004af9c1ab83bce5544c0b1c0abaa9f4536bbfb1f85d152a1ae761",
   "mode": "Live Gemini through API handlers; no browser/UI review",
-  "culturalReviewer": "Pending Diệu Linh review",
+  "culturalReviewer": "Diệu Linh — reviewed 2026-10-02",
   "critic": [
     {
       "id": "CC_01_AO_DAI_VALID",

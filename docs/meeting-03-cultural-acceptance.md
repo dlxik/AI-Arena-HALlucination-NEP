@@ -12,7 +12,8 @@ Artefact gồm:
 - Ma trận đủ **14/14 knowledge records**: garment, trigger, expected status/severity, suggested action và approved source.
 - **8 cultural acceptance cases**: mỗi garment có một case đúng (`pass`) và một case cần cảnh báo (`warning`).
 - `case_review` ghi kết quả Linh review expected behavior.
-- `runtime_review` giữ `pending` cho tới khi Cultural Critic độc lập của Lan Anh chạy được.
+- Expected cases của Linh được giữ riêng với backend evaluation inputs của Lan Anh để tránh biến expected fixture thành bằng chứng runtime.
+- Live output đã được Linh review trong `docs/meeting-03-critic-evaluation.json` ngày 2026-10-02.
 
 ## Quyết định severity và status
 
@@ -43,6 +44,21 @@ Không được nâng một advisory rule thành `revise` chỉ để đủ ba n
 
 `Cultural review: Pass` nghĩa là expected status, rule, severity và suggested fix đã được Linh đối chiếu với Cultural KB. Nó không phải kết quả chạy Gemini Critic.
 
+## Live cultural review ngày 2026-10-02
+
+| Backend case | Actual | Rule IDs | Review |
+| --- | --- | --- | --- |
+| `CC_01_AO_DAI_VALID` | Pass | Không có | Pass |
+| `CC_02_AO_DAI_GENERALIZATION` | Warning | `AD_WARNING_SINGLE_FORM_GENERALIZATION` | Pass |
+| `CC_03_NGU_THAN_VALID` | Pass | Không có | Pass |
+| `CC_04_NGU_THAN_BUTTONS` | Warning | `ANT_STRUCTURE_FIVE_BUTTONS` | Pass |
+| `CC_05_TU_THAN_VALID` | Pass | Không có | Pass |
+| `CC_06_TU_THAN_UNIVERSAL_ENSEMBLE` | Warning | `ATT_CONTEXT_KINH_BAC_FESTIVAL` | Pass |
+| `CC_07_NHAT_BINH_VALID` | Pass | Không có | Pass |
+| `CC_08_RC04_NHAT_BINH_MISSING_COLLAR` | Warning | `NB_STRUCTURE_RECTANGULAR_COLLAR` | Pass |
+
+Kết luận: **8/8 output khớp expected status và rule IDs**. Severity phù hợp với enforcement `advisory`; suggested fix thu hẹp claim/context hoặc khôi phục đặc điểm nhận diện mà không tuyệt đối hóa. Runtime validation đã chặn rule/source không tồn tại, sai garment hoặc chưa approved qua automated tests.
+
 ## Review wording
 
 - Suggested fix phải sửa đúng vấn đề và đưa ra lựa chọn thu hẹp nhãn/context khi phù hợp.
@@ -58,16 +74,14 @@ Không được nâng một advisory rule thành `revise` chỉ để đủ ba n
 - `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`, không xuất hiện trong Critic fixture.
 - Validator yêu cầu ma trận phủ đủ mọi knowledge record và mỗi garment có cả pass/warning case.
 
-## Handoff cho Lan Anh
+## Handoff đã hoàn thành
 
-1. Dùng `rule_matrix` làm expected policy, không hard-code wording vào model output.
-2. Chạy 8 cases sau khi `/api/validate` và Critic độc lập hoàn thành.
-3. Lưu actual status, warning/rule IDs và suggested fix; Linh cập nhật `runtime_review` thành pass/warning/fail.
-4. Đặc biệt xác nhận `CV_M03_08` bắt được `NB_STRUCTURE_RECTANGULAR_COLLAR`.
-5. Reject rule/source bịa ở runtime validation trước khi trả response.
+1. Rule Retrieval và Critic dùng record đủ điều kiện, không hard-code verdict từ expected fixture.
+2. Tám backend cases đã chạy live và được lưu cùng provenance an toàn.
+3. Regression Nhật Bình bắt đúng `NB_STRUCTURE_RECTANGULAR_COLLAR`.
+4. Runtime validation từ chối rule/source bịa hoặc không đủ điều kiện.
 
-## TODO cần teammate
+## TODO chuyển sang checkpoint sau
 
-- **Lan Anh:** triển khai Rule Retrieval/Critic và tạo actual output cho 8 cases.
-- **Hiền:** xác nhận UI hiển thị warning dài, reason, rule ID và suggested fix.
 - **Cả đội:** chỉ tạo `revise` cultural case sau khi thống nhất hard-rule policy; hiện chưa có hard rule đủ điều kiện.
+- Hai source `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn cần review thủ công và tiếp tục bị loại khỏi production retrieval.

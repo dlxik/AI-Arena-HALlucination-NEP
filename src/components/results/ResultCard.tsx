@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { OutfitLook } from "@/types/outfit";
 import { GARMENT_LABEL, VALIDATION_BADGE, SEVERITY_COLOR } from "@/lib/constants";
+import {
+  needsIndependentValidation,
+  resolveValidationUiState,
+} from "@/components/results/validation-state";
 
 interface ResultCardProps {
   look: OutfitLook;
@@ -15,9 +19,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   const [isValidating, setIsValidating] = useState(false);
   const [validationError, setValidationError] = useState(false);
 
-  const needsValidation = look.validation.warnings.some(
-    (w) => w.ruleId === "CULTURAL_CRITIC_PENDING" || w.ruleId === "SOURCE_REVIEW_REQUIRED"
-  );
+  const needsValidation = needsIndependentValidation(look);
 
   const validateLook = async () => {
     setIsValidating(true);
@@ -37,7 +39,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
       } else {
         setValidationError(true);
       }
-    } catch (_err) {
+    } catch {
       setValidationError(true);
     } finally {
       setIsValidating(false);
@@ -53,6 +55,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   }, []);
 
   const badge = VALIDATION_BADGE[look.validation.status];
+  const validationUiState = resolveValidationUiState(look, isValidating, validationError);
 
   return (
     <article className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden transition hover:shadow-md hover:-translate-y-0.5">
@@ -88,12 +91,12 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
           {index + 1}
         </span>
         {/* Validation badge */}
-        {isValidating ? (
+        {validationUiState === "validating" ? (
           <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-slate-400 animate-pulse" />
             ĐANG KIỂM DUYỆT
           </span>
-        ) : validationError ? (
+        ) : validationUiState === "error" ? (
           <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
             LỖI KIỂM DUYỆT
           </span>
@@ -165,7 +168,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
         <p className="text-sm leading-6 text-slate-600 break-words">{look.reason}</p>
 
         {/* Retry Button */}
-        {validationError && (
+        {validationUiState === "error" && (
           <div className="rounded-lg border border-red-200 bg-red-50 p-3 flex flex-col items-center gap-2">
             <p className="text-xs text-red-700 text-center">Có lỗi xảy ra khi kiểm duyệt văn hóa.</p>
             <button
@@ -178,7 +181,9 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
         )}
 
         {/* Warnings (if any) */}
-        {!isValidating && !validationError && look.validation.warnings.length > 0 && (
+        {validationUiState !== "validating" &&
+          validationUiState !== "error" &&
+          look.validation.warnings.length > 0 && (
           <div className="space-y-2">
             {look.validation.warnings.map((w) => (
               <div
