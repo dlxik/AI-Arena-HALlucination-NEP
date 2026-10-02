@@ -118,13 +118,13 @@ Definition of Done của Lan Anh:
 
 ### Linh - Cultural Data và Submission
 
-- [ ] Lập ma trận rule → expected status/severity/action cho bốn garment.
-- [ ] Tạo tối thiểu 8 acceptance cases cho Critic: mỗi garment có một case đúng và một case cần cảnh báo/sửa.
-- [ ] Bổ sung case hồi quy Nhật Bình từ `RC_04`, kiểm tra `NB_STRUCTURE_RECTANGULAR_COLLAR` được phát hiện khi thiếu.
-- [ ] Review wording của `reason` và `suggestedFix`: đúng phạm vi nguồn, không tuyệt đối hóa advisory rule.
+- [x] Lập ma trận rule → expected status/severity/action cho bốn garment.
+- [x] Tạo tối thiểu 8 acceptance cases cho Critic: mỗi garment có một case đúng và một case cần cảnh báo/sửa.
+- [x] Bổ sung case hồi quy Nhật Bình từ `RC_04`, kiểm tra `NB_STRUCTURE_RECTANGULAR_COLLAR` được phát hiện khi thiếu.
+- [x] Review wording của `reason` và `suggestedFix`: đúng phạm vi nguồn, không tuyệt đối hóa advisory rule.
 - [ ] Kiểm tra mọi `ruleId`/`sourceId` trong output tồn tại, đúng garment và đủ trạng thái review.
 - [ ] Ghi pass/warning/fail và lý do vào artefact evaluation; không sửa implementation backend/UI thay owner.
-- [ ] Cập nhật tài liệu Cultural KB nếu rule status, enforcement hoặc cách retrieval thay đổi.
+- [x] Cập nhật tài liệu Cultural KB nếu rule status, enforcement hoặc cách retrieval thay đổi.
 
 Definition of Done của Linh:
 
