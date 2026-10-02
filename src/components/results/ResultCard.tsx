@@ -1,3 +1,6 @@
+﻿"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { OutfitLook } from "@/types/outfit";
 import { GARMENT_LABEL, VALIDATION_BADGE, SEVERITY_COLOR } from "@/lib/constants";
@@ -7,7 +10,48 @@ interface ResultCardProps {
   index: number;
 }
 
-export default function ResultCard({ look, index }: ResultCardProps) {
+export default function ResultCard({ look: initialLook, index }: ResultCardProps) {
+  const [look, setLook] = useState<OutfitLook>(initialLook);
+  const [isValidating, setIsValidating] = useState(false);
+  const [validationError, setValidationError] = useState(false);
+
+  const needsValidation = look.validation.warnings.some(
+    (w) => w.ruleId === "CULTURAL_CRITIC_PENDING" || w.ruleId === "SOURCE_REVIEW_REQUIRED"
+  );
+
+  const validateLook = async () => {
+    setIsValidating(true);
+    setValidationError(false);
+    try {
+      const res = await fetch("/api/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(look),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setLook((prev) => ({
+          ...prev,
+          validation: data.data,
+        }));
+      } else {
+        setValidationError(true);
+      }
+    } catch (_err) {
+      setValidationError(true);
+    } finally {
+      setIsValidating(false);
+    }
+  };
+
+  useEffect(() => {
+    if (needsValidation) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      validateLook();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const badge = VALIDATION_BADGE[look.validation.status];
 
   return (
@@ -44,11 +88,22 @@ export default function ResultCard({ look, index }: ResultCardProps) {
           {index + 1}
         </span>
         {/* Validation badge */}
-        <span
-          className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badge.className}`}
-        >
-          {badge.label}
-        </span>
+        {isValidating ? (
+          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-slate-400 animate-pulse" />
+            ĐANG KIỂM DUYỆT
+          </span>
+        ) : validationError ? (
+          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
+            LỖI KIỂM DUYỆT
+          </span>
+        ) : (
+          <span
+            className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badge.className}`}
+          >
+            {badge.label}
+          </span>
+        )}
       </div>
 
       {/* Content */}
@@ -64,7 +119,7 @@ export default function ResultCard({ look, index }: ResultCardProps) {
         {/* Palette */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-slate-500">Bảng màu:</span>
-          <div className="flex gap-1.5">
+          <div className="flex flex-wrap gap-1.5">
             {look.palette.map((color) => (
               <span
                 key={color}
@@ -107,18 +162,36 @@ export default function ResultCard({ look, index }: ResultCardProps) {
         )}
 
         {/* Reason */}
-        <p className="text-sm leading-6 text-slate-600">{look.reason}</p>
+        <p className="text-sm leading-6 text-slate-600 break-words">{look.reason}</p>
+
+        {/* Retry Button */}
+        {validationError && (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-3 flex flex-col items-center gap-2">
+            <p className="text-xs text-red-700 text-center">Có lỗi xảy ra khi kiểm duyệt văn hóa.</p>
+            <button
+              onClick={validateLook}
+              className="text-xs font-semibold text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded transition"
+            >
+              Thử lại
+            </button>
+          </div>
+        )}
 
         {/* Warnings (if any) */}
-        {look.validation.warnings.length > 0 && (
+        {!isValidating && !validationError && look.validation.warnings.length > 0 && (
           <div className="space-y-2">
             {look.validation.warnings.map((w) => (
               <div
                 key={w.ruleId}
                 className={`rounded-lg border px-3 py-2.5 text-xs leading-5 ${SEVERITY_COLOR[w.severity] ?? ""}`}
               >
-                <p className="font-semibold mb-0.5">{w.reason}</p>
-                <p className="opacity-80">💡 {w.suggestedFix}</p>
+                <div className="flex justify-between items-start gap-2 mb-1">
+                  <p className="font-semibold break-words">{w.reason}</p>
+                  <span className="shrink-0 rounded bg-white/50 px-1.5 py-0.5 text-[10px] font-mono opacity-80">
+                    {w.ruleId}
+                  </span>
+                </div>
+                <p className="opacity-80 break-words">💡 {w.suggestedFix}</p>
               </div>
             ))}
           </div>
@@ -131,7 +204,7 @@ export default function ResultCard({ look, index }: ResultCardProps) {
             id={`btn-view-passport-${look.id}`}
             className="block w-full rounded-xl border border-emerald-600 px-4 py-2.5 text-center text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
           >
-            Xem Cultural Passport →
+            Xem Cultural Passport ↗
           </Link>
         </div>
       </div>
