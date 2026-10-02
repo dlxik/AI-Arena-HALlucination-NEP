@@ -2,7 +2,7 @@
 
 AI Arena là nền tảng thử nghiệm gợi ý bản phối trang phục văn hóa Việt. Người dùng mô tả dịp, loại trang phục, phong cách, màu sắc và mức độ remix; pipeline dự kiến truy xuất tri thức có nguồn, tạo đề xuất, kiểm tra văn hóa rồi mới tạo hình ảnh.
 
-> Trạng thái: intent parser và recommendation flow đã tích hợp Gemini; Cultural Retrieval chỉ dùng dữ liệu đã duyệt và response được validate trước khi hiển thị. Cultural Critic và image generation thật thuộc các checkpoint tiếp theo.
+> Trạng thái: intent parser, Stylist và Cultural Critic đã tích hợp Gemini. Recommendation trả validation thật cho từng look; `/api/validate` chạy Critic độc lập với Rule Retrieval đã duyệt và runtime validation. Image generation thật thuộc Meeting 04; UI/cultural review Meeting 03 còn cần owner xác nhận.
 
 ## Bài toán sản phẩm
 
@@ -48,7 +48,7 @@ Copy-Item .env.example .env.local # PowerShell
 npm run dev
 ```
 
-Mở `http://localhost:3000`. Các endpoint `/api/parse-intent` và `/api/recommend` cần key trong `.env.local`:
+Mở `http://localhost:3000`. Các endpoint `/api/parse-intent`, `/api/recommend` và `/api/validate` cần key trong `.env.local`:
 
 ```env
 GEMINI_API_KEY=
@@ -67,6 +67,7 @@ Không commit `.env`, `.env.local`, API key hay secret dưới bất kỳ hình 
 | `npm run typecheck` | Kiểm tra TypeScript, không emit |
 | `npm test` | Chạy contract test cục bộ, không gọi Gemini |
 | `npm run evaluate:intent` | Chạy 5 golden cases qua Gemini thật; cần API key |
+| `npm run evaluate:critic -- --recommend` | Chạy 8 Critic cases và 5 recommendation inputs qua Gemini thật, ghi artefact review |
 | `npm run build` | Tạo production build |
 | `npm run start` | Chạy production server đã build |
 | `npm run validate:data` | Kiểm tra cấu trúc garment JSON tối thiểu |

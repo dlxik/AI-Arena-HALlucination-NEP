@@ -8,6 +8,7 @@
 | 2026-09-25 | Team | Codex | Tích hợp artefact Meeting 01 từ `linh`, `hien`, `lanh` vào `main` | Merge commits trên `main` | Tự động + cần team review | Data validation, 10 tests, lint, typecheck và production build đều pass |
 | 2026-09-27 | Lan Anh | Codex + Gemini structured-output integration | Hoàn thiện Cultural Retrieval, Stylist v1, runtime validation và `/api/recommend` | `src/lib/cultural/`, `src/lib/gemini/stylist.ts`, `src/lib/validation/recommendation-output.ts`, `src/app/api/recommend/route.ts`, `prompts/stylist/stylist-v1.md` | Team integration review | Pipeline và validation đã triển khai; retrieval fail-closed theo trạng thái cultural data. |
 | 2026-09-28 | Team | Codex integration review | Merge Meeting 02, đối chiếu retrieval policy và chạy automated checks | Local `main` integration commits | Codex + cần owner demo | 35/35 tests, data validation, lint và typecheck pass; live 5-case acceptance chờ `GEMINI_API_KEY`, responsive review chờ Hiền xác nhận. |
+| 2026-10-01 | Lan Anh | Codex + Gemini (`gemini-3.5-flash-lite`) | Cultural Critic v1 độc lập, Rule Retrieval và recommendation orchestration | `plan/LAN_ANH_MEETING_03.md`, `docs/meeting-03-critic-evaluation.json` | Chờ Hiền/Linh review | 86/86 tests; data validation, lint, typecheck pass; live 8/8 Critic cases + 5/5 recommendation inputs sau prompt iteration và retry upstream. |
 
 ## Stylist v1 evaluation — 2026-09-27
 
@@ -26,3 +27,14 @@
 - Review phát hiện implementation cũ cho phép dữ liệu `needs_review` vào prompt dưới dạng advisory, không khớp handoff cultural data.
 - Policy đã đổi sang fail-closed: garment/source phải approved; record phải verified và reviewed; source liên kết của record cũng phải approved.
 - Automated success path dùng dữ liệu approved thật trong repository. Negative tests chỉ hạ trạng thái trên snapshot cô lập để xác nhận fail-closed và không mutate cache dùng chung.
+
+## Cultural Critic v1 evaluation — 2026-10-01
+
+- Model thực chạy: `gemini-3.5-flash-lite`, `GEMINI_TIMEOUT_MS=60000` theo `.env.local`; không ghi key. Client hiện tại giữ `store: false` và một SDK retry.
+- Prompt: `prompts/critic/critic-v1.md`; SHA-256 của mỗi iteration ghi trong artefact. Độc lập với Stylist, structured output gồm status/warnings và enum rule IDs theo Rule Retrieval phía server.
+- Retrieval riêng lấy toàn bộ rules verified + reviewed của garment với tất cả source approved/đúng garment. Giữ context/occasion rules để phát hiện universal claims sai phạm vi; không nâng advisory thành hard.
+- Iteration đầu (SHA-256 `a433dd20575bcfefdc0bfb84390f25a6d13800bd5f0f65accddb707fa5a6baa0`): 6/8 Critic cases đạt expected status/rule IDs, bỏ sót `ANT_STRUCTURE_FIVE_BUTTONS` khi ba khuy giữa thân và `NB_STRUCTURE_RECTANGULAR_COLLAR` khi thiếu mô tả cổ. 5/5 recommendation requests thành công. Artefact: `docs/meeting-03-critic-evaluation-initial.json`.
+- Iteration sau bổ sung decision checks và ví dụ JSON scoped cho hai tình huống; không sửa dữ liệu/enforcement để làm case pass. Lần full evaluation có 2 upstream failures; `--retry-failed` chạy lại đúng hai case với cùng prompt/model và giữ lịch sử `previousAttempts`.
+- Kết quả cuối: 8/8 Critic expected outcomes (4 pass, 4 warning), 5/5 recommendation inputs có 3 looks với validation hợp lệ, không pending. Nhật Bình recommendation có 2 cảnh báo thiếu cổ và 1 pass. Artefact: `docs/meeting-03-critic-evaluation.json`.
+- 86/86 tests kiểm tra contract/provenance/status/severity, revise với snapshot hard cô lập, lỗi API và fail-closed. Live production KB hiện toàn advisory nên không tạo case revise giả bằng cách nâng rule production.
+- Automated checks không thay cultural review. Wording/status của artefact cần Linh phê duyệt; UI trạng thái/error/retry cần Hiền review. Production build chờ branch tích hợp trước khi đóng checkpoint, theo MEETING_03.

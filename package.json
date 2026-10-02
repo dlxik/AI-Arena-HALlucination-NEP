@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/**/*.test.ts",
     "evaluate:intent": "tsx scripts/evaluate-intent.ts",
+    "evaluate:critic": "tsx scripts/evaluate-critic.ts",
     "validate:data": "node --experimental-strip-types scripts/validate-cultural-data.ts"
   },
   "dependencies": {
