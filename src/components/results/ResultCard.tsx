@@ -1,6 +1,6 @@
-﻿"use client";
+"use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import type { OutfitLook } from "@/types/outfit";
 import { GARMENT_LABEL, VALIDATION_BADGE, SEVERITY_COLOR } from "@/lib/constants";
@@ -18,24 +18,41 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   const [look, setLook] = useState<OutfitLook>(initialLook);
   const [isValidating, setIsValidating] = useState(false);
   const [validationError, setValidationError] = useState(false);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
 
-  const needsValidation = needsIndependentValidation(look);
+  // Sync look to session storage whenever it updates significantly
+  const updateStorage = (updatedLook: OutfitLook) => {
+    try {
+      const raw = sessionStorage.getItem("recommendation_result");
+      if (raw) {
+        const stored = JSON.parse(raw);
+        const lookIndex = stored.data.looks.findIndex((l: OutfitLook) => l.id === updatedLook.id);
+        if (lookIndex !== -1) {
+          stored.data.looks[lookIndex] = updatedLook;
+          sessionStorage.setItem("recommendation_result", JSON.stringify(stored));
+        }
+      }
+    } catch {}
+  };
 
   const validateLook = async () => {
     setIsValidating(true);
     setValidationError(false);
     try {
+      const rawInput = sessionStorage.getItem("recommendation_input");
+      const recommendationInput = rawInput ? JSON.parse(rawInput) : undefined;
       const res = await fetch("/api/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(look),
+        body: JSON.stringify({ look, recommendationInput }),
       });
       const data = await res.json();
       if (data.success) {
-        setLook((prev) => ({
-          ...prev,
-          validation: data.data,
-        }));
+        setLook((prev) => {
+          const updated = { ...prev, validation: data.data };
+          updateStorage(updated);
+          return updated;
+        });
       } else {
         setValidationError(true);
       }
@@ -46,13 +63,56 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
     }
   };
 
+  const generateImage = async (forceRetry = false) => {
+    if (look.imageUrl || (look.imageFallback && !forceRetry) || isGeneratingImage) return;
+    setIsGeneratingImage(true);
+    try {
+      const res = await fetch("/api/generate-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ look }),
+      });
+      const data = await res.json();
+      
+      setLook((prev) => {
+        const newLook = { ...prev };
+        if (data.success && data.data.status === "generated") {
+          newLook.imageUrl = data.data.imageUrl;
+          newLook.imageFallback = undefined;
+        } else {
+          newLook.imageFallback = data.data?.fallbackReason || data.data?.message || (!data.success && data.error?.message) || "Không thể tạo ảnh minh họa do lỗi máy chủ.";
+        }
+        updateStorage(newLook);
+        return newLook;
+      });
+    } catch {
+      setLook((prev) => {
+        const newLook = { ...prev, imageFallback: "Lỗi kết nối khi tạo ảnh minh họa." };
+        updateStorage(newLook);
+        return newLook;
+      });
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
+
   useEffect(() => {
-    if (needsValidation) {
+    if (needsIndependentValidation(look)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       validateLook();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const hasFiredImageGeneration = useRef(false);
+  useEffect(() => {
+    if (!look.imageUrl && !look.imageFallback && !hasFiredImageGeneration.current) {
+      hasFiredImageGeneration.current = true;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      generateImage();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [look.imageUrl, look.imageFallback]);
 
   const badge = VALIDATION_BADGE[look.validation.status];
   const validationUiState = resolveValidationUiState(look, isValidating, validationError);
@@ -60,7 +120,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   return (
     <article className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden transition hover:shadow-md hover:-translate-y-0.5">
       {/* Image area */}
-      <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+      <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4 text-center">
         {look.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -68,41 +128,50 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
             alt={`Bản phối ${look.name}`}
             className="h-full w-full object-cover"
           />
-        ) : (
-          <div className="flex flex-col items-center gap-2 text-slate-400">
+        ) : isGeneratingImage ? (
+          <div className="flex flex-col items-center gap-3 text-slate-500">
+            <span className="h-6 w-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></span>
+            <span className="text-xs font-medium">Đang tạo ảnh minh họa...</span>
+          </div>
+        ) : look.imageFallback ? (
+          <div className="flex flex-col items-center gap-2 text-slate-500">
             <svg
-              className="h-12 w-12 opacity-40"
+              className="h-10 w-10 opacity-40 text-amber-500"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.2}
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <span className="text-xs">Ảnh minh họa sẽ được tạo</span>
+            <span className="text-xs font-medium">Ảnh minh họa không khả dụng</span>
+            <span className="text-[10px] opacity-80">{look.imageFallback}</span>
+            <button onClick={() => generateImage(true)} className="mt-2 text-xs font-semibold text-emerald-700 hover:underline">
+              Thử lại
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-2 text-slate-400">
+            <span className="text-xs">Chờ tạo ảnh...</span>
           </div>
         )}
+        
         {/* Index badge */}
-        <span className="absolute top-3 left-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-900/70 text-xs font-bold text-white">
+        <span className="absolute top-3 left-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-900/70 text-xs font-bold text-white shadow-sm z-10">
           {index + 1}
         </span>
         {/* Validation badge */}
         {validationUiState === "validating" ? (
-          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5">
+          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5 z-10">
             <span className="h-1.5 w-1.5 rounded-full bg-slate-400 animate-pulse" />
             ĐANG KIỂM DUYỆT
           </span>
         ) : validationUiState === "error" ? (
-          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
+          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-800 border border-red-200 z-10">
             LỖI KIỂM DUYỆT
           </span>
         ) : (
           <span
-            className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badge.className}`}
+            className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badge.className} z-10`}
           >
             {badge.label}
           </span>

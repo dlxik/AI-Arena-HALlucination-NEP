@@ -84,13 +84,13 @@ Tổng thời lượng: **120-150 phút**.
 
 ### Hiền - Product và Frontend
 
-- [ ] Hiển thị ảnh generated và fallback rõ ràng, có loading/retry phù hợp.
-- [ ] Không để ảnh lỗi làm mất nội dung text/validation của look.
-- [ ] Hoàn thiện Cultural Passport: cultural note, validation, rule ID, suggested fix và nguồn dễ đọc.
-- [ ] Hiển thị source title/publisher/link an toàn thay vì chỉ source ID khi dữ liệu cho phép.
-- [ ] Tạo remix controls trong phạm vi đã khóa; hiển thị trạng thái revalidating/regenerating.
-- [ ] Không hiển thị validation cũ sau khi người dùng sửa look.
-- [ ] Bổ sung test cho generated/fallback, Passport và remix state.
+- [x] Hiển thị ảnh generated và fallback rõ ràng, có loading/retry phù hợp.
+- [x] Không để ảnh lỗi làm mất nội dung text/validation của look.
+- [x] Hoàn thiện Cultural Passport: cultural note, validation, rule ID, suggested fix và nguồn dễ đọc.
+- [x] Hiển thị source title/publisher/link an toàn thay vì chỉ source ID khi dữ liệu cho phép.
+- [x] Tạo remix controls trong phạm vi đã khóa; hiển thị trạng thái revalidating/regenerating.
+- [x] Không hiển thị validation cũ sau khi người dùng sửa look.
+- [x] Bổ sung test cho generated/fallback, Passport và remix state.
 
 Definition of Done của Hiền:
 

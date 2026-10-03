@@ -1,5 +1,6 @@
 import type { OutfitLook } from "@/types/outfit";
 import { GARMENT_LABEL, STYLE_LABEL, VALIDATION_BADGE, SEVERITY_COLOR } from "@/lib/constants";
+import referencesData from "../../../data/sources/references.json";
 
 interface CulturalPassportProps {
   look: OutfitLook;
@@ -144,17 +145,38 @@ export default function CulturalPassport({ look }: CulturalPassportProps) {
           Nguồn tham khảo
         </h2>
         {look.sourceIds.length > 0 ? (
-          <ul className="space-y-1.5">
-            {look.sourceIds.map((sid) => (
-              <li key={sid} className="flex items-center gap-2 text-sm text-slate-600">
-                <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs">
-                  {sid}
-                </span>
-                <span className="text-slate-400 text-xs">
-                  — chi tiết xem trong Cultural Knowledge Base
-                </span>
-              </li>
-            ))}
+          <ul className="space-y-4">
+            {look.sourceIds.map((sid) => {
+              const source = referencesData.sources.find((s) => s.id === sid);
+              return (
+                <li key={sid} className="flex flex-col gap-1 text-sm text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-500">
+                      {sid}
+                    </span>
+                    {source && (
+                      <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                        {source.publisher}
+                      </span>
+                    )}
+                  </div>
+                  {source ? (
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-700 hover:underline font-medium text-base mt-0.5 inline-block"
+                    >
+                      {source.title}
+                    </a>
+                  ) : (
+                    <span className="text-slate-400 text-xs italic mt-0.5">
+                      — chi tiết nguồn chưa được ánh xạ trong Cultural Knowledge Base.
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p className="text-sm text-slate-400 italic">Chưa có nguồn được ánh xạ.</p>
