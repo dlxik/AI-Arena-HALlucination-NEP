@@ -108,7 +108,6 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   useEffect(() => {
     if (!look.imageUrl && !look.imageFallback && !hasFiredImageGeneration.current) {
       hasFiredImageGeneration.current = true;
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       generateImage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

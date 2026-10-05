@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import CulturalPassport from "@/components/cultural-passport/CulturalPassport";
 import type { RecommendationOutput, RecommendationInput } from "@/types/api";
@@ -140,7 +140,7 @@ export default function CulturalPassportPage() {
       };
 
       // 1. Revalidate
-      const { validation, imageUrl, imageFallback, ...validationLook } = updatedLook;
+      const { validation: _v, imageUrl: _i, imageFallback: _f, ...validationLook } = updatedLook;
       const validateRes = await fetch("/api/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
