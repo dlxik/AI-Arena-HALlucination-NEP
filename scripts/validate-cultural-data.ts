@@ -8,6 +8,12 @@ const garmentsDirectory = join(root, "data", "garments");
 const referencesPath = join(root, "data", "sources", "references.json");
 const recordsPath = join(root, "data", "knowledge", "records.json");
 const casesPath = join(root, "tests", "fixtures", "cultural-validation-cases.json");
+const imageRemixCasesPath = join(
+  root,
+  "tests",
+  "fixtures",
+  "image-remix-cultural-cases.json",
+);
 const recommendationCasesPath = join(
   root,
   "tests",
@@ -397,6 +403,164 @@ for (const garment of ["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh"]) {
   }
 }
 
+const imageRemixDocument = readJson(imageRemixCasesPath);
+if (!imageRemixDocument.metadata || typeof imageRemixDocument.metadata !== "object") {
+  throw new Error("Image/remix cultural cases must include metadata.");
+}
+const imageRemixMetadata = imageRemixDocument.metadata as JsonObject;
+requireText(imageRemixMetadata, "owner", "image/remix metadata");
+requireText(imageRemixMetadata, "disclaimer", "image/remix metadata");
+requireEnum(
+  imageRemixMetadata,
+  "runtime_status",
+  ["pending_image_and_remix_implementation", "ready_for_live_review", "reviewed"],
+  "image/remix metadata",
+);
+
+if (!imageRemixDocument.rubric || typeof imageRemixDocument.rubric !== "object") {
+  throw new Error("Image/remix cultural cases must include a rubric.");
+}
+const imageRubric = imageRemixDocument.rubric as JsonObject;
+requireStrings(imageRubric.passport_requirements, "image rubric.passport_requirements", false);
+requireStrings(imageRubric.remix_requirements, "image rubric.remix_requirements", false);
+if (!Array.isArray(imageRubric.garments)) {
+  throw new Error("Image rubric.garments must be an array.");
+}
+
+const rubricGarments = new Set<string>();
+const rubricRuleIds = new Set<string>();
+for (const row of imageRubric.garments as JsonObject[]) {
+  const garment = requireText(row, "garment", "image rubric garment");
+  if (!garmentIds.has(garment)) throw new Error(`Image rubric uses unknown garment: ${garment}`);
+  if (rubricGarments.has(garment)) throw new Error(`Duplicate image rubric garment: ${garment}`);
+  rubricGarments.add(garment);
+  requireStrings(row.recognizable_cues, `${garment}.recognizable_cues`, false);
+  requireStrings(row.flexible_elements, `${garment}.flexible_elements`, false);
+  requireStrings(row.context_risks, `${garment}.context_risks`, false);
+
+  const rubricSourceIds = requireStrings(row.sourceIds, `${garment}.sourceIds`, false);
+  for (const sourceId of rubricSourceIds) {
+    const source = sources.find((candidate) => candidate.id === sourceId);
+    if (!source) throw new Error(`${garment} image rubric references unknown source: ${sourceId}`);
+    if (!(source.garment_ids as string[]).includes(garment) || source.status !== "approved") {
+      throw new Error(`${garment} image rubric source is not approved for this garment: ${sourceId}`);
+    }
+  }
+
+  for (const ruleId of requireStrings(row.ruleIds, `${garment}.ruleIds`, false)) {
+    if (rubricRuleIds.has(ruleId)) throw new Error(`Duplicate image rubric rule: ${ruleId}`);
+    rubricRuleIds.add(ruleId);
+    const record = knowledgeRecords.find((candidate) => candidate.id === ruleId);
+    if (!record) throw new Error(`${garment} image rubric references unknown rule: ${ruleId}`);
+    if (record.garment !== garment || record.verification_status !== "verified" || !record.reviewed) {
+      throw new Error(`${ruleId} is not a verified/reviewed rule for ${garment}.`);
+    }
+    for (const sourceId of record.source_ids as string[]) {
+      if (!rubricSourceIds.includes(sourceId)) {
+        throw new Error(`${garment} image rubric omits source ${sourceId} required by ${ruleId}.`);
+      }
+    }
+  }
+}
+
+for (const garment of garmentIds) {
+  if (!rubricGarments.has(garment)) throw new Error(`Image rubric is missing garment: ${garment}`);
+}
+for (const ruleId of ruleIds) {
+  if (!rubricRuleIds.has(ruleId)) throw new Error(`Image rubric is missing knowledge rule: ${ruleId}`);
+}
+
+if (!Array.isArray(imageRemixDocument.cases) || imageRemixDocument.cases.length < 8) {
+  throw new Error("At least eight image/remix cultural cases are required.");
+}
+const imageRemixCaseIds = new Set<string>();
+const imageRemixCoverage = new Map<string, Set<string>>();
+for (const testCase of imageRemixDocument.cases as JsonObject[]) {
+  const id = requireText(testCase, "id", "image/remix case");
+  if (imageRemixCaseIds.has(id)) throw new Error(`Duplicate image/remix case ID: ${id}`);
+  imageRemixCaseIds.add(id);
+  const garment = requireText(testCase, "garment", id);
+  if (!garmentIds.has(garment)) throw new Error(`${id} uses unknown garment: ${garment}`);
+  const caseType = requireEnum(testCase, "case_type", ["image", "remix"], id);
+  const riskLevel = requireEnum(testCase, "risk_level", ["safe", "risky"], id);
+
+  if (!testCase.look || typeof testCase.look !== "object" || Array.isArray(testCase.look)) {
+    throw new Error(`${id}.look must be an object.`);
+  }
+  const look = testCase.look as JsonObject;
+  requireStrings(look.items, `${id}.look.items`, false);
+  requireText(look, "culturalNote", `${id}.look`);
+  requireText(look, "imagePrompt", `${id}.look`);
+  const lookSourceIds = requireStrings(look.sourceIds, `${id}.look.sourceIds`, false);
+  for (const sourceId of lookSourceIds) {
+    const source = sources.find((candidate) => candidate.id === sourceId);
+    if (!source) throw new Error(`${id} uses unknown source: ${sourceId}`);
+    if (!(source.garment_ids as string[]).includes(garment) || source.status !== "approved") {
+      throw new Error(`${id} uses a source not approved for ${garment}: ${sourceId}`);
+    }
+  }
+
+  if (!testCase.expected || typeof testCase.expected !== "object") {
+    throw new Error(`${id}.expected must be an object.`);
+  }
+  const expected = testCase.expected as JsonObject;
+  const imageReview = requireEnum(expected, "image_review", ["pass", "warning", "fail"], `${id}.expected`);
+  const criticStatus = requireEnum(expected, "critic_status", ["pass", "warning", "revise"], `${id}.expected`);
+  const expectedSourceIds = requireStrings(expected.sourceIds, `${id}.expected.sourceIds`, false);
+  for (const sourceId of expectedSourceIds) {
+    if (!lookSourceIds.includes(sourceId)) throw new Error(`${id} expected source is absent from look: ${sourceId}`);
+  }
+  const expectedRuleIds = requireStrings(expected.ruleIds, `${id}.expected.ruleIds`);
+  for (const ruleId of expectedRuleIds) {
+    const record = knowledgeRecords.find((candidate) => candidate.id === ruleId);
+    if (!record) throw new Error(`${id} expects unknown rule: ${ruleId}`);
+    if (record.garment !== garment || record.verification_status !== "verified" || !record.reviewed) {
+      throw new Error(`${id} expects a rule not verified/reviewed for ${garment}: ${ruleId}`);
+    }
+    for (const sourceId of record.source_ids as string[]) {
+      if (!expectedSourceIds.includes(sourceId)) {
+        throw new Error(`${id} omits source ${sourceId} required by ${ruleId}.`);
+      }
+    }
+  }
+  requireStrings(expected.assertions, `${id}.expected.assertions`, false);
+  for (const key of ["must_revalidate", "must_regenerate", "reuse_previous_validation"] as const) {
+    if (typeof expected[key] !== "boolean") throw new Error(`${id}.expected.${key} must be boolean.`);
+  }
+  if (expected.must_regenerate !== true || expected.reuse_previous_validation !== false) {
+    throw new Error(`${id} must regenerate and must not reuse previous validation.`);
+  }
+  if (caseType === "remix" && expected.must_revalidate !== true) {
+    throw new Error(`${id} remix case must require revalidation.`);
+  }
+  if (riskLevel === "safe" && (imageReview !== "pass" || criticStatus !== "pass" || expectedRuleIds.length > 0)) {
+    throw new Error(`${id} safe case must expect pass with no rule warnings.`);
+  }
+  if (riskLevel === "risky" && (imageReview === "pass" || criticStatus === "pass" || expectedRuleIds.length === 0)) {
+    throw new Error(`${id} risky case must expect a non-pass result with rule evidence.`);
+  }
+
+  for (const reviewKey of ["case_review", "runtime_review"] as const) {
+    if (!testCase[reviewKey] || typeof testCase[reviewKey] !== "object") {
+      throw new Error(`${id}.${reviewKey} must be an object.`);
+    }
+    const review = testCase[reviewKey] as JsonObject;
+    requireEnum(review, "verdict", ["pass", "warning", "fail", "pending"], `${id}.${reviewKey}`);
+    requireText(review, "reason", `${id}.${reviewKey}`);
+  }
+
+  const coverage = imageRemixCoverage.get(garment) ?? new Set<string>();
+  coverage.add(`${caseType}:${riskLevel}`);
+  imageRemixCoverage.set(garment, coverage);
+}
+
+for (const garment of ["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh"]) {
+  const coverage = imageRemixCoverage.get(garment);
+  if (!coverage?.has("image:safe") || !coverage.has("remix:risky")) {
+    throw new Error(`${garment} must have one safe image case and one risky remix case.`);
+  }
+}
+
 const recommendationCasesDocument = readJson(recommendationCasesPath);
 if (
   !Array.isArray(recommendationCasesDocument.cases) ||
@@ -537,5 +701,5 @@ for (const requiredGarment of ["ao_dai", "ao_ngu_than", "ao_tu_than", "nhat_binh
 }
 
 console.log(
-  `Cultural data valid: ${garmentIds.size} garments, ${sourceIds.size} sources, ${ruleIds.size} knowledge records, ${presentRuleTypes.size} rule types, ${caseIds.size} validation cases, ${recommendationCaseIds.size} recommendation cases.`,
+  `Cultural data valid: ${garmentIds.size} garments, ${sourceIds.size} sources, ${ruleIds.size} knowledge records, ${presentRuleTypes.size} rule types, ${caseIds.size} validation cases, ${recommendationCaseIds.size} recommendation cases, ${imageRemixCaseIds.size} image/remix cases.`,
 );

@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "owner": "Diệu Linh",
+    "meeting": "04",
+    "created_at": "2026-10-05",
+    "purpose": "Cultural image and remix acceptance rubric for the four MVP garments",
+    "runtime_status": "pending_image_and_remix_implementation",
+    "disclaimer": "AI-generated images are styling illustrations, not authenticated artifacts, historical reconstructions or evidence for new cultural claims."
+  },
+  "rubric": {
+    "passport_requirements": [
+      "Every displayed source must resolve to an approved references.json entry linked to the look garment.",
+      "Display source title, publisher and safe URL; a source ID alone is insufficient for the final Passport.",
+      "Cultural claims must stay within the retrieved record condition and source usable_knowledge.",
+      "needs_review sources must not be presented as production-approved evidence."
+    ],
+    "remix_requirements": [
+      "Only whitelisted fields may change and garment identity must remain explicit.",
+      "Any changed look must receive a new Cultural Critic result before image regeneration.",
+      "A previous validation result must never be reused after items, culturalNote, sourceIds or imagePrompt change.",
+      "The original look remains available when remix, revalidation or regeneration fails."
+    ],
+    "garments": [
+      {
+        "garment": "ao_dai",
+        "recognizable_cues": [
+          "Describe the result as contemporary/adapted when collar, sleeve or decoration changes substantially.",
+          "Do not present one modern or historical form as mandatory for every ao dai."
+        ],
+        "flexible_elements": ["collar", "sleeve", "material", "decoration", "palette"],
+        "context_risks": ["single-form historical generalization"],
+        "ruleIds": [
+          "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+          "AD_FLEX_NECK_SLEEVE_DECORATION",
+          "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+        ],
+        "sourceIds": ["VNMH_AO_DAI_2015"]
+      },
+      {
+        "garment": "ao_ngu_than",
+        "recognizable_cues": [
+          "For the sourced tay chen variant, retain five buttons along the right flap.",
+          "For the sourced tay chen variant, keep the sleeves narrow and fitted."
+        ],
+        "flexible_elements": ["material", "palette"],
+        "context_risks": ["generalizing one artifact palette or motif to every ao ngu than"],
+        "ruleIds": [
+          "ANT_STRUCTURE_FIVE_BUTTONS",
+          "ANT_STRUCTURE_NARROW_SLEEVES",
+          "ANT_FLEX_MATERIAL_AND_PALETTE",
+          "ANT_CONTEXT_NGUYEN_STYLE",
+          "ANT_WARNING_ARTIFACT_GENERALIZATION"
+        ],
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+      },
+      {
+        "garment": "ao_tu_than",
+        "recognizable_cues": [
+          "In the sourced Kinh Bac context, preserve a recognizable four-panel construction with two front and two back panels/tails.",
+          "Treat the black skirt, white yem and mo qua scarf as a reconstructed event ensemble, not a universal uniform."
+        ],
+        "flexible_elements": ["palette", "modern photoshoot accessories outside an exact event reconstruction"],
+        "context_risks": ["universalizing the reconstructed Kinh Bac festival ensemble"],
+        "ruleIds": ["ATT_STRUCTURE_FOUR_PANELS", "ATT_CONTEXT_KINH_BAC_FESTIVAL"],
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"]
+      },
+      {
+        "garment": "nhat_binh",
+        "recognizable_cues": [
+          "For a Nguyen-court Nhat Binh claim, retain the rectangular opposing collar and central closure.",
+          "Do not infer a specific rank from palette or motifs without an approved rank-specific source."
+        ],
+        "flexible_elements": ["contemporary palette", "contemporary decoration", "formal styling"],
+        "context_risks": [
+          "generalizing motifs from Doan Huy Empress Dowager's artifact",
+          "assigning unsupported court rank"
+        ],
+        "ruleIds": [
+          "NB_STRUCTURE_RECTANGULAR_COLLAR",
+          "NB_CONTEXT_NGUYEN_COURT_USE",
+          "NB_FLEX_CONTEMPORARY_VARIATION",
+          "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+        ],
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025", "VHNT_NHAT_BINH_CONTEXT_2022"]
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "IR_M04_01_AO_DAI_IMAGE_SAFE",
+      "garment": "ao_dai",
+      "case_type": "image",
+      "risk_level": "safe",
+      "look": {
+        "items": ["Áo dài cách tân cổ thuyền, tay lửng, hai vạt"],
+        "culturalNote": "Thiết kế đương đại dựa trên sự biến đổi đa dạng của cổ, tay và trang trí áo dài.",
+        "imagePrompt": "Contemporary Vietnamese ao dai with two panels, boat neckline and short sleeves; editorial illustration, not a museum reconstruction.",
+        "sourceIds": ["VNMH_AO_DAI_2015"]
+      },
+      "expected": {
+        "image_review": "pass",
+        "critic_status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VNMH_AO_DAI_2015"],
+        "must_revalidate": false,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": [
+          "The output is labeled contemporary rather than an authenticated reconstruction.",
+          "No single collar or sleeve is claimed as universal."
+        ]
+      },
+      "case_review": {"verdict": "pass", "reason": "Expected image cues stay within the approved flexible record."},
+      "runtime_review": {"verdict": "pending", "reason": "Image generation is not integrated yet."}
+    },
+    {
+      "id": "IR_M04_02_AO_DAI_REMIX_GENERALIZATION",
+      "garment": "ao_dai",
+      "case_type": "remix",
+      "risk_level": "risky",
+      "look": {
+        "items": ["Áo dài cổ cao, tay dài"],
+        "culturalNote": "Cổ cao và tay dài là hình thức duy nhất bắt buộc cho mọi áo dài Việt Nam.",
+        "imagePrompt": "Vietnamese ao dai presented as the only historically correct universal form.",
+        "sourceIds": ["VNMH_AO_DAI_2015"]
+      },
+      "expected": {
+        "image_review": "warning",
+        "critic_status": "warning",
+        "ruleIds": ["AD_WARNING_SINGLE_FORM_GENERALIZATION"],
+        "sourceIds": ["VNMH_AO_DAI_2015"],
+        "must_revalidate": true,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": ["Critic must replace the pre-remix verdict and narrow the universal claim before regeneration."]
+      },
+      "case_review": {"verdict": "pass", "reason": "The risk is the universal claim, not the high-collar design itself."},
+      "runtime_review": {"verdict": "pending", "reason": "Remix orchestration is not implemented yet."}
+    },
+    {
+      "id": "IR_M04_03_NGU_THAN_IMAGE_SAFE",
+      "garment": "ao_ngu_than",
+      "case_type": "image",
+      "risk_level": "safe",
+      "look": {
+        "items": ["Áo ngũ thân tay chẽn năm cúc dọc vạt phải, tay hẹp"],
+        "culturalNote": "Đặc điểm được giới hạn ở biến thể tay chẽn trong nhóm hiện vật của nguồn.",
+        "imagePrompt": "Vietnamese ao ngu than tay chen with five buttons on the right flap and narrow sleeves; modern palette, heritage illustration.",
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+      },
+      "expected": {
+        "image_review": "pass",
+        "critic_status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"],
+        "must_revalidate": false,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": ["Five right-flap buttons and narrow sleeves remain visually recognizable."]
+      },
+      "case_review": {"verdict": "pass", "reason": "The prompt preserves both sourced tay chen cues while allowing palette variation."},
+      "runtime_review": {"verdict": "pending", "reason": "Image generation is not integrated yet."}
+    },
+    {
+      "id": "IR_M04_04_NGU_THAN_REMIX_STRUCTURE",
+      "garment": "ao_ngu_than",
+      "case_type": "remix",
+      "risk_level": "risky",
+      "look": {
+        "items": ["Áo ngũ thân tay chẽn ba cúc giữa thân, tay rất rộng"],
+        "culturalNote": "Thiết kế vẫn được gọi là phục dựng đúng biến thể tay chẽn của nguồn.",
+        "imagePrompt": "Ao ngu than tay chen with three central buttons and very wide sleeves, claimed as exact reconstruction.",
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"]
+      },
+      "expected": {
+        "image_review": "warning",
+        "critic_status": "warning",
+        "ruleIds": ["ANT_STRUCTURE_FIVE_BUTTONS", "ANT_STRUCTURE_NARROW_SLEEVES"],
+        "sourceIds": ["VNMH_AO_NGU_THAN_2021"],
+        "must_revalidate": true,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": ["Both changed structural cues must be evaluated before any new image is accepted."]
+      },
+      "case_review": {"verdict": "pass", "reason": "Both warnings remain advisory and scoped to the tay chen reconstruction claim."},
+      "runtime_review": {"verdict": "pending", "reason": "Remix orchestration is not implemented yet."}
+    },
+    {
+      "id": "IR_M04_05_TU_THAN_IMAGE_SAFE",
+      "garment": "ao_tu_than",
+      "case_type": "image",
+      "risk_level": "safe",
+      "look": {
+        "items": ["Áo tứ thân gồm hai tà trước và hai tà sau", "Yếm trắng", "Váy đen", "Khăn mỏ quạ"],
+        "culturalNote": "Tổ hợp này tái hiện riêng bối cảnh hội thi nấu cơm xuân Kinh Bắc được nguồn mô tả.",
+        "imagePrompt": "Four-panel ao tu than ensemble in a reconstructed Kinh Bac spring festival scene; contextual illustration.",
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"]
+      },
+      "expected": {
+        "image_review": "pass",
+        "critic_status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"],
+        "must_revalidate": false,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": ["Four panels remain recognizable and the ensemble is visibly/contextually event-specific."]
+      },
+      "case_review": {"verdict": "pass", "reason": "Structure and reconstructed festival context are both scoped correctly."},
+      "runtime_review": {"verdict": "pending", "reason": "Image generation is not integrated yet."}
+    },
+    {
+      "id": "IR_M04_06_TU_THAN_REMIX_CONTEXT",
+      "garment": "ao_tu_than",
+      "case_type": "remix",
+      "risk_level": "risky",
+      "look": {
+        "items": ["Áo tứ thân liền kín thân trước", "Yếm trắng", "Váy đen", "Khăn mỏ quạ"],
+        "culturalNote": "Mọi áo tứ thân ở mọi dịp đều bắt buộc có tổ hợp này.",
+        "imagePrompt": "Closed-front ao tu than described as a universal mandatory four-item uniform.",
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"]
+      },
+      "expected": {
+        "image_review": "warning",
+        "critic_status": "warning",
+        "ruleIds": ["ATT_STRUCTURE_FOUR_PANELS", "ATT_CONTEXT_KINH_BAC_FESTIVAL"],
+        "sourceIds": ["VHTT_AO_TU_THAN_KINH_BAC", "VNMH_AO_TU_THAN_CONTEXT_2016"],
+        "must_revalidate": true,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": ["Critic must flag both the lost panel structure and the universalized event ensemble."]
+      },
+      "case_review": {"verdict": "pass", "reason": "The expected warnings separate structural identity from event-specific context."},
+      "runtime_review": {"verdict": "pending", "reason": "Remix orchestration is not implemented yet."}
+    },
+    {
+      "id": "IR_M04_07_NHAT_BINH_IMAGE_SAFE",
+      "garment": "nhat_binh",
+      "case_type": "image",
+      "risk_level": "safe",
+      "look": {
+        "items": ["Nhật Bình đương đại cổ đối khâm hình chữ nhật, cúc giữa"],
+        "culturalNote": "Bảng màu lavender là diễn giải đương đại và không đại diện phẩm cấp cung đình.",
+        "imagePrompt": "Contemporary Nhat Binh with rectangular opposing collar and center closure; lavender palette, no court-rank claim.",
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025", "VHNT_NHAT_BINH_CONTEXT_2022"]
+      },
+      "expected": {
+        "image_review": "pass",
+        "critic_status": "pass",
+        "ruleIds": [],
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025", "VHNT_NHAT_BINH_CONTEXT_2022"],
+        "must_revalidate": false,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": ["The rectangular collar is visible and palette carries no unsupported rank meaning."]
+      },
+      "case_review": {"verdict": "pass", "reason": "The prompt preserves the sourced collar while correctly labeling contemporary palette variation."},
+      "runtime_review": {"verdict": "pending", "reason": "Image generation is not integrated yet."}
+    },
+    {
+      "id": "IR_M04_08_NHAT_BINH_REMIX_RANK",
+      "garment": "nhat_binh",
+      "case_type": "remix",
+      "risk_level": "risky",
+      "look": {
+        "items": ["Áo khoác cổ tròn màu vàng với họa tiết phượng, hạc và rùa"],
+        "culturalNote": "Màu vàng và các họa tiết này bắt buộc cho mọi Nhật Bình và chứng minh người mặc có phẩm cấp Hoàng thái hậu.",
+        "imagePrompt": "Round-collar yellow robe with phoenix, crane and turtle motifs, claimed as universal Nhat Binh rank evidence.",
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"]
+      },
+      "expected": {
+        "image_review": "warning",
+        "critic_status": "warning",
+        "ruleIds": ["NB_STRUCTURE_RECTANGULAR_COLLAR", "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"],
+        "sourceIds": ["VHNT_NHAT_BINH_MOTIF_2025"],
+        "must_revalidate": true,
+        "must_regenerate": true,
+        "reuse_previous_validation": false,
+        "assertions": [
+          "Critic must catch the missing rectangular collar.",
+          "Artifact-specific motifs and yellow color must not be generalized into universal rank evidence."
+        ]
+      },
+      "case_review": {"verdict": "pass", "reason": "The case separates a preserve warning from artifact/rank overgeneralization."},
+      "runtime_review": {"verdict": "pending", "reason": "Remix orchestration is not implemented yet."}
+    }
+  ]
+}
