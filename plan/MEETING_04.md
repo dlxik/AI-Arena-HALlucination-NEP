@@ -117,13 +117,20 @@ Definition of Done của Lan Anh:
 
 ### Linh - Cultural Data và Submission
 
-- [ ] Tạo rubric review ảnh cho 4 garment: cấu trúc nhận diện, context, motif/rank claim và mức sai lệch chấp nhận được.
-- [ ] Chuẩn bị tối thiểu 8 image/remix acceptance cases, mỗi garment có một case giữ đúng và một case có rủi ro.
-- [ ] Review Cultural Passport: source title/publisher/link đúng với `references.json`, claim không vượt provenance.
+- [x] Tạo rubric review ảnh cho 4 garment: cấu trúc nhận diện, context, motif/rank claim và mức sai lệch chấp nhận được.
+- [x] Chuẩn bị tối thiểu 8 image/remix acceptance cases, mỗi garment có một case giữ đúng và một case có rủi ro.
+- [x] Review Cultural Passport: source title/publisher/link đúng với `references.json`, claim không vượt provenance.
 - [ ] Kiểm tra remix giữ đúng garment/rule scope và actual validation không tái sử dụng kết quả cũ.
 - [ ] Ghi pass/warning/fail cho output ảnh/remix; phân biệt lỗi hình ảnh với lỗi fact/cultural claim.
-- [ ] Ghi rõ giới hạn: ảnh AI là minh họa, không phải phục dựng/hiện vật được xác thực.
-- [ ] Cập nhật evaluation/submission artefact phục vụ Meeting 05.
+- [x] Ghi rõ giới hạn: ảnh AI là minh họa, không phải phục dựng/hiện vật được xác thực.
+- [x] Cập nhật evaluation/submission artefact phục vụ Meeting 05.
+
+Artefact Linh ngày 2026-10-05:
+
+- `tests/fixtures/image-remix-cultural-cases.json`: rubric 14 rules và 8 expected cases.
+- `docs/meeting-04-cultural-acceptance.md`: Passport audit, remix policy, cultural handoff và runtime blockers.
+- Passport hiện thiếu source title/publisher/link, còn lộ raw `imagePrompt` và chưa có AI-image disclaimer; owner sửa là Hiền.
+- Image/remix runtime review giữ `pending` cho tới khi Lan Anh tích hợp endpoint/orchestration.
 
 Definition of Done của Linh:
 

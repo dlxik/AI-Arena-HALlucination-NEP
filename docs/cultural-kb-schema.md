@@ -116,3 +116,14 @@ Ma trận rule và 8 acceptance cases nằm tại `tests/fixtures/cultural-valid
 - Rule/source ID bịa phải bị runtime validation từ chối, không được chuyển thành một cultural verdict có vẻ hợp lệ.
 - Mỗi warning cần có `ruleId`, severity, reason và suggested fix nằm trong phạm vi condition/action của record.
 - Actual output chưa chạy phải ghi `pending`; không dùng expected fixture làm bằng chứng Gemini Critic đã pass.
+
+## Policy image/remix cho Meeting 04
+
+Rubric và 8 image/remix cultural cases nằm tại `tests/fixtures/image-remix-cultural-cases.json`; báo cáo review nằm tại `docs/meeting-04-cultural-acceptance.md`.
+
+- Ảnh AI là minh họa, không phải hiện vật, phục dựng đã xác thực hoặc nguồn cultural fact.
+- Image prompt chỉ được dùng claim đã có trong validated look/context.
+- Cultural Passport phải resolve source ID thành title, publisher và safe URL từ source catalog đã validate.
+- Source `needs_review` không được trình bày như production-approved evidence.
+- Mọi remix phải chạy lại Cultural Critic và tạo ảnh mới/fallback; không tái sử dụng validation cũ.
+- Expected fixture không thay thế runtime image/remix review; output chưa chạy phải giữ `pending`.
