@@ -1,0 +1,329 @@
+{
+  "executedAt": "2026-10-02T15:17:56.054Z",
+  "timezone": "Asia/Saigon",
+  "criticModel": "gemini-3.5-flash-lite",
+  "criticTimeoutMs": 60000,
+  "imageProvider": "disabled_for_critic_only_evaluation",
+  "imageModel": null,
+  "imageTimeoutMs": null,
+  "criticPrompt": "prompts/critic/critic-v1.md",
+  "criticPromptSha256": "2219f735a8004af9c1ab83bce5544c0b1c0abaa9f4536bbfb1f85d152a1ae761",
+  "imagePrompt": "prompts/image/image-v1.md",
+  "imagePromptSha256": "ef2f9343cfb58376fa4be8e7d046baec6b11f3759ecc3eff0d86b010df059697",
+  "culturalReviewer": "Pending Diệu Linh review; expected outcomes are backend hypotheses",
+  "imageReview": "Not culturally reviewed; images are AI illustrations, not authenticated artefacts",
+  "cases": [
+    {
+      "id": "IR_01_AO_DAI_PALETTE",
+      "garment": "ao_dai",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1400,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "changes": {
+        "palette": [
+          "soft_pink",
+          "soft_white"
+        ]
+      },
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "validationId": "5326aebb-6d61-43da-a41f-895bf2c3cabc",
+      "validatedAt": "2026-10-02T15:17:57.462Z",
+      "image": {
+        "lookId": "remix-737fd960-952b-41e7-9c1a-decefa0530ef",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VNMH_AO_DAI_2015"
+      ],
+      "ruleIds": [
+        "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+        "AD_FLEX_NECK_SLEEVE_DECORATION",
+        "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+      ]
+    },
+    {
+      "id": "IR_02_AO_DAI_RISK",
+      "garment": "ao_dai",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1568,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+      ],
+      "changes": {
+        "accessories": [
+          "Khăn kèm claim: cổ cao và tay dài là hình thức lịch sử duy nhất, bắt buộc cho mọi áo dài ở mọi thời kỳ."
+        ]
+      },
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
+            "severity": "medium",
+            "reason": "Phụ kiện trong bản phối chứa tuyên bố khẳng định cổ cao và tay dài là hình thức lịch sử duy nhất và bắt buộc cho mọi áo dài, trái với ghi nhận của nguồn về sự đa dạng kiểu dáng trong tiến trình lịch sử.",
+            "suggestedFix": "Loại bỏ hoặc điều chỉnh lại tuyên bố tuyệt đối trong phụ kiện, chuyển thành việc công nhận cổ cao và tay dài là một trong số các kiểu dáng truyền thống bên cạnh các biến thể đương đại."
+          }
+        ]
+      },
+      "validationId": "427c7a62-6a59-4064-ae86-6e87bf3487fa",
+      "validatedAt": "2026-10-02T15:17:59.031Z",
+      "image": {
+        "lookId": "remix-5b454aa8-9c32-4cbe-91ea-bbc503c51e97",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VNMH_AO_DAI_2015"
+      ],
+      "ruleIds": [
+        "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+        "AD_FLEX_NECK_SLEEVE_DECORATION",
+        "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+      ]
+    },
+    {
+      "id": "IR_03_NGU_THAN_PALETTE",
+      "garment": "ao_ngu_than",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1212,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "changes": {
+        "palette": [
+          "soft_pink",
+          "soft_white"
+        ]
+      },
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "validationId": "2611abb2-9f07-44a9-b0cf-f5fcc55a02f0",
+      "validatedAt": "2026-10-02T15:18:00.237Z",
+      "image": {
+        "lookId": "remix-0fd0c3b3-8afe-486d-96e1-e764f4047a13",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VNMH_AO_NGU_THAN_2021"
+      ],
+      "ruleIds": [
+        "ANT_CONTEXT_NGUYEN_STYLE",
+        "ANT_FLEX_MATERIAL_AND_PALETTE",
+        "ANT_STRUCTURE_FIVE_BUTTONS",
+        "ANT_STRUCTURE_NARROW_SLEEVES",
+        "ANT_WARNING_ARTIFACT_GENERALIZATION"
+      ]
+    },
+    {
+      "id": "IR_04_NGU_THAN_RISK",
+      "garment": "ao_ngu_than",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1607,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "ANT_WARNING_ARTIFACT_GENERALIZATION"
+      ],
+      "changes": {
+        "accessories": [
+          "Khăn kèm claim: mọi áo ngũ thân đều bắt buộc màu đen và họa tiết hồi văn, thủy ba, ngũ Phúc như hiện vật bảo tàng."
+        ]
+      },
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "ANT_WARNING_ARTIFACT_GENERALIZATION",
+            "severity": "medium",
+            "reason": "Khăn trong phần phụ kiện đưa ra claim: mọi áo ngũ thân đều bắt buộc màu đen và họa tiết hồi văn, thủy ba, ngũ Phúc như hiện vật bảo tàng, vi phạm điều kiện tránh khái quát hóa từ một hiện vật cụ thể.",
+            "suggestedFix": "Sửa lại mô tả phụ kiện hoặc khăn để làm rõ đây là họa tiết của một hiện vật cụ thể được bảo tàng lưu giữ, không khẳng định đó là quy chuẩn bắt buộc cho mọi áo ngũ thân."
+          }
+        ]
+      },
+      "validationId": "8f763091-d88f-46d9-9f77-7577ec749255",
+      "validatedAt": "2026-10-02T15:18:01.862Z",
+      "image": {
+        "lookId": "remix-eca26048-0604-4d8d-881a-6865728338b7",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VNMH_AO_NGU_THAN_2021"
+      ],
+      "ruleIds": [
+        "ANT_CONTEXT_NGUYEN_STYLE",
+        "ANT_FLEX_MATERIAL_AND_PALETTE",
+        "ANT_STRUCTURE_FIVE_BUTTONS",
+        "ANT_STRUCTURE_NARROW_SLEEVES",
+        "ANT_WARNING_ARTIFACT_GENERALIZATION"
+      ]
+    },
+    {
+      "id": "IR_05_TU_THAN_PALETTE",
+      "garment": "ao_tu_than",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1234,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "changes": {
+        "palette": [
+          "soft_pink",
+          "soft_white"
+        ]
+      },
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "validationId": "0b0c16c5-2144-4f59-9312-431380982843",
+      "validatedAt": "2026-10-02T15:18:03.099Z",
+      "image": {
+        "lookId": "remix-3aa9b9b3-3d21-4377-a30e-8dab24c7d07b",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VHTT_AO_TU_THAN_KINH_BAC",
+        "VNMH_AO_TU_THAN_CONTEXT_2016"
+      ],
+      "ruleIds": [
+        "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+        "ATT_STRUCTURE_FOUR_PANELS"
+      ]
+    },
+    {
+      "id": "IR_06_TU_THAN_RISK",
+      "garment": "ao_tu_than",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1612,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "ATT_CONTEXT_KINH_BAC_FESTIVAL"
+      ],
+      "changes": {
+        "accessories": [
+          "Khăn mỏ quạ kèm claim: mọi áo tứ thân ở mọi dịp bắt buộc yếm trắng, váy đen và khăn mỏ quạ kể cả photoshoot hiện đại."
+        ]
+      },
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+            "severity": "medium",
+            "reason": "Phụ kiện có chứa claim khẳng định mọi áo tứ thân ở mọi dịp bắt buộc phải có yếm trắng, váy đen và khăn mỏ quạ kể cả trong photoshoot hiện đại, mâu thuẫn với quy định nguồn rằng đây là ngữ cảnh lễ hội cụ thể.",
+            "suggestedFix": "Loại bỏ claim bắt buộc phổ quát trong phụ kiện; ghi nhận yếm trắng, váy đen và khăn mỏ quạ là lựa chọn phù hợp cho ngữ cảnh lễ hội truyền thống thay vì bắt buộc ở mọi dịp."
+          }
+        ]
+      },
+      "validationId": "0c29c501-51cd-433a-a1de-5afa5032e92f",
+      "validatedAt": "2026-10-02T15:18:04.713Z",
+      "image": {
+        "lookId": "remix-b1e2c3a4-a8c0-4914-b9f5-1c487b0fd5a9",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VHTT_AO_TU_THAN_KINH_BAC",
+        "VNMH_AO_TU_THAN_CONTEXT_2016"
+      ],
+      "ruleIds": [
+        "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+        "ATT_STRUCTURE_FOUR_PANELS"
+      ]
+    },
+    {
+      "id": "IR_07_NHAT_BINH_PALETTE",
+      "garment": "nhat_binh",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1614,
+      "expectedStatus": "pass",
+      "expectedRuleIds": [],
+      "changes": {
+        "palette": [
+          "soft_pink",
+          "soft_white"
+        ]
+      },
+      "validation": {
+        "status": "pass",
+        "warnings": []
+      },
+      "validationId": "4de26d63-ecb8-4217-b8f2-48028a08eda5",
+      "validatedAt": "2026-10-02T15:18:06.332Z",
+      "image": {
+        "lookId": "remix-f598ee6c-3394-4171-9e8b-aecc0686626c",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VHNT_NHAT_BINH_MOTIF_2025",
+        "VHNT_NHAT_BINH_CONTEXT_2022"
+      ],
+      "ruleIds": [
+        "NB_CONTEXT_NGUYEN_COURT_USE",
+        "NB_FLEX_CONTEMPORARY_VARIATION",
+        "NB_STRUCTURE_RECTANGULAR_COLLAR",
+        "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+      ]
+    },
+    {
+      "id": "IR_08_NHAT_BINH_RISK",
+      "garment": "nhat_binh",
+      "result": "pass",
+      "httpStatus": 200,
+      "elapsedMs": 1656,
+      "expectedStatus": "warning",
+      "expectedRuleIds": [
+        "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+      ],
+      "changes": {
+        "accessories": [
+          "Quạt kèm claim: màu vàng cùng họa tiết phượng, hạc, rùa của áo Đoan Huy Hoàng thái hậu là bắt buộc cho mọi Nhật Bình và mọi phẩm cấp."
+        ]
+      },
+      "validation": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION",
+            "severity": "medium",
+            "reason": "Phụ kiện trong bản phối tuyên bố màu vàng và họa tiết phượng, hạc, rùa của áo Đoan Huy Hoàng thái hậu là bắt buộc cho mọi Nhật Bình và mọi phẩm cấp, điều này khái quát hóa một hiện vật cá biệt thành quy chuẩn phổ quát.",
+            "suggestedFix": "Loại bỏ tuyên bố cho rằng màu vàng và bộ họa tiết của Đoan Huy Hoàng thái hậu là bắt buộc cho mọi áo Nhật Bình; ghi rõ đó là các yếu tố tham khảo từ một hiện vật cụ thể."
+          }
+        ]
+      },
+      "validationId": "a8f135a5-01a9-4082-8191-5c6ac3c15491",
+      "validatedAt": "2026-10-02T15:18:07.991Z",
+      "image": {
+        "lookId": "remix-f194871e-bf98-4f04-a511-6e1180f99819",
+        "status": "fallback",
+        "fallbackReason": "not_configured"
+      },
+      "sourceIds": [
+        "VHNT_NHAT_BINH_MOTIF_2025",
+        "VHNT_NHAT_BINH_CONTEXT_2022"
+      ],
+      "ruleIds": [
+        "NB_CONTEXT_NGUYEN_COURT_USE",
+        "NB_FLEX_CONTEMPORARY_VARIATION",
+        "NB_STRUCTURE_RECTANGULAR_COLLAR",
+        "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+      ]
+    }
+  ]
+}

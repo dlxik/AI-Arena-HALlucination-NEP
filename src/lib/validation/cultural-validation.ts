@@ -36,7 +36,7 @@ export function parseValidationLook(value: unknown): ValidationResult<Validation
       typeof value.style !== "string" || !STYLE_IDS.includes(value.style as typeof STYLE_IDS[number]) ||
       !texts(value.palette, 1, 4) || !texts(value.items, 1, 8) ||
       !texts(value.accessories, 0, 6) || !text(value.reason) || !text(value.culturalNote) ||
-      !texts(value.sourceIds, 1, 4) || !text(value.imagePrompt, 1_500)) {
+      !texts(value.sourceIds, 1, 4) || !text(value.imagePrompt, 4_096)) {
     return invalid("look must contain all bounded outfit fields and a concrete garment ID.");
   }
 

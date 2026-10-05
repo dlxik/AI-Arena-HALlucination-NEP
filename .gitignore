@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/artifacts/meeting-04/
 
 # next.js
 /.next/
@@ -23,6 +24,8 @@
 # misc
 .DS_Store
 *.pem
+plan/LAN_ANH_*.md
+docs/*-lan-anh-verification.md
 
 # debug
 npm-debug.log*
