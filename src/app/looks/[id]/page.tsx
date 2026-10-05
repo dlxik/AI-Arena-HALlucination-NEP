@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import CulturalPassport from "@/components/cultural-passport/CulturalPassport";
-import type { RecommendationOutput } from "@/types/api";
+import type { RecommendationOutput, RecommendationInput } from "@/types/api";
 import type { OutfitLook } from "@/types/outfit";
 
 // ─────────────────────────────────────────────────────────
@@ -12,7 +12,7 @@ import type { OutfitLook } from "@/types/outfit";
 // ─────────────────────────────────────────────────────────
 
 type PageState =
-  | { status: "found"; look: OutfitLook; isFixture: boolean }
+  | { status: "found"; look: OutfitLook; isFixture: boolean; originalInput?: RecommendationInput }
   | { status: "not-found" }
   | { status: "no-session" };
 
@@ -22,18 +22,42 @@ type PageState =
 
 function readLookFromStorage(id: string | undefined): PageState {
   try {
-    const raw = sessionStorage.getItem("recommendation_result");
-    if (!raw) return { status: "no-session" };
-    const stored = JSON.parse(raw) as {
+    const rawResult = sessionStorage.getItem("recommendation_result");
+    const rawInput = sessionStorage.getItem("recommendation_input");
+    
+    if (!rawResult) return { status: "no-session" };
+    
+    const storedResult = JSON.parse(rawResult) as {
       data: RecommendationOutput;
       isFixture: boolean;
     };
-    const look = stored.data?.looks?.find((l) => l.id === id);
+    
+    let originalInput: RecommendationInput | undefined;
+    if (rawInput) {
+      originalInput = JSON.parse(rawInput);
+    }
+
+    const look = storedResult.data?.looks?.find((l) => l.id === id);
     if (!look) return { status: "not-found" };
-    return { status: "found", look, isFixture: stored.isFixture };
+    
+    return { status: "found", look, isFixture: storedResult.isFixture, originalInput };
   } catch {
     return { status: "not-found" };
   }
+}
+
+function updateStorage(updatedLook: OutfitLook) {
+  try {
+    const raw = sessionStorage.getItem("recommendation_result");
+    if (raw) {
+      const stored = JSON.parse(raw);
+      const lookIndex = stored.data.looks.findIndex((l: OutfitLook) => l.id === updatedLook.id);
+      if (lookIndex !== -1) {
+        stored.data.looks[lookIndex] = updatedLook;
+        sessionStorage.setItem("recommendation_result", JSON.stringify(stored));
+      }
+    }
+  } catch {}
 }
 
 // ─────────────────────────────────────────────────────────
@@ -43,8 +67,17 @@ function readLookFromStorage(id: string | undefined): PageState {
 export default function CulturalPassportPage() {
   const params = useParams<{ id: string }>();
   const id = params?.id;
+  
   // Lazy initializer: đọc sessionStorage ngay lần đầu render, không dùng useEffect
-  const [state] = useState<PageState>(() => readLookFromStorage(id));
+  const [state, setState] = useState<PageState>(() => readLookFromStorage(id));
+  
+  const [isRemixing, setIsRemixing] = useState(false);
+  const [isRevalidating, setIsRevalidating] = useState(false);
+  const [remixError, setRemixError] = useState("");
+
+  const [editPalette, setEditPalette] = useState("");
+  const [editAccessories, setEditAccessories] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   // ── No session / not found ───────────────────────────────
   if (state.status === "no-session" || state.status === "not-found") {
@@ -86,17 +119,80 @@ export default function CulturalPassportPage() {
   }
 
   // ── Found ─────────────────────────────────────────────────
-  const { look, isFixture } = state;
+  const { look, isFixture, originalInput } = state;
+
+  const startEdit = () => {
+    setEditPalette(look.palette.join(", "));
+    setEditAccessories(look.accessories.join(", "));
+    setIsEditing(true);
+  };
+
+  const handleRemix = async () => {
+    setIsRemixing(true);
+    setIsRevalidating(true);
+    setRemixError("");
+
+    try {
+      const updatedLook: OutfitLook = {
+        ...look,
+        palette: editPalette.split(",").map((s) => s.trim()).filter(Boolean),
+        accessories: editAccessories.split(",").map((s) => s.trim()).filter(Boolean),
+      };
+
+      // 1. Revalidate
+      const validateRes = await fetch("/api/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ look: updatedLook, recommendationInput: originalInput }),
+      });
+      const validateData = await validateRes.json();
+      
+      if (!validateData.success) {
+        throw new Error(validateData.error?.message || "Kiểm duyệt thất bại.");
+      }
+      
+      updatedLook.validation = validateData.data;
+      setIsRevalidating(false);
+
+      // 2. Generate new image
+      const imgRes = await fetch("/api/generate-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ look: updatedLook }),
+      });
+      const imgData = await imgRes.json();
+
+      if (imgData.success && imgData.data.status === "generated") {
+        updatedLook.imageUrl = imgData.data.imageUrl;
+        updatedLook.imageFallback = undefined;
+      } else {
+        updatedLook.imageUrl = undefined;
+        updatedLook.imageFallback = imgData.data?.fallbackReason || imgData.data?.message || (!imgData.success && imgData.error?.message) || "Không thể tạo ảnh minh họa mới.";
+      }
+
+      // Update state and storage
+      setState({ ...state, look: updatedLook });
+      updateStorage(updatedLook);
+      setIsEditing(false);
+    } catch (err: unknown) {
+      setRemixError((err as Error).message || "Đã xảy ra lỗi khi remix.");
+    } finally {
+      setIsRemixing(false);
+      setIsRevalidating(false);
+    }
+  };
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-12 sm:px-10">
       {/* Breadcrumb */}
-      <nav className="mb-8 flex items-center gap-2 text-sm text-slate-500">
-        <Link href="/results" className="hover:text-emerald-700 transition-colors">
-          ← Bản phối
-        </Link>
-        <span>/</span>
-        <span className="text-slate-900 font-medium">{look.name}</span>
+      <nav className="mb-8 flex items-center justify-between text-sm text-slate-500">
+        <div className="flex items-center gap-2">
+          <Link href="/results" className="hover:text-emerald-700 transition-colors">
+            ← Bản phối
+          </Link>
+          <span>/</span>
+          <span className="text-slate-900 font-medium">{look.name}</span>
+        </div>
       </nav>
 
       {/* Fixture badge */}
@@ -106,7 +202,81 @@ export default function CulturalPassportPage() {
         </div>
       )}
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+      {/* Remix Controls */}
+      <div className="mb-8 rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
+            Remix (Tinh chỉnh)
+          </h2>
+          {!isEditing && (
+            <button
+              onClick={startEdit}
+              className="text-xs font-semibold text-emerald-700 hover:underline"
+            >
+              Chỉnh sửa
+            </button>
+          )}
+        </div>
+
+        {isEditing ? (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Bảng màu (cách nhau bằng dấu phẩy)</label>
+              <input
+                type="text"
+                value={editPalette}
+                onChange={(e) => setEditPalette(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+                disabled={isRemixing}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Phụ kiện (cách nhau bằng dấu phẩy)</label>
+              <input
+                type="text"
+                value={editAccessories}
+                onChange={(e) => setEditAccessories(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+                disabled={isRemixing}
+              />
+            </div>
+
+            {remixError && (
+              <p className="text-xs text-red-600 font-medium">{remixError}</p>
+            )}
+
+            <div className="flex items-center gap-3 mt-4">
+              <button
+                onClick={handleRemix}
+                disabled={isRemixing}
+                className="rounded-xl bg-emerald-700 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-50 flex items-center gap-2"
+              >
+                {isRemixing ? (
+                  <>
+                    <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    {isRevalidating ? "Đang kiểm duyệt..." : "Đang tạo ảnh..."}
+                  </>
+                ) : (
+                  "Cập nhật & Chạy lại Critic"
+                )}
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                disabled={isRemixing}
+                className="text-sm font-medium text-slate-500 hover:text-slate-700 disabled:opacity-50"
+              >
+                Hủy
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-xs text-slate-500">
+            Bạn có thể chỉnh sửa bảng màu hoặc phụ kiện. Sau khi lưu, Cultural Critic sẽ kiểm duyệt lại và tạo ảnh mới.
+          </p>
+        )}
+      </div>
+
+      <div className={`rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10 transition-opacity ${isRemixing ? 'opacity-50' : 'opacity-100'}`}>
         {/* Header */}
         <div className="mb-8 border-b border-slate-100 pb-6">
           <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
@@ -117,25 +287,6 @@ export default function CulturalPassportPage() {
         </div>
 
         <CulturalPassport look={look} />
-
-        {/* Source IDs */}
-        {look.sourceIds.length > 0 && (
-          <div className="mt-8 rounded-xl border border-slate-100 bg-slate-50 px-5 py-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-              Nguồn tham khảo
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {look.sourceIds.map((sid) => (
-                <span
-                  key={sid}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-mono text-slate-600"
-                >
-                  {sid}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Actions */}
         <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">

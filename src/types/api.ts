@@ -36,3 +36,15 @@ export type ApiFailure = {
 };
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
+
+export type ImageGenerationRequest = {
+  look: OutfitLook;
+};
+
+export type ImageGenerationResult = {
+  lookId: string;
+  status: "generated" | "fallback";
+  imageUrl?: string;
+  fallbackReason?: string;
+};
+

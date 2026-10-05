@@ -22,4 +22,5 @@ export type OutfitLook = {
   };
   imagePrompt: string;
   imageUrl?: string;
+  imageFallback?: string;
 };
