@@ -1,0 +1,10 @@
+[
+  { "id": "IR_01_AO_DAI_PALETTE", "baseCaseId": "CC_01_AO_DAI_VALID", "changes": { "palette": ["soft_pink", "soft_white"] }, "expectedStatus": "pass", "expectedRuleIds": [] },
+  { "id": "IR_02_AO_DAI_RISK", "baseCaseId": "CC_01_AO_DAI_VALID", "changes": { "accessories": ["Khăn kèm claim: cổ cao và tay dài là hình thức lịch sử duy nhất, bắt buộc cho mọi áo dài ở mọi thời kỳ."] }, "expectedStatus": "warning", "expectedRuleIds": ["AD_WARNING_SINGLE_FORM_GENERALIZATION"] },
+  { "id": "IR_03_NGU_THAN_PALETTE", "baseCaseId": "CC_03_NGU_THAN_VALID", "changes": { "palette": ["soft_pink", "soft_white"] }, "expectedStatus": "pass", "expectedRuleIds": [] },
+  { "id": "IR_04_NGU_THAN_RISK", "baseCaseId": "CC_03_NGU_THAN_VALID", "changes": { "accessories": ["Khăn kèm claim: mọi áo ngũ thân đều bắt buộc màu đen và họa tiết hồi văn, thủy ba, ngũ Phúc như hiện vật bảo tàng."] }, "expectedStatus": "warning", "expectedRuleIds": ["ANT_WARNING_ARTIFACT_GENERALIZATION"] },
+  { "id": "IR_05_TU_THAN_PALETTE", "baseCaseId": "CC_05_TU_THAN_VALID", "changes": { "palette": ["soft_pink", "soft_white"] }, "expectedStatus": "pass", "expectedRuleIds": [] },
+  { "id": "IR_06_TU_THAN_RISK", "baseCaseId": "CC_05_TU_THAN_VALID", "changes": { "accessories": ["Khăn mỏ quạ kèm claim: mọi áo tứ thân ở mọi dịp bắt buộc yếm trắng, váy đen và khăn mỏ quạ kể cả photoshoot hiện đại."] }, "expectedStatus": "warning", "expectedRuleIds": ["ATT_CONTEXT_KINH_BAC_FESTIVAL"] },
+  { "id": "IR_07_NHAT_BINH_PALETTE", "baseCaseId": "CC_07_NHAT_BINH_VALID", "changes": { "palette": ["soft_pink", "soft_white"] }, "expectedStatus": "pass", "expectedRuleIds": [] },
+  { "id": "IR_08_NHAT_BINH_RISK", "baseCaseId": "CC_07_NHAT_BINH_VALID", "changes": { "accessories": ["Quạt kèm claim: màu vàng cùng họa tiết phượng, hạc, rùa của áo Đoan Huy Hoàng thái hậu là bắt buộc cho mọi Nhật Bình và mọi phẩm cấp."] }, "expectedStatus": "warning", "expectedRuleIds": ["NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"] }
+]

@@ -33,4 +33,16 @@ Rule Retrieval dùng toàn bộ records verified + reviewed của garment, có t
 
 Critic structured output được kiểm tra lại: JSON/schema, rule IDs duy nhất và thuộc tập retrieved, garment/provenance đúng, status khớp severity. Advisory không được nâng thành high/revise. Không có context/rules thì trả lỗi fail-closed. Ba Critic calls chạy song song sau Stylist; kết quả pending nội bộ bị thay hoàn toàn trước response. Một call lỗi làm toàn recommendation trả failure envelope. Timeout áp dụng cho từng Gemini request theo client hiện tại (có retry), không phải deadline tổng của pipeline; team cần tính cả hai giai đoạn khi đặt timeout UI/deployment.
 
-Image generator vẫn là scaffold cho Meeting 04. Kiểm tra UI/retry và cultural review cuối thuộc Hiền/Linh; backend live evaluation không thay các review này.
+## Image/remix — Meeting 04
+
+`POST /api/generate-image` dùng input giống validation: schema → bỏ verdict/image client → dựng visual JSON phía server → full Rule Retrieval → fresh Critic → runtime verdict validation → Gemini image provider. Không có persistence/trusted look token, nên mỗi lần gọi phải recheck; validationId chỉ là ID execution, không dùng để xác thực client.
+
+`POST /api/remix` chỉ patch palette/accessories trên bản sao. Tạo look ID mới, giữ garment/source/rule scope và toàn bộ cấu trúc item, cập nhật input.colors khi đổi palette, rồi đi qua cùng pipeline. Không mở rộng sang virtual try-on hoặc rewrite cấu trúc. Look gốc không mutate; request lỗi không có partial success.
+
+Critic kiểm tra chính visual JSON được provider dùng. Image instruction version `prompts/image/image-v1.md` cố định việc không tự thêm motif/rank/structure/cultural claims. Provider không nhận culturalNote/source payloads/validation hay imagePrompt tự do từ client. Prompt constraints không thay cultural review ảnh thực tế.
+
+Provider Gemini `models.generateContent` dùng env riêng, một attempt, SDK timeout và Promise deadline/AbortController; map quota, timeout, safety, invalid image và upstream error thành fallback enum an toàn. Parser nhận một final non-thought inline PNG/JPEG/WebP, kiểm tra bounded base64 + MIME/signature/container, không chấp nhận URL/fileData/SVG. Không log key hoặc upstream response. Đáp ứng runtime representation không đồng nghĩa ảnh đúng văn hóa.
+
+Pass/warning tạo ảnh và giữ cảnh báo. Revise bỏ qua provider, trả fallback cultural_revision_required. Provider thất bại trả fresh look/validation cùng fallback không có ảnh; Critic thất bại trả failure envelope, không fabricated verdict. Response có validationId/validatedAt mới và disclaimer AI illustration. Deadline toàn pipeline cần bao gồm Critic và image, không chỉ image call.
+
+`scripts/evaluate-image-remix.ts` dùng 8 remix cases (mỗi garment có palette hợp lệ và claim mới có rủi ro trong accessory). Mặc định chỉ Critic thật, image được tắt rõ ràng; `--with-images` bật provider đã cấu hình và lưu ảnh local bị Git ignore, báo cáo chỉ chứa metadata/hash. Kiểm tra UI/retry và cultural review cuối thuộc Hiền/Linh; backend evaluation không thay các review này.

@@ -30,21 +30,31 @@ export type ValidationInput = {
 };
 
 export type ApiSuccess<T> = { success: true; data: T };
+export type ImageFallbackReason =
+  | "not_configured" | "timeout" | "quota" | "safety_rejection"
+  | "upstream_error" | "invalid_image" | "cultural_revision_required";
+export type ImageGenerationResult =
+  | { lookId: string; status: "generated"; imageUrl: string; fallbackReason?: never }
+  | { lookId: string; status: "fallback"; fallbackReason: ImageFallbackReason; imageUrl?: never };
+export type FreshValidation = {
+  validation: ValidationOutput;
+  validationId: string;
+  validatedAt: string;
+};
+export type ImageGenerationOutput = ImageGenerationResult & FreshValidation & { disclaimer: string };
+export type RemixChanges = { palette?: string[]; accessories?: string[] };
+export type RemixInput = ValidationInput & { changes: RemixChanges };
+export type RemixOutput = FreshValidation & {
+  parentLookId: string;
+  look: OutfitLook;
+  recommendationInput: RecommendationInput;
+  image: ImageGenerationResult;
+  disclaimer: string;
+};
 export type ApiFailure = {
   success: false;
   error: { code: string; message: string };
 };
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
-
-export type ImageGenerationRequest = {
-  look: OutfitLook;
-};
-
-export type ImageGenerationResult = {
-  lookId: string;
-  status: "generated" | "fallback";
-  imageUrl?: string;
-  fallbackReason?: string;
-};
 

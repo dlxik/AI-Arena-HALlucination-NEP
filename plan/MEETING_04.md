@@ -100,14 +100,16 @@ Definition of Done của Hiền:
 
 ### Lan Anh - AI và Backend
 
-- [ ] Khóa/cập nhật contract `/api/generate-image` và remix endpoint/orchestration.
-- [ ] Tích hợp image provider theo env, timeout, safety và error mapping an toàn.
-- [ ] Runtime-validate image response; có fallback minh bạch khi provider lỗi.
-- [ ] Giới hạn image prompt vào look đã validate; không tự bịa cultural detail.
-- [ ] Triển khai remix trong whitelist field và chạy lại Cultural Critic.
-- [ ] Chỉ regenerate ảnh từ look sau revalidation, không dùng validation cũ.
-- [ ] Viết test cho success, timeout, upstream/safety failure, invalid output và remix recheck.
-- [ ] Ghi model/provider, prompt version và evaluation vào `docs/ai-log.md`.
+- [x] Khóa/cập nhật contract `/api/generate-image` và remix endpoint/orchestration.
+- [x] Tích hợp image provider theo env, timeout, safety và error mapping an toàn.
+- [x] Runtime-validate image response; có fallback minh bạch khi provider lỗi.
+- [x] Giới hạn image prompt vào look đã validate; không tự bịa cultural detail.
+- [x] Triển khai remix trong whitelist field và chạy lại Cultural Critic.
+- [x] Chỉ regenerate ảnh từ look sau revalidation, không dùng validation cũ.
+- [x] Viết test cho success, timeout, upstream/safety failure, invalid output và remix recheck.
+- [x] Ghi model/provider, prompt version và evaluation vào `docs/ai-log.md`.
+
+Kết quả backend 2026-10-02: kế hoạch Lan Anh, [live Critic/remix 8/8](../docs/meeting-04-image-remix-evaluation.json); 160/160 tests, data validation, lint, typecheck và production build pass. Whitelist hiện tại chỉ palette/accessories. Image provider đã triển khai và test bằng transport mock; ảnh thật chưa chạy vì `.env.local` chưa có IMAGE_PROVIDER/GEMINI_IMAGE_MODEL. UI/Passport, live image acceptance và cultural review còn theo owner; chưa đóng checkpoint toàn team.
 
 Definition of Done của Lan Anh:
 
@@ -211,6 +213,6 @@ Mang sang giai đoạn đánh giá và khóa scope:
 
 - [x] Đã lập kế hoạch.
 - [ ] Chưa bắt đầu triển khai.
-- [ ] Đang thực hiện.
+- [x] Đang thực hiện.
 - [ ] Hoàn thành.
 - [ ] Có blocker cần xử lý.
