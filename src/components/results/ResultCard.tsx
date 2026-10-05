@@ -122,12 +122,17 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
       {/* Image area */}
       <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4 text-center">
         {look.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={look.imageUrl}
-            alt={`Bản phối ${look.name}`}
-            className="h-full w-full object-cover"
-          />
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={look.imageUrl}
+              alt={`Bản phối ${look.name}`}
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute bottom-0 inset-x-0 bg-black/50 px-2 py-1.5 text-center backdrop-blur-sm">
+              <p className="text-[10px] text-white/90">Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực.</p>
+            </div>
+          </>
         ) : isGeneratingImage ? (
           <div className="flex flex-col items-center gap-3 text-slate-500">
             <span className="h-6 w-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></span>

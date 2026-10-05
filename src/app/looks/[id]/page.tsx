@@ -140,10 +140,11 @@ export default function CulturalPassportPage() {
       };
 
       // 1. Revalidate
+      const { validation, imageUrl, imageFallback, ...validationLook } = updatedLook;
       const validateRes = await fetch("/api/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ look: updatedLook, recommendationInput: originalInput }),
+        body: JSON.stringify({ look: validationLook, recommendationInput: originalInput }),
       });
       const validateData = await validateRes.json();
       
