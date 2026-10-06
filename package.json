@@ -12,7 +12,8 @@
     "evaluate:intent": "tsx scripts/evaluate-intent.ts",
     "evaluate:critic": "tsx scripts/evaluate-critic.ts",
     "evaluate:image-remix": "tsx scripts/evaluate-image-remix.ts",
-    "validate:data": "node --experimental-strip-types scripts/validate-cultural-data.ts"
+    "validate:data": "node --experimental-strip-types scripts/validate-cultural-data.ts",
+    "validate:meeting05-cultural": "node --experimental-strip-types scripts/validate-meeting-05-cultural-review.ts"
   },
   "dependencies": {
     "@google/genai": "^2.24.0",

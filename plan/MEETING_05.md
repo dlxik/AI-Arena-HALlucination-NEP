@@ -46,11 +46,19 @@ Không làm virtual try-on, account, commerce, social, weather, animation phức
 
 ### Linh - Cultural Data và Submission
 
-- [ ] Adjudicate cultural correctness cho toàn bộ 15-20 case; ghi expected/actual/verdict và lý do.
+- [x] Adjudicate cultural correctness cho toàn bộ 15-20 case; ghi expected/actual/verdict và lý do.
 - [ ] Review riêng mọi ảnh thật theo rubric bốn garment; không dùng ảnh AI làm bằng chứng lịch sử.
-- [ ] Kiểm tra citation/source link, garment scope và các source còn `needs_review`; không nâng trạng thái nếu chưa đối chiếu.
-- [ ] Soạn bản nháp submission: problem, approach, cultural safeguards, Gemini usage, evaluation, limitation và impact.
-- [ ] Soạn demo script/shot list cùng Hiền; chọn case pass, warning và fallback minh bạch.
+- [x] Kiểm tra citation/source link, garment scope và các source còn `needs_review`; không nâng trạng thái nếu chưa đối chiếu.
+- [x] Soạn bản nháp submission: problem, approach, cultural safeguards, Gemini usage, evaluation, limitation và impact.
+- [x] Soạn demo script/shot list cùng Hiền; chọn case pass, warning và fallback minh bạch.
+
+Kết quả Linh ngày 2026-10-06:
+
+- `docs/meeting-05-cultural-adjudication.json`: 18 case có expected/actual/verdict/rationale và evidence.
+- `scripts/validate-meeting-05-cultural-review.ts`: kiểm tra coverage, duplicate ID, source/rule approval và garment scope.
+- `docs/meeting-05-cultural-review.md`: cultural/source audit; không có P0/P1, còn hai P2 về raw intent evidence và live image review.
+- `docs/submission-draft.md` và `docs/demo-script-shot-list.md`: bản nháp handoff cho Meeting 06.
+- Chưa tick image review vì artefact hiện chỉ có tám fallback `not_configured`, chưa có ảnh thật. Hiền vẫn cần xác nhận shot list theo UI/deploy candidate.
 
 ## 5. Evaluation matrix tối thiểu
 
@@ -105,6 +113,6 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 
 - [x] Đã lập kế hoạch.
 - [ ] Chưa bắt đầu triển khai.
-- [ ] Đang thực hiện.
+- [x] Đang thực hiện.
 - [ ] Hoàn thành.
 - [ ] Có blocker cần xử lý.
