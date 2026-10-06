@@ -122,8 +122,8 @@ Definition of Done của Lan Anh:
 - [x] Tạo rubric review ảnh cho 4 garment: cấu trúc nhận diện, context, motif/rank claim và mức sai lệch chấp nhận được.
 - [x] Chuẩn bị tối thiểu 8 image/remix acceptance cases, mỗi garment có một case giữ đúng và một case có rủi ro.
 - [x] Review Cultural Passport: source title/publisher/link đúng với `references.json`, claim không vượt provenance.
-- [ ] Kiểm tra remix giữ đúng garment/rule scope và actual validation không tái sử dụng kết quả cũ.
-- [ ] Ghi pass/warning/fail cho output ảnh/remix; phân biệt lỗi hình ảnh với lỗi fact/cultural claim.
+- [x] Kiểm tra remix giữ đúng garment/rule scope và actual validation không tái sử dụng kết quả cũ.
+- [x] Ghi pass/warning/fail cho output ảnh/remix; phân biệt lỗi hình ảnh với lỗi fact/cultural claim.
 - [x] Ghi rõ giới hạn: ảnh AI là minh họa, không phải phục dựng/hiện vật được xác thực.
 - [x] Cập nhật evaluation/submission artefact phục vụ Meeting 05.
 
@@ -131,8 +131,8 @@ Artefact Linh ngày 2026-10-05:
 
 - `tests/fixtures/image-remix-cultural-cases.json`: rubric 14 rules và 8 expected cases.
 - `docs/meeting-04-cultural-acceptance.md`: Passport audit, remix policy, cultural handoff và runtime blockers.
-- Passport hiện thiếu source title/publisher/link, còn lộ raw `imagePrompt` và chưa có AI-image disclaimer; owner sửa là Hiền.
-- Image/remix runtime review giữ `pending` cho tới khi Lan Anh tích hợp endpoint/orchestration.
+- Integration review 2026-10-06 xác nhận Passport có source title/publisher/link, ẩn raw `imagePrompt` và có AI-image disclaimer.
+- Runtime review đạt 8/8 remix cases; cả 8 image calls trả fallback `not_configured` minh bạch nên chưa có visual output để chấm.
 
 Definition of Done của Linh:
 
@@ -181,23 +181,23 @@ Live evaluation chỉ chạy bằng `.env.local`; không commit key, ảnh chứ
 
 Checklist chung:
 
-- [ ] Image/remix contract và architecture khớp implementation.
-- [ ] Image provider có timeout, safety/error mapping và fallback.
-- [ ] Cultural Passport hiển thị provenance đúng.
-- [ ] Remix luôn chạy lại Critic trước khi tạo ảnh mới.
-- [ ] Acceptance artefact có review của Linh.
-- [ ] Automated checks và production build pass.
-- [ ] Không có secret hoặc dữ liệu nhạy cảm trong Git diff/history.
+- [x] Image/remix contract và architecture khớp implementation.
+- [x] Image provider có timeout, safety/error mapping và fallback.
+- [x] Cultural Passport hiển thị provenance đúng.
+- [x] Remix luôn chạy lại Critic trước khi tạo ảnh mới.
+- [x] Acceptance artefact có review của Linh.
+- [x] Automated checks và production build pass.
+- [x] Không có secret hoặc dữ liệu nhạy cảm trong Git diff/history.
 
 ## 8. Definition of Done của Meeting 04
 
-- [ ] Mỗi look có ảnh generated hoặc fallback minh bạch.
-- [ ] Cultural Passport hiển thị cultural note, validation và nguồn có provenance.
-- [ ] Người dùng remix được field trong whitelist.
-- [ ] Look remix có validation mới và ảnh mới/fallback tương ứng.
-- [ ] Các lỗi provider/validation không tạo fake success.
-- [ ] Artefact image/remix cultural review bao phủ đủ 4 garment.
-- [ ] Cả ba owner review và không còn blocker mức checkpoint.
+- [x] Mỗi look có ảnh generated hoặc fallback minh bạch.
+- [x] Cultural Passport hiển thị cultural note, validation và nguồn có provenance.
+- [x] Người dùng remix được field trong whitelist.
+- [x] Look remix có validation mới và ảnh mới/fallback tương ứng.
+- [x] Các lỗi provider/validation không tạo fake success.
+- [x] Artefact image/remix cultural review bao phủ đủ 4 garment.
+- [x] Cả ba owner review và không còn blocker mức checkpoint.
 
 ## 9. Handoff sang Meeting 05
 
@@ -213,6 +213,6 @@ Mang sang giai đoạn đánh giá và khóa scope:
 
 - [x] Đã lập kế hoạch.
 - [ ] Chưa bắt đầu triển khai.
-- [x] Đang thực hiện.
-- [ ] Hoàn thành.
+- [ ] Đang thực hiện.
+- [x] Hoàn thành.
 - [ ] Có blocker cần xử lý.

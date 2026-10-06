@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import CulturalPassport from "@/components/cultural-passport/CulturalPassport";
-import type { RecommendationOutput, RecommendationInput } from "@/types/api";
+import type { RecommendationOutput, RecommendationInput, RemixOutput } from "@/types/api";
 import type { OutfitLook } from "@/types/outfit";
+import { toValidationLook } from "@/lib/client/look-payload";
 
 // ─────────────────────────────────────────────────────────
 // Types
@@ -46,12 +47,12 @@ function readLookFromStorage(id: string | undefined): PageState {
   }
 }
 
-function updateStorage(updatedLook: OutfitLook) {
+function updateStorage(originalLookId: string, updatedLook: OutfitLook) {
   try {
     const raw = sessionStorage.getItem("recommendation_result");
     if (raw) {
       const stored = JSON.parse(raw);
-      const lookIndex = stored.data.looks.findIndex((l: OutfitLook) => l.id === updatedLook.id);
+      const lookIndex = stored.data.looks.findIndex((l: OutfitLook) => l.id === originalLookId);
       if (lookIndex !== -1) {
         stored.data.looks[lookIndex] = updatedLook;
         sessionStorage.setItem("recommendation_result", JSON.stringify(stored));
@@ -133,47 +134,38 @@ export default function CulturalPassportPage() {
     setRemixError("");
 
     try {
-      const updatedLook: OutfitLook = {
-        ...look,
-        palette: editPalette.split(",").map((s) => s.trim()).filter(Boolean),
-        accessories: editAccessories.split(",").map((s) => s.trim()).filter(Boolean),
-      };
+      if (!originalInput) throw new Error("Thiếu dữ liệu yêu cầu ban đầu.");
 
-      // 1. Revalidate
-      const { validation: _v, imageUrl: _i, imageFallback: _f, ...validationLook } = updatedLook;
-      const validateRes = await fetch("/api/validate", {
+      const remixRes = await fetch("/api/remix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ look: validationLook, recommendationInput: originalInput }),
+        body: JSON.stringify({
+          look: toValidationLook(look),
+          recommendationInput: originalInput,
+          changes: {
+            palette: editPalette.split(",").map((s) => s.trim()).filter(Boolean),
+            accessories: editAccessories.split(",").map((s) => s.trim()).filter(Boolean),
+          },
+        }),
       });
-      const validateData = await validateRes.json();
+      const remixData = await remixRes.json();
       
-      if (!validateData.success) {
-        throw new Error(validateData.error?.message || "Kiểm duyệt thất bại.");
+      if (!remixData.success) {
+        throw new Error(remixData.error?.message || "Remix thất bại.");
       }
-      
-      updatedLook.validation = validateData.data;
       setIsRevalidating(false);
-
-      // 2. Generate new image
-      const imgRes = await fetch("/api/generate-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ look: updatedLook }),
-      });
-      const imgData = await imgRes.json();
-
-      if (imgData.success && imgData.data.status === "generated") {
-        updatedLook.imageUrl = imgData.data.imageUrl;
-        updatedLook.imageFallback = undefined;
-      } else {
-        updatedLook.imageUrl = undefined;
-        updatedLook.imageFallback = imgData.data?.fallbackReason || imgData.data?.message || (!imgData.success && imgData.error?.message) || "Không thể tạo ảnh minh họa mới.";
-      }
+      const output = remixData.data as RemixOutput;
+      const updatedLook: OutfitLook = {
+        ...output.look,
+        validation: output.validation,
+        imageUrl: output.image.status === "generated" ? output.image.imageUrl : undefined,
+        imageFallback: output.image.status === "fallback" ? output.image.fallbackReason : undefined,
+        imageDisclaimer: output.disclaimer,
+      };
 
       // Update state and storage
       setState({ ...state, look: updatedLook });
-      updateStorage(updatedLook);
+      updateStorage(look.id, updatedLook);
       setIsEditing(false);
     } catch (err: unknown) {
       setRemixError((err as Error).message || "Đã xảy ra lỗi khi remix.");

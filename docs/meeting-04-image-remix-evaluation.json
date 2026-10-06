@@ -10,8 +10,8 @@
   "criticPromptSha256": "2219f735a8004af9c1ab83bce5544c0b1c0abaa9f4536bbfb1f85d152a1ae761",
   "imagePrompt": "prompts/image/image-v1.md",
   "imagePromptSha256": "ef2f9343cfb58376fa4be8e7d046baec6b11f3759ecc3eff0d86b010df059697",
-  "culturalReviewer": "Pending Diệu Linh review; expected outcomes are backend hypotheses",
-  "imageReview": "Not culturally reviewed; images are AI illustrations, not authenticated artefacts",
+  "culturalReviewer": "Diệu Linh reviewed 2026-10-06: 8/8 actual Critic statuses and rule IDs match the expected cultural outcomes",
+  "imageReview": "N/A for visual review: all 8 executions returned the transparent not_configured fallback; no generated image was treated as cultural evidence",
   "cases": [
     {
       "id": "IR_01_AO_DAI_PALETTE",

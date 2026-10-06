@@ -22,7 +22,10 @@ export type ValidationOutput = {
   warnings: ValidationWarning[];
 };
 
-export type ValidationLook = Omit<OutfitLook, "validation" | "imageUrl">;
+export type ValidationLook = Omit<
+  OutfitLook,
+  "validation" | "imageUrl" | "imageFallback" | "imageDisclaimer"
+>;
 
 export type ValidationInput = {
   look: ValidationLook;

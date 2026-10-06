@@ -2,7 +2,7 @@
 
 AI Arena là nền tảng thử nghiệm gợi ý bản phối trang phục văn hóa Việt. Người dùng mô tả dịp, loại trang phục, phong cách, màu sắc và mức độ remix; pipeline dự kiến truy xuất tri thức có nguồn, tạo đề xuất, kiểm tra văn hóa rồi mới tạo hình ảnh.
 
-> Trạng thái: intent parser, Stylist và Cultural Critic đã tích hợp Gemini. Recommendation trả validation thật cho từng look; `/api/validate` chạy Critic độc lập với Rule Retrieval đã duyệt và runtime validation. Meeting 03 đã được integration/cultural review; image generation thật và remix/revalidation thuộc Meeting 04.
+> Trạng thái: Meeting 04 đã hoàn thành. Core flow recommendation → Cultural Critic → image/fallback → Cultural Passport → remix/revalidation đã tích hợp; dự án chuyển sang Meeting 05 để đánh giá 15-20 case và khóa scope.
 
 ## Bài toán sản phẩm
 

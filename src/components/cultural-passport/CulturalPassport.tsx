@@ -1,5 +1,7 @@
 import type { OutfitLook } from "@/types/outfit";
+import type { CulturalSource } from "@/types/cultural";
 import { GARMENT_LABEL, STYLE_LABEL, VALIDATION_BADGE, SEVERITY_COLOR } from "@/lib/constants";
+import sourceData from "../../../data/sources/references.json";
 
 interface CulturalPassportProps {
   look: OutfitLook;
@@ -7,6 +9,10 @@ interface CulturalPassportProps {
 
 export default function CulturalPassport({ look }: CulturalPassportProps) {
   const badge = VALIDATION_BADGE[look.validation.status];
+  const approvedSources = (sourceData.sources as CulturalSource[]).filter(
+    (source) => source.status === "approved" && source.garment_ids.includes(look.garment),
+  );
+  const sourceById = new Map(approvedSources.map((source) => [source.id, source]));
 
   return (
     <div className="space-y-8">
@@ -145,21 +151,40 @@ export default function CulturalPassport({ look }: CulturalPassportProps) {
         </h2>
         {look.sourceIds.length > 0 ? (
           <ul className="space-y-1.5">
-            {look.sourceIds.map((sid) => (
-              <li key={sid} className="flex items-center gap-2 text-sm text-slate-600">
-                <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs">
-                  {sid}
-                </span>
-                <span className="text-slate-400 text-xs">
-                  — chi tiết xem trong Cultural Knowledge Base
-                </span>
-              </li>
-            ))}
+            {look.sourceIds.map((sid) => {
+              const source = sourceById.get(sid);
+              return (
+                <li key={sid} className="rounded-lg border border-slate-100 p-3 text-sm text-slate-600">
+                  <span className="block font-medium text-slate-800">{source?.title ?? sid}</span>
+                  {source ? (
+                    <>
+                      <span className="mt-1 block text-xs text-slate-500">{source.publisher}</span>
+                      <a className="mt-1 inline-block text-xs font-medium text-emerald-700 hover:underline" href={source.url} target="_blank" rel="noreferrer">
+                        Mở nguồn tham khảo ↗
+                      </a>
+                    </>
+                  ) : (
+                    <span className="mt-1 block text-xs text-amber-700">Nguồn chưa được duyệt hoặc không khớp trang phục.</span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p className="text-sm text-slate-400 italic">Chưa có nguồn được ánh xạ.</p>
         )}
       </section>
+
+      {(look.imageUrl || look.imageFallback) && (
+        <section className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-amber-800 mb-2">
+            Lưu ý về ảnh
+          </h2>
+          <p className="text-sm leading-6 text-amber-900">
+            {look.imageDisclaimer ?? "Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực."}
+          </p>
+        </section>
+      )}
     </div>
   );
 }

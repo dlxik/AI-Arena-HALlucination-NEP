@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import type { OutfitLook } from "@/types/outfit";
+import type { ImageGenerationOutput, RecommendationInput } from "@/types/api";
 import { GARMENT_LABEL, VALIDATION_BADGE, SEVERITY_COLOR } from "@/lib/constants";
+import { toValidationLook } from "@/lib/client/look-payload";
 import {
   needsIndependentValidation,
   resolveValidationUiState,
@@ -40,11 +42,12 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
     setValidationError(false);
     try {
       const rawInput = sessionStorage.getItem("recommendation_input");
-      const recommendationInput = rawInput ? JSON.parse(rawInput) : undefined;
+      if (!rawInput) throw new Error("Thiếu dữ liệu yêu cầu ban đầu.");
+      const recommendationInput = JSON.parse(rawInput) as RecommendationInput;
       const res = await fetch("/api/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ look, recommendationInput }),
+        body: JSON.stringify({ look: toValidationLook(look), recommendationInput }),
       });
       const data = await res.json();
       if (data.success) {
@@ -67,20 +70,34 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
     if (look.imageUrl || (look.imageFallback && !forceRetry) || isGeneratingImage) return;
     setIsGeneratingImage(true);
     try {
+      const rawInput = sessionStorage.getItem("recommendation_input");
+      if (!rawInput) throw new Error("Thiếu dữ liệu yêu cầu ban đầu.");
+      const recommendationInput = JSON.parse(rawInput) as RecommendationInput;
       const res = await fetch("/api/generate-image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ look }),
+        body: JSON.stringify({
+          look: toValidationLook(look),
+          recommendationInput,
+        }),
       });
       const data = await res.json();
       
       setLook((prev) => {
         const newLook = { ...prev };
-        if (data.success && data.data.status === "generated") {
-          newLook.imageUrl = data.data.imageUrl;
-          newLook.imageFallback = undefined;
+        if (data.success) {
+          const output = data.data as ImageGenerationOutput;
+          newLook.validation = output.validation;
+          newLook.imageDisclaimer = output.disclaimer;
+          if (output.status === "generated") {
+            newLook.imageUrl = output.imageUrl;
+            newLook.imageFallback = undefined;
+          } else {
+            newLook.imageUrl = undefined;
+            newLook.imageFallback = output.fallbackReason;
+          }
         } else {
-          newLook.imageFallback = data.data?.fallbackReason || data.data?.message || (!data.success && data.error?.message) || "Không thể tạo ảnh minh họa do lỗi máy chủ.";
+          newLook.imageFallback = data.error?.message || "Không thể tạo ảnh minh họa do lỗi máy chủ.";
         }
         updateStorage(newLook);
         return newLook;
@@ -129,7 +146,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
               className="h-full w-full object-cover"
             />
             <div className="absolute bottom-0 inset-x-0 bg-black/50 px-2 py-1.5 text-center backdrop-blur-sm">
-              <p className="text-[10px] text-white/90">Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực.</p>
+              <p className="text-[10px] text-white/90">{look.imageDisclaimer ?? "Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực."}</p>
             </div>
           </>
         ) : isGeneratingImage ? (

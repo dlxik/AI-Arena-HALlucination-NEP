@@ -291,6 +291,6 @@ Không tạo lịch sử hội thoại giả vào ngày cuối.
 - [x] Hoàn thành checkpoint buổi 1.
 - [x] Hoàn thành checkpoint buổi 2.
 - [x] Hoàn thành checkpoint buổi 3.
-- [ ] Hoàn thành checkpoint buổi 4.
+- [x] Hoàn thành checkpoint buổi 4.
 - [ ] Hoàn thành checkpoint buổi 5.
 - [ ] Hoàn thành checkpoint buổi 6.

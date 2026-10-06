@@ -57,14 +57,14 @@ File review: `src/components/cultural-passport/CulturalPassport.tsx`.
 | Cultural note | Pass | Có section riêng và giữ nguyên nội dung look |
 | Validation status/warnings | Pass | Có status, severity, rule ID, reason và suggested fix |
 | Source ID | Pass | Hiển thị danh sách `sourceIds` |
-| Source title | Fail | Chưa resolve từ `references.json` |
-| Publisher | Fail | Chưa hiển thị |
-| Safe clickable URL | Fail | Chưa hiển thị/link |
-| Garment/source approval | Pass ở backend contract | Retrieval/runtime validation đã fail-closed; UI vẫn cần render metadata đã resolve từ server |
-| End-user content | Warning | Passport đang hiển thị raw `imagePrompt` với nhãn “dành cho team”; cần ẩn khỏi UI người dùng cuối |
-| AI-image disclaimer | Fail | Chưa có thông báo ảnh là minh họa AI, không phải hiện vật/phục dựng xác thực |
+| Source title | Pass | Resolve theo `sourceIds` từ `references.json` |
+| Publisher | Pass | Hiển thị publisher của source đã duyệt |
+| Safe clickable URL | Pass | Link mở tab mới với `noreferrer` |
+| Garment/source approval | Pass | UI chỉ resolve source `approved` đúng garment; retrieval/runtime validation vẫn fail-closed |
+| End-user content | Pass | Không còn hiển thị raw `imagePrompt` |
+| AI-image disclaimer | Pass | Result card và Passport ghi rõ ảnh AI không phải hiện vật/phục dựng xác thực |
 
-Kết luận: Passport hiện **chưa đạt Definition of Done Meeting 04**. Hiền cần hiển thị title/publisher/link từ dữ liệu server đã validate, ẩn raw image prompt và thêm disclaimer. Linh không sửa UI thay owner.
+Kết luận sau integration review ngày 2026-10-06: Passport **đạt Definition of Done Meeting 04**. Source chưa duyệt hoặc sai garment không được trình bày như provenance hợp lệ.
 
 ## Remix/revalidation policy
 
@@ -85,25 +85,27 @@ Artefact yêu cầu `must_revalidate: true`, `must_regenerate: true` và `reuse_
 - `VWM_AO_DAI` và `HMCC_NHAT_BINH_2022` vẫn `needs_review`; không xuất hiện trong fixture Meeting 04.
 - Source title/publisher/URL phải lấy từ server-side source catalog; client không được tự suy ra URL từ source ID.
 
+## Runtime review ngày 2026-10-06
+
+- 8/8 remix executions trả HTTP 200 và actual Critic status/rule IDs khớp expected outcome.
+- Mỗi execution có `validationId` và `validatedAt` mới; orchestration chạy Critic trước bước ảnh.
+- Bốn safe palette cases trả `pass`; bốn risky claim cases trả đúng `warning` và rule theo garment.
+- Cả 8 image executions trả fallback `not_configured`. Đây là fallback minh bạch, không phải lỗi văn hóa và không có visual output để chấm thẩm mỹ/cấu trúc.
+- UI gọi đúng `/api/remix`, không mang validation/image cũ vào payload và lưu validation/disclaimer mới từ server.
+
 ## Handoff
 
 ### Cho Hiền
 
-- Resolve source metadata và render title/publisher/safe link.
-- Ẩn raw `imagePrompt` khỏi Passport end-user.
-- Thêm AI-image disclaimer.
-- Hiển thị generated/fallback/remix/revalidating states mà không làm mất look gốc.
+- Meeting 05 cần regression test UX cho generated/fallback/remix và chụp screenshot luồng demo.
 
 ### Cho Lan Anh
 
-- Dùng 8 cases sau khi image/remix endpoint hoàn thành.
-- Trả validation revision mới sau remix; không nhận verdict/rules do client gửi.
-- Lưu output image/remix an toàn để Linh cập nhật `runtime_review`.
-- Không dùng image model output làm nguồn cultural fact.
+- Meeting 05 cần chạy provider thật khi có cấu hình, nhưng vẫn giữ fallback và nguyên tắc không dùng ảnh làm nguồn cultural fact.
 
 ## Trạng thái runtime
 
-- Image generation: `pending` — endpoint vẫn `not_integrated` tại thời điểm review.
-- Remix/revalidation: `pending` — chưa có orchestration production.
-- Cultural Passport provenance: `fail` — thiếu source metadata/link và disclaimer.
-- Expected case design/provenance: `pass` — chờ validator và teammate review.
+- Image generation: `pass_with_fallback` — endpoint production có guardrails; artefact hiện dùng `not_configured`, chưa có ảnh thật để visual review.
+- Remix/revalidation: `pass` — 8/8 case khớp expected status/rule IDs và có validation revision mới.
+- Cultural Passport provenance: `pass` — metadata/link approved source và disclaimer đã hiển thị.
+- Expected case design/provenance: `pass` — validator và cultural review hoàn tất.
