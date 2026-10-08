@@ -11,7 +11,7 @@ import {
 import type { RecommendationInput } from "@/types/api";
 
 const fieldClass =
-  "mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100";
+  "mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100";
 
 const labelClass = "block text-sm font-medium text-slate-700";
 
@@ -153,12 +153,12 @@ export default function CreatePage() {
         </div>
 
         {/* Màu sắc — multi-select dạng chip */}
-        <div className="sm:col-span-2">
-          <p className={labelClass}>
+        <fieldset className="sm:col-span-2">
+          <legend className={labelClass}>
             Màu sắc yêu thích{" "}
             <span className="text-red-500">*</span>
             <span className="ml-1 text-slate-400 font-normal">(chọn tối đa 3)</span>
-          </p>
+          </legend>
           {form.colors.length === 0 && (
             <p className="mt-2 text-xs text-red-500">Vui lòng chọn ít nhất 1 màu.</p>
           )}
@@ -182,7 +182,7 @@ export default function CreatePage() {
               );
             })}
           </div>
-        </div>
+        </fieldset>
 
         {/* Mô tả tự do */}
         <div className="sm:col-span-2">

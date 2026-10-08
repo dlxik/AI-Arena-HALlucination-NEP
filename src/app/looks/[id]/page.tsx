@@ -214,8 +214,9 @@ export default function CulturalPassportPage() {
         {isEditing ? (
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Bảng màu (cách nhau bằng dấu phẩy)</label>
+              <label htmlFor="remix-palette" className="block text-xs font-medium text-slate-700 mb-1">Bảng màu (cách nhau bằng dấu phẩy)</label>
               <input
+                id="remix-palette"
                 type="text"
                 value={editPalette}
                 onChange={(e) => setEditPalette(e.target.value)}
@@ -224,8 +225,9 @@ export default function CulturalPassportPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Phụ kiện (cách nhau bằng dấu phẩy)</label>
+              <label htmlFor="remix-accessories" className="block text-xs font-medium text-slate-700 mb-1">Phụ kiện (cách nhau bằng dấu phẩy)</label>
               <input
+                id="remix-accessories"
                 type="text"
                 value={editAccessories}
                 onChange={(e) => setEditAccessories(e.target.value)}
@@ -235,7 +237,7 @@ export default function CulturalPassportPage() {
             </div>
 
             {remixError && (
-              <p className="text-xs text-red-600 font-medium">{remixError}</p>
+              <p role="alert" className="text-xs text-red-600 font-medium">{remixError}</p>
             )}
 
             <div className="flex items-center gap-3 mt-4">
@@ -247,7 +249,9 @@ export default function CulturalPassportPage() {
                 {isRemixing ? (
                   <>
                     <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    {isRevalidating ? "Đang kiểm duyệt..." : "Đang tạo ảnh..."}
+                    <span role="status" aria-live="polite">
+                      {isRevalidating ? "Đang kiểm duyệt..." : "Đang tạo ảnh..."}
+                    </span>
                   </>
                 ) : (
                   "Cập nhật & Chạy lại Critic"

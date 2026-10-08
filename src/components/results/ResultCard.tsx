@@ -150,7 +150,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
             </div>
           </>
         ) : isGeneratingImage ? (
-          <div className="flex flex-col items-center gap-3 text-slate-500">
+          <div role="status" aria-live="polite" className="flex flex-col items-center gap-3 text-slate-500">
             <span className="h-6 w-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></span>
             <span className="text-xs font-medium">Đang tạo ảnh minh họa...</span>
           </div>
@@ -182,7 +182,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
         </span>
         {/* Validation badge */}
         {validationUiState === "validating" ? (
-          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5 z-10">
+          <span role="status" aria-live="polite" className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5 z-10">
             <span className="h-1.5 w-1.5 rounded-full bg-slate-400 animate-pulse" />
             ĐANG KIỂM DUYỆT
           </span>
@@ -259,7 +259,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
 
         {/* Retry Button */}
         {validationUiState === "error" && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-3 flex flex-col items-center gap-2">
+          <div role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 flex flex-col items-center gap-2">
             <p className="text-xs text-red-700 text-center">Có lỗi xảy ra khi kiểm duyệt văn hóa.</p>
             <button
               onClick={validateLook}

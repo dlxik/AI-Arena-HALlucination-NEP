@@ -30,13 +30,13 @@ Không làm virtual try-on, account, commerce, social, weather, animation phức
 
 ### Hiền - Product và Frontend
 
-- [ ] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
-- [ ] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
-- [ ] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
+- [x] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
+- [x] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
+- [x] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
 - [ ] Chốt demo flow 2-3 phút; chuẩn bị screenshot/shot list theo đúng UI hiện tại.
 - [ ] Chuẩn bị preview/deploy candidate và ghi rõ cấu hình cần thiết, không đưa secret vào repo.
 
-Tiến độ Hiền ngày 2026-10-08: đã thêm `aria-pressed` cho color toggle và tạo hướng dẫn deploy. Integration review đã sửa env/Node contract trong guide; chưa có regression artefact, screenshot, URL preview hoặc accessibility audit để xác nhận năm task hoàn tất. Shot list chuẩn dùng `docs/demo-script-shot-list.md`; không dùng giả định palette neon tự động tạo cultural warning.
+Tiến độ Hiền ngày 2026-10-08: `docs/ux-regression-report.md` ghi 32/32 case live pass và một generated-image case N/A; `docs/accessibility-audit.md` đã được đối chiếu với code và các issue label/live-region/contrast được sửa khi integration. Chưa có screenshot hoặc URL preview nên demo-flow confirmation và deploy candidate vẫn chưa hoàn tất. Shot list chuẩn dùng `docs/demo-script-shot-list.md`; không dùng giả định palette/phụ kiện tự động tạo warning ngoài rule đã evaluation.
 
 ### Lan Anh - AI và Backend
 
