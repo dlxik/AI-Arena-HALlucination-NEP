@@ -38,11 +38,11 @@ Không làm virtual try-on, account, commerce, social, weather, animation phức
 
 ### Lan Anh - AI và Backend
 
-- [ ] Hợp nhất bộ evaluation thành 15-20 case phủ intent, recommendation, Critic, image và remix.
-- [ ] Chạy evaluation với env hợp lệ; ghi model, prompt hash, thời gian, kết quả và fallback.
-- [ ] Nếu image provider được cấu hình, chạy tối thiểu một success case và các failure path an toàn; nếu chưa có, ghi blocker rõ ràng.
-- [ ] Khóa prompt/schema production; chỉ sửa khi có case thất bại và ghi lý do trong `docs/ai-log.md`.
-- [ ] Kiểm tra timeout, latency, error mapping, secret exposure và log hygiene.
+- [x] Hợp nhất bộ evaluation thành 15-20 case phủ intent, recommendation, Critic, image và remix.
+- [x] Chạy evaluation với env hợp lệ; ghi model, prompt hash, thời gian, kết quả và fallback.
+- [x] Nếu image provider được cấu hình, chạy tối thiểu một success case và các failure path an toàn; nếu chưa có, ghi blocker rõ ràng. → **Blocker P2**: `GEMINI_IMAGE_MODEL` chưa cấu hình; fallback `not_configured` minh bạch; không có generated-image evidence.
+- [x] Khóa prompt/schema production; chỉ sửa khi có case thất bại và ghi lý do trong `docs/ai-log.md`.
+- [x] Kiểm tra timeout, latency, error mapping, secret exposure và log hygiene.
 
 ### Linh - Cultural Data và Submission
 
@@ -112,7 +112,7 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 ## 10. Trạng thái checkpoint
 
 - [x] Đã lập kế hoạch.
-- [ ] Chưa bắt đầu triển khai.
-- [x] Đang thực hiện.
+- [x] Đang thực hiện (Lan Anh hoàn thành phần AI & Backend — 2026-10-08).
+- [ ] Chưa hoàn thành (chờ Hiền cung cấp bằng chứng regression/preview và Linh review khi có ảnh generated).
 - [ ] Hoàn thành.
-- [ ] Có blocker cần xử lý.
+- [x] Có blocker cần xử lý: **P2** — `GEMINI_IMAGE_MODEL` chưa cấu hình; generated-image success case không thể chứng minh. Ghi rõ limitation trong `docs/ai-log.md` và `docs/meeting-05-ai-evaluation.json`.
