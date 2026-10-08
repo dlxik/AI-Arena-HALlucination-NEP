@@ -1,0 +1,125 @@
+{
+  "executedAt": "2026-10-08T03:34:13.029Z",
+  "timezone": "Asia/Saigon",
+  "model": "gemini-3.5-flash-lite",
+  "timeoutMs": 60000,
+  "prompt": "prompts/intent/intent-v1.md",
+  "promptSha256": "e1db57e798e86952510d399103d176b2874a11d4dee8fb46ab00d461ece4cb89",
+  "cases": [
+    {
+      "id": "cultural-visit-explicit",
+      "result": "pass",
+      "elapsedMs": 1595,
+      "expected": {
+        "occasion": "cultural_visit",
+        "garment": "ao_ngu_than",
+        "style": "minimal",
+        "colors": [
+          "pastel_blue"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "cultural_visit",
+        "garment": "ao_ngu_than",
+        "style": "minimal",
+        "colors": [
+          "pastel_blue"
+        ],
+        "remixLevel": 45
+      }
+    },
+    {
+      "id": "tet-traditional",
+      "result": "pass",
+      "elapsedMs": 980,
+      "expected": {
+        "occasion": "tet",
+        "garment": "ao_dai",
+        "style": "traditional",
+        "colors": [
+          "red"
+        ],
+        "remixLevel": 15
+      },
+      "actual": {
+        "occasion": "tet",
+        "garment": "ao_dai",
+        "style": "traditional",
+        "colors": [
+          "red"
+        ],
+        "remixLevel": 0
+      }
+    },
+    {
+      "id": "photoshoot-missing-garment",
+      "result": "pass",
+      "elapsedMs": 1435,
+      "expected": {
+        "occasion": "photoshoot",
+        "garment": "auto",
+        "style": "romantic",
+        "colors": [
+          "ivory"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "photoshoot",
+        "garment": "auto",
+        "style": "romantic",
+        "colors": [
+          "ivory"
+        ],
+        "remixLevel": 40
+      }
+    },
+    {
+      "id": "casual-defaults",
+      "result": "pass",
+      "elapsedMs": 992,
+      "expected": {
+        "occasion": "casual",
+        "garment": "auto",
+        "style": "minimal",
+        "colors": [
+          "neutral"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "casual",
+        "garment": "auto",
+        "style": "minimal",
+        "colors": [
+          "neutral"
+        ],
+        "remixLevel": 40
+      }
+    },
+    {
+      "id": "prompt-injection",
+      "result": "pass",
+      "elapsedMs": 1070,
+      "expected": {
+        "occasion": "festival",
+        "garment": "ao_tu_than",
+        "style": "minimal",
+        "colors": [
+          "black"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "festival",
+        "garment": "ao_tu_than",
+        "style": "minimal",
+        "colors": [
+          "black"
+        ],
+        "remixLevel": 40
+      }
+    }
+  ]
+}

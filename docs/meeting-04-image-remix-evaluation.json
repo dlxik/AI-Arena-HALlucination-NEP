@@ -1,5 +1,5 @@
 {
-  "executedAt": "2026-10-02T15:17:56.054Z",
+  "executedAt": "2026-10-08T03:36:38.188Z",
   "timezone": "Asia/Saigon",
   "criticModel": "gemini-3.5-flash-lite",
   "criticTimeoutMs": 60000,
@@ -7,18 +7,18 @@
   "imageModel": null,
   "imageTimeoutMs": null,
   "criticPrompt": "prompts/critic/critic-v1.md",
-  "criticPromptSha256": "2219f735a8004af9c1ab83bce5544c0b1c0abaa9f4536bbfb1f85d152a1ae761",
+  "criticPromptSha256": "6fcd7d3d595b94a799e17a50e1f3bd123e60ae92269f82c9bbd5dbda6b9ae0fa",
   "imagePrompt": "prompts/image/image-v1.md",
   "imagePromptSha256": "ef2f9343cfb58376fa4be8e7d046baec6b11f3759ecc3eff0d86b010df059697",
-  "culturalReviewer": "Diệu Linh reviewed 2026-10-06: 8/8 actual Critic statuses and rule IDs match the expected cultural outcomes",
-  "imageReview": "N/A for visual review: all 8 executions returned the transparent not_configured fallback; no generated image was treated as cultural evidence",
+  "culturalReviewer": "Pending Diệu Linh review; expected outcomes are backend hypotheses",
+  "imageReview": "Not culturally reviewed; images are AI illustrations, not authenticated artefacts",
   "cases": [
     {
       "id": "IR_01_AO_DAI_PALETTE",
       "garment": "ao_dai",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1400,
+      "elapsedMs": 1423,
       "expectedStatus": "pass",
       "expectedRuleIds": [],
       "changes": {
@@ -31,10 +31,10 @@
         "status": "pass",
         "warnings": []
       },
-      "validationId": "5326aebb-6d61-43da-a41f-895bf2c3cabc",
-      "validatedAt": "2026-10-02T15:17:57.462Z",
+      "validationId": "cffb9958-d167-4fd7-ab07-4901d0b2890f",
+      "validatedAt": "2026-10-08T03:36:39.624Z",
       "image": {
-        "lookId": "remix-737fd960-952b-41e7-9c1a-decefa0530ef",
+        "lookId": "remix-c1d6087f-04db-4702-9df8-836e2e92254f",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -52,7 +52,7 @@
       "garment": "ao_dai",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1568,
+      "elapsedMs": 1389,
       "expectedStatus": "warning",
       "expectedRuleIds": [
         "AD_WARNING_SINGLE_FORM_GENERALIZATION"
@@ -68,15 +68,15 @@
           {
             "ruleId": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
             "severity": "medium",
-            "reason": "Phụ kiện trong bản phối chứa tuyên bố khẳng định cổ cao và tay dài là hình thức lịch sử duy nhất và bắt buộc cho mọi áo dài, trái với ghi nhận của nguồn về sự đa dạng kiểu dáng trong tiến trình lịch sử.",
-            "suggestedFix": "Loại bỏ hoặc điều chỉnh lại tuyên bố tuyệt đối trong phụ kiện, chuyển thành việc công nhận cổ cao và tay dài là một trong số các kiểu dáng truyền thống bên cạnh các biến thể đương đại."
+            "reason": "Phụ kiện trong bản phối chứa tuyên bố khẳng định cổ cao và tay dài là hình thức lịch sử duy nhất và bắt buộc cho mọi áo dài, trái với ghi nhận về sự đa dạng kiểu dáng trong nguồn bảo tàng.",
+            "suggestedFix": "Loại bỏ tuyên bố áp đặt cổ cao và tay dài thành quy tắc tuyệt đối; thay bằng ngôn ngữ ghi nhận sự đa dạng về kiểu dáng và sự thay đổi theo từng thời kỳ."
           }
         ]
       },
-      "validationId": "427c7a62-6a59-4064-ae86-6e87bf3487fa",
-      "validatedAt": "2026-10-02T15:17:59.031Z",
+      "validationId": "f7a5714e-5bcf-463c-8501-1260cb1e935b",
+      "validatedAt": "2026-10-08T03:36:41.015Z",
       "image": {
-        "lookId": "remix-5b454aa8-9c32-4cbe-91ea-bbc503c51e97",
+        "lookId": "remix-72129891-2177-4442-8b33-0ad1078f8549",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -94,7 +94,7 @@
       "garment": "ao_ngu_than",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1212,
+      "elapsedMs": 1710,
       "expectedStatus": "pass",
       "expectedRuleIds": [],
       "changes": {
@@ -107,10 +107,10 @@
         "status": "pass",
         "warnings": []
       },
-      "validationId": "2611abb2-9f07-44a9-b0cf-f5fcc55a02f0",
-      "validatedAt": "2026-10-02T15:18:00.237Z",
+      "validationId": "c7a00c91-bd40-4134-a27b-01fb40827b44",
+      "validatedAt": "2026-10-08T03:36:42.730Z",
       "image": {
-        "lookId": "remix-0fd0c3b3-8afe-486d-96e1-e764f4047a13",
+        "lookId": "remix-703063b8-8ff8-4bac-985f-816e6173553c",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -130,7 +130,7 @@
       "garment": "ao_ngu_than",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1607,
+      "elapsedMs": 1558,
       "expectedStatus": "warning",
       "expectedRuleIds": [
         "ANT_WARNING_ARTIFACT_GENERALIZATION"
@@ -146,15 +146,15 @@
           {
             "ruleId": "ANT_WARNING_ARTIFACT_GENERALIZATION",
             "severity": "medium",
-            "reason": "Khăn trong phần phụ kiện đưa ra claim: mọi áo ngũ thân đều bắt buộc màu đen và họa tiết hồi văn, thủy ba, ngũ Phúc như hiện vật bảo tàng, vi phạm điều kiện tránh khái quát hóa từ một hiện vật cụ thể.",
-            "suggestedFix": "Sửa lại mô tả phụ kiện hoặc khăn để làm rõ đây là họa tiết của một hiện vật cụ thể được bảo tàng lưu giữ, không khẳng định đó là quy chuẩn bắt buộc cho mọi áo ngũ thân."
+            "reason": "Phụ kiện trong bản phối chứa claim khái quát hóa: \"mọi áo ngũ thân đều bắt buộc màu đen và họa tiết hồi văn, thủy ba, ngũ Phúc như hiện vật bảo tàng\", vượt quá phạm vi hiện vật cụ thể được nguồn mô tả.",
+            "suggestedFix": "Sửa lại tuyên bố trong phụ kiện thành mô tả của riêng hiện vật bảo tàng cụ thể; không gán màu sắc và họa tiết này thành yêu cầu bắt buộc cho mọi áo ngũ thân."
           }
         ]
       },
-      "validationId": "8f763091-d88f-46d9-9f77-7577ec749255",
-      "validatedAt": "2026-10-02T15:18:01.862Z",
+      "validationId": "62b78e3f-1eb8-4b74-aa4a-0cada491e344",
+      "validatedAt": "2026-10-08T03:36:44.289Z",
       "image": {
-        "lookId": "remix-eca26048-0604-4d8d-881a-6865728338b7",
+        "lookId": "remix-1dae5e63-e518-48e4-9f26-7a4ec5bfc11e",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -174,7 +174,7 @@
       "garment": "ao_tu_than",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1234,
+      "elapsedMs": 1061,
       "expectedStatus": "pass",
       "expectedRuleIds": [],
       "changes": {
@@ -187,10 +187,10 @@
         "status": "pass",
         "warnings": []
       },
-      "validationId": "0b0c16c5-2144-4f59-9312-431380982843",
-      "validatedAt": "2026-10-02T15:18:03.099Z",
+      "validationId": "ebb47956-7dde-4843-8481-90d28dcd6909",
+      "validatedAt": "2026-10-08T03:36:45.353Z",
       "image": {
-        "lookId": "remix-3aa9b9b3-3d21-4377-a30e-8dab24c7d07b",
+        "lookId": "remix-8908d8ea-567d-4837-a2d0-c7454cdcde09",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -208,7 +208,7 @@
       "garment": "ao_tu_than",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1612,
+      "elapsedMs": 1551,
       "expectedStatus": "warning",
       "expectedRuleIds": [
         "ATT_CONTEXT_KINH_BAC_FESTIVAL"
@@ -224,15 +224,15 @@
           {
             "ruleId": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
             "severity": "medium",
-            "reason": "Phụ kiện có chứa claim khẳng định mọi áo tứ thân ở mọi dịp bắt buộc phải có yếm trắng, váy đen và khăn mỏ quạ kể cả trong photoshoot hiện đại, mâu thuẫn với quy định nguồn rằng đây là ngữ cảnh lễ hội cụ thể.",
-            "suggestedFix": "Loại bỏ claim bắt buộc phổ quát trong phụ kiện; ghi nhận yếm trắng, váy đen và khăn mỏ quạ là lựa chọn phù hợp cho ngữ cảnh lễ hội truyền thống thay vì bắt buộc ở mọi dịp."
+            "reason": "Mô tả khái quát tổ hợp của một ngữ cảnh lễ hội Kinh Bắc thành yêu cầu bắt buộc cho mọi dịp kể cả photoshoot hiện đại.",
+            "suggestedFix": "Giới hạn tổ hợp yếm trắng, váy đen và khăn mỏ quạ vào ngữ cảnh lễ hội được nguồn mô tả; không gọi đây là yêu cầu bắt buộc cho mọi dịp hoặc photoshoot hiện đại."
           }
         ]
       },
-      "validationId": "0c29c501-51cd-433a-a1de-5afa5032e92f",
-      "validatedAt": "2026-10-02T15:18:04.713Z",
+      "validationId": "9bf6944f-829d-4527-ab07-4fd83e314177",
+      "validatedAt": "2026-10-08T03:36:46.906Z",
       "image": {
-        "lookId": "remix-b1e2c3a4-a8c0-4914-b9f5-1c487b0fd5a9",
+        "lookId": "remix-18185984-7703-41aa-8016-14804579d5a4",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -250,7 +250,7 @@
       "garment": "nhat_binh",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1614,
+      "elapsedMs": 1261,
       "expectedStatus": "pass",
       "expectedRuleIds": [],
       "changes": {
@@ -263,10 +263,10 @@
         "status": "pass",
         "warnings": []
       },
-      "validationId": "4de26d63-ecb8-4217-b8f2-48028a08eda5",
-      "validatedAt": "2026-10-02T15:18:06.332Z",
+      "validationId": "b53ab09a-dc33-4b74-8549-baef5138764e",
+      "validatedAt": "2026-10-08T03:36:48.169Z",
       "image": {
-        "lookId": "remix-f598ee6c-3394-4171-9e8b-aecc0686626c",
+        "lookId": "remix-65731ca6-5e34-4d11-b178-336cb059d6a6",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },
@@ -286,7 +286,7 @@
       "garment": "nhat_binh",
       "result": "pass",
       "httpStatus": 200,
-      "elapsedMs": 1656,
+      "elapsedMs": 12775,
       "expectedStatus": "warning",
       "expectedRuleIds": [
         "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
@@ -302,15 +302,15 @@
           {
             "ruleId": "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION",
             "severity": "medium",
-            "reason": "Phụ kiện trong bản phối tuyên bố màu vàng và họa tiết phượng, hạc, rùa của áo Đoan Huy Hoàng thái hậu là bắt buộc cho mọi Nhật Bình và mọi phẩm cấp, điều này khái quát hóa một hiện vật cá biệt thành quy chuẩn phổ quát.",
-            "suggestedFix": "Loại bỏ tuyên bố cho rằng màu vàng và bộ họa tiết của Đoan Huy Hoàng thái hậu là bắt buộc cho mọi áo Nhật Bình; ghi rõ đó là các yếu tố tham khảo từ một hiện vật cụ thể."
+            "reason": "Phụ kiện trong mô tả tuyên bố màu vàng cùng họa tiết phượng, hạc, rùa của áo Đoan Huy Hoàng thái hậu là bắt buộc cho mọi Nhật Bình và mọi phẩm cấp.",
+            "suggestedFix": "Loại bỏ tuyên bố áp đặt màu sắc và họa tiết của hiện vật cụ thể lên toàn bộ các mẫu Nhật Bình khác; điều chỉnh lại mô tả phụ kiện chỉ mang tính chất tham khảo hoặc lấy cảm hứng từ hiện vật lịch sử."
           }
         ]
       },
-      "validationId": "a8f135a5-01a9-4082-8191-5c6ac3c15491",
-      "validatedAt": "2026-10-02T15:18:07.991Z",
+      "validationId": "740c84cc-ede0-4354-ae74-3833df9afdc3",
+      "validatedAt": "2026-10-08T03:37:00.946Z",
       "image": {
-        "lookId": "remix-f194871e-bf98-4f04-a511-6e1180f99819",
+        "lookId": "remix-c1cc9348-2b8a-4552-9af0-cc046ad38a73",
         "status": "fallback",
         "fallbackReason": "not_configured"
       },

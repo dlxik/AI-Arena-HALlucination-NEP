@@ -1,0 +1,470 @@
+{
+  "executedAt": "2026-10-08T03:37:12.097Z",
+  "timezone": "Asia/Saigon",
+  "model": "gemini-3.5-flash-lite",
+  "promptVersions": {
+    "intent": {
+      "file": "prompts/intent/intent-v1.md",
+      "sha256": "e1db57e798e86952510d399103d176b2874a11d4dee8fb46ab00d461ece4cb89"
+    },
+    "critic": {
+      "file": "prompts/critic/critic-v1.md",
+      "sha256": "6fcd7d3d595b94a799e17a50e1f3bd123e60ae92269f82c9bbd5dbda6b9ae0fa"
+    },
+    "image": {
+      "file": "prompts/image/image-v1.md",
+      "sha256": "ef2f9343cfb58376fa4be8e7d046baec6b11f3759ecc3eff0d86b010df059697"
+    }
+  },
+  "timeoutMs": {
+    "critic": 60000,
+    "image": null
+  },
+  "imageProvider": {
+    "configured": false,
+    "mode": "disabled_for_critic_only_evaluation",
+    "model": null,
+    "blocker": "GEMINI_IMAGE_MODEL/provider is not configured; generated-image success cannot be demonstrated."
+  },
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0,
+    "categories": {
+      "intent": 3,
+      "recommendation": 4,
+      "critic": 4,
+      "image": 2,
+      "remix": 3
+    }
+  },
+  "culturalReview": "Pending Diệu Linh adjudication; backend verdicts are not cultural approval.",
+  "cases": [
+    {
+      "id": "cultural-visit-explicit",
+      "category": "intent",
+      "expected": {
+        "occasion": "cultural_visit",
+        "garment": "ao_ngu_than",
+        "style": "minimal",
+        "colors": [
+          "pastel_blue"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "cultural_visit",
+        "garment": "ao_ngu_than",
+        "style": "minimal",
+        "colors": [
+          "pastel_blue"
+        ],
+        "remixLevel": 45
+      },
+      "verdict": "pass",
+      "elapsedMs": 1595,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-05-intent-evaluation.json"
+    },
+    {
+      "id": "photoshoot-missing-garment",
+      "category": "intent",
+      "expected": {
+        "occasion": "photoshoot",
+        "garment": "auto",
+        "style": "romantic",
+        "colors": [
+          "ivory"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "photoshoot",
+        "garment": "auto",
+        "style": "romantic",
+        "colors": [
+          "ivory"
+        ],
+        "remixLevel": 40
+      },
+      "verdict": "pass",
+      "elapsedMs": 1435,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-05-intent-evaluation.json"
+    },
+    {
+      "id": "prompt-injection",
+      "category": "intent",
+      "expected": {
+        "occasion": "festival",
+        "garment": "ao_tu_than",
+        "style": "minimal",
+        "colors": [
+          "black"
+        ],
+        "remixLevel": 40
+      },
+      "actual": {
+        "occasion": "festival",
+        "garment": "ao_tu_than",
+        "style": "minimal",
+        "colors": [
+          "black"
+        ],
+        "remixLevel": 40
+      },
+      "verdict": "pass",
+      "elapsedMs": 1070,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-05-intent-evaluation.json"
+    },
+    {
+      "id": "RC_01_AO_DAI_FESTIVAL",
+      "category": "recommendation",
+      "expected": {
+        "lookCount": 3,
+        "requestedGarment": "AO"
+      },
+      "actual": {
+        "lookCount": 3,
+        "garments": [
+          "ao_dai",
+          "ao_dai",
+          "ao_dai"
+        ],
+        "statuses": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "sourceIds": [
+          "VNMH_AO_DAI_2015"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 64427,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "RC_02_AO_NGU_THAN_CULTURAL_VISIT",
+      "category": "recommendation",
+      "expected": {
+        "lookCount": 3,
+        "requestedGarment": "AO"
+      },
+      "actual": {
+        "lookCount": 3,
+        "garments": [
+          "ao_ngu_than",
+          "ao_ngu_than",
+          "ao_ngu_than"
+        ],
+        "statuses": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "sourceIds": [
+          "VNMH_AO_NGU_THAN_2021"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 5743,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "RC_03_AO_TU_THAN_FESTIVAL",
+      "category": "recommendation",
+      "expected": {
+        "lookCount": 3,
+        "requestedGarment": "AO"
+      },
+      "actual": {
+        "lookCount": 3,
+        "garments": [
+          "ao_tu_than",
+          "ao_tu_than",
+          "ao_tu_than"
+        ],
+        "statuses": [
+          "pass",
+          "pass",
+          "pass"
+        ],
+        "sourceIds": [
+          "VNMH_AO_TU_THAN_CONTEXT_2016",
+          "VHTT_AO_TU_THAN_KINH_BAC"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 6452,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "RC_04_NHAT_BINH_PHOTOSHOOT",
+      "category": "recommendation",
+      "expected": {
+        "lookCount": 3,
+        "requestedGarment": "NHAT"
+      },
+      "actual": {
+        "lookCount": 3,
+        "garments": [
+          "nhat_binh",
+          "nhat_binh",
+          "nhat_binh"
+        ],
+        "statuses": [
+          "warning",
+          "warning",
+          "pass"
+        ],
+        "sourceIds": [
+          "VHNT_NHAT_BINH_CONTEXT_2022",
+          "VHNT_NHAT_BINH_MOTIF_2025"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 7835,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "CC_01_AO_DAI_VALID",
+      "category": "critic",
+      "expected": {
+        "status": "pass",
+        "ruleIds": []
+      },
+      "actual": {
+        "status": "pass",
+        "warnings": [],
+        "retrievedRules": [
+          "AD_CONTEXT_TWENTIETH_CENTURY_TRANSFORMATION",
+          "AD_FLEX_NECK_SLEEVE_DECORATION",
+          "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 1712,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "CC_04_NGU_THAN_BUTTONS",
+      "category": "critic",
+      "expected": {
+        "status": "warning",
+        "ruleIds": [
+          "ANT_STRUCTURE_FIVE_BUTTONS"
+        ]
+      },
+      "actual": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "ANT_STRUCTURE_FIVE_BUTTONS",
+            "severity": "medium",
+            "reason": "Bản phối áo ngũ thân tay chẽn có ba khuy đặt giữa thân trước thay vì hàng năm cúc bên phải theo mẫu được nguồn mô tả.",
+            "suggestedFix": "Đổi mô tả thành hàng năm cúc chạy theo vạt bên phải từ cổ xuống eo hoặc làm rõ thiết kế chỉ lấy cảm hứng và không tái hiện mẫu hiện vật."
+          }
+        ],
+        "retrievedRules": [
+          "ANT_CONTEXT_NGUYEN_STYLE",
+          "ANT_FLEX_MATERIAL_AND_PALETTE",
+          "ANT_STRUCTURE_FIVE_BUTTONS",
+          "ANT_STRUCTURE_NARROW_SLEEVES",
+          "ANT_WARNING_ARTIFACT_GENERALIZATION"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 1836,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "CC_05_TU_THAN_VALID",
+      "category": "critic",
+      "expected": {
+        "status": "pass",
+        "ruleIds": []
+      },
+      "actual": {
+        "status": "pass",
+        "warnings": [],
+        "retrievedRules": [
+          "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+          "ATT_STRUCTURE_FOUR_PANELS"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 1164,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "CC_08_RC04_NHAT_BINH_MISSING_COLLAR",
+      "category": "critic",
+      "expected": {
+        "status": "warning",
+        "ruleIds": [
+          "NB_STRUCTURE_RECTANGULAR_COLLAR"
+        ]
+      },
+      "actual": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "NB_STRUCTURE_RECTANGULAR_COLLAR",
+            "severity": "medium",
+            "reason": "Look được gọi là Nhật Bình nhưng items, culturalNote và imagePrompt chưa mô tả cụ thể cổ đối khâm hình chữ nhật, khiến thiếu chi tiết nhận diện cốt lõi theo nguồn.",
+            "suggestedFix": "Bổ sung mô tả 'cổ đối khâm hình chữ nhật' vào items hoặc imagePrompt; nếu đây chỉ là thiết kế cách tân phóng khoáng không giữ cấu trúc chuẩn, hãy ghi rõ nhãn lấy cảm hứng."
+          }
+        ],
+        "retrievedRules": [
+          "NB_CONTEXT_NGUYEN_COURT_USE",
+          "NB_FLEX_CONTEMPORARY_VARIATION",
+          "NB_STRUCTURE_RECTANGULAR_COLLAR",
+          "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+        ]
+      },
+      "verdict": "pass",
+      "elapsedMs": 1679,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-03-critic-evaluation.json"
+    },
+    {
+      "id": "IR_01_AO_DAI_PALETTE",
+      "category": "image",
+      "expected": {
+        "status": "generated or explicit fallback",
+        "fallbackReason": "not_configured"
+      },
+      "actual": {
+        "status": "fallback",
+        "fallbackReason": "not_configured",
+        "httpStatus": 200
+      },
+      "verdict": "pass",
+      "elapsedMs": 1423,
+      "reviewer": "Lan Anh (backend); generated-image review pending provider configuration",
+      "sourceArtifact": "docs/meeting-04-image-remix-evaluation.json"
+    },
+    {
+      "id": "IR_03_NGU_THAN_PALETTE",
+      "category": "image",
+      "expected": {
+        "status": "generated or explicit fallback",
+        "fallbackReason": "not_configured"
+      },
+      "actual": {
+        "status": "fallback",
+        "fallbackReason": "not_configured",
+        "httpStatus": 200
+      },
+      "verdict": "pass",
+      "elapsedMs": 1710,
+      "reviewer": "Lan Anh (backend); generated-image review pending provider configuration",
+      "sourceArtifact": "docs/meeting-04-image-remix-evaluation.json"
+    },
+    {
+      "id": "IR_02_AO_DAI_RISK",
+      "category": "remix",
+      "expected": {
+        "status": "warning",
+        "ruleIds": [
+          "AD_WARNING_SINGLE_FORM_GENERALIZATION"
+        ],
+        "freshValidation": true
+      },
+      "actual": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "AD_WARNING_SINGLE_FORM_GENERALIZATION",
+            "severity": "medium",
+            "reason": "Phụ kiện trong bản phối chứa tuyên bố khẳng định cổ cao và tay dài là hình thức lịch sử duy nhất và bắt buộc cho mọi áo dài, trái với ghi nhận về sự đa dạng kiểu dáng trong nguồn bảo tàng.",
+            "suggestedFix": "Loại bỏ tuyên bố áp đặt cổ cao và tay dài thành quy tắc tuyệt đối; thay bằng ngôn ngữ ghi nhận sự đa dạng về kiểu dáng và sự thay đổi theo từng thời kỳ."
+          }
+        ],
+        "freshValidation": true,
+        "image": {
+          "lookId": "remix-72129891-2177-4442-8b33-0ad1078f8549",
+          "status": "fallback",
+          "fallbackReason": "not_configured"
+        }
+      },
+      "verdict": "pass",
+      "elapsedMs": 1389,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-04-image-remix-evaluation.json"
+    },
+    {
+      "id": "IR_06_TU_THAN_RISK",
+      "category": "remix",
+      "expected": {
+        "status": "warning",
+        "ruleIds": [
+          "ATT_CONTEXT_KINH_BAC_FESTIVAL"
+        ],
+        "freshValidation": true
+      },
+      "actual": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "ATT_CONTEXT_KINH_BAC_FESTIVAL",
+            "severity": "medium",
+            "reason": "Mô tả khái quát tổ hợp của một ngữ cảnh lễ hội Kinh Bắc thành yêu cầu bắt buộc cho mọi dịp kể cả photoshoot hiện đại.",
+            "suggestedFix": "Giới hạn tổ hợp yếm trắng, váy đen và khăn mỏ quạ vào ngữ cảnh lễ hội được nguồn mô tả; không gọi đây là yêu cầu bắt buộc cho mọi dịp hoặc photoshoot hiện đại."
+          }
+        ],
+        "freshValidation": true,
+        "image": {
+          "lookId": "remix-18185984-7703-41aa-8016-14804579d5a4",
+          "status": "fallback",
+          "fallbackReason": "not_configured"
+        }
+      },
+      "verdict": "pass",
+      "elapsedMs": 1551,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-04-image-remix-evaluation.json"
+    },
+    {
+      "id": "IR_08_NHAT_BINH_RISK",
+      "category": "remix",
+      "expected": {
+        "status": "warning",
+        "ruleIds": [
+          "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION"
+        ],
+        "freshValidation": true
+      },
+      "actual": {
+        "status": "warning",
+        "warnings": [
+          {
+            "ruleId": "NB_WARNING_ARTIFACT_MOTIF_GENERALIZATION",
+            "severity": "medium",
+            "reason": "Phụ kiện trong mô tả tuyên bố màu vàng cùng họa tiết phượng, hạc, rùa của áo Đoan Huy Hoàng thái hậu là bắt buộc cho mọi Nhật Bình và mọi phẩm cấp.",
+            "suggestedFix": "Loại bỏ tuyên bố áp đặt màu sắc và họa tiết của hiện vật cụ thể lên toàn bộ các mẫu Nhật Bình khác; điều chỉnh lại mô tả phụ kiện chỉ mang tính chất tham khảo hoặc lấy cảm hứng từ hiện vật lịch sử."
+          }
+        ],
+        "freshValidation": true,
+        "image": {
+          "lookId": "remix-c1cc9348-2b8a-4552-9af0-cc046ad38a73",
+          "status": "fallback",
+          "fallbackReason": "not_configured"
+        }
+      },
+      "verdict": "pass",
+      "elapsedMs": 12775,
+      "reviewer": "Lan Anh (backend); cultural adjudication pending Linh",
+      "sourceArtifact": "docs/meeting-04-image-remix-evaluation.json"
+    }
+  ]
+}

@@ -1,8 +1,11 @@
 import { loadEnvConfig } from "@next/env";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import { parseIntentWithGemini } from "../src/lib/gemini/parse-intent";
+import { getGeminiApiKey, getGeminiModel, getGeminiTimeoutMs } from "../src/lib/gemini/client";
+import { loadIntentPrompt, parseIntentWithGemini } from "../src/lib/gemini/parse-intent";
 import type { RecommendationInput } from "../src/types/api";
 
 type IntentCase = {
@@ -15,6 +18,7 @@ type IntentCase = {
 loadEnvConfig(process.cwd());
 
 async function main() {
+  getGeminiApiKey();
   const casesPath = path.join(
     process.cwd(),
     "tests",
@@ -22,10 +26,21 @@ async function main() {
     "intent-cases.json",
   );
   const cases = JSON.parse(await readFile(casesPath, "utf8")) as IntentCase[];
+  const prompt = await loadIntentPrompt();
+  const report = {
+    executedAt: new Date().toISOString(),
+    timezone: "Asia/Saigon",
+    model: getGeminiModel(),
+    timeoutMs: getGeminiTimeoutMs(),
+    prompt: "prompts/intent/intent-v1.md",
+    promptSha256: createHash("sha256").update(prompt).digest("hex"),
+    cases: [] as Array<Record<string, unknown>>,
+  };
 
   let passed = 0;
 
   for (const intentCase of cases) {
+    const started = Date.now();
     try {
       const actual = await parseIntentWithGemini(intentCase.description);
       assert.deepEqual(
@@ -48,8 +63,28 @@ async function main() {
         `Expected remixLevel in ${intentCase.remixLevelRange.join("..")}, received ${actual.remixLevel}.`,
       );
       passed += 1;
+      report.cases.push({
+        id: intentCase.id,
+        result: "pass",
+        elapsedMs: Date.now() - started,
+        expected: intentCase.expected,
+        actual: {
+          occasion: actual.occasion,
+          garment: actual.garment,
+          style: actual.style,
+          colors: actual.colors,
+          remixLevel: actual.remixLevel,
+        },
+      });
       console.log(`PASS ${intentCase.id}`);
     } catch (error) {
+      report.cases.push({
+        id: intentCase.id,
+        result: "fail",
+        elapsedMs: Date.now() - started,
+        expected: intentCase.expected,
+        errorCode: error instanceof Error ? error.name : "UnknownError",
+      });
       console.error(
         `FAIL ${intentCase.id}: ${error instanceof Error ? error.message : "Unknown error"}`,
         error instanceof Error && "cause" in error ? error.cause : ""
@@ -57,7 +92,10 @@ async function main() {
     }
   }
 
+  const reportPath = "docs/meeting-05-intent-evaluation.json";
+  await writeFile(reportPath, JSON.stringify(report, null, 2) + "\n", "utf8");
   console.log(`Intent evaluation: ${passed}/${cases.length} passed.`);
+  console.log(`Intent report: ${reportPath}`);
   if (passed !== cases.length) {
     process.exitCode = 1;
   }
