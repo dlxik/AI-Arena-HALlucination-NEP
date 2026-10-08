@@ -49,18 +49,18 @@ Tiến độ Hiền ngày 2026-10-08: `docs/ux-regression-report.md` ghi 32/32 c
 ### Linh - Cultural Data và Submission
 
 - [x] Adjudicate cultural correctness cho toàn bộ 15-20 case; ghi expected/actual/verdict và lý do.
-- [ ] Review riêng mọi ảnh thật theo rubric bốn garment; không dùng ảnh AI làm bằng chứng lịch sử.
+- [x] Review riêng mọi ảnh thật theo rubric bốn garment — N/A: artefact có 0 ảnh generated và chỉ có fallback `not_configured`; gate tự mở lại nếu có ảnh thật. Không dùng ảnh AI làm bằng chứng lịch sử.
 - [x] Kiểm tra citation/source link, garment scope và các source còn `needs_review`; không nâng trạng thái nếu chưa đối chiếu.
 - [x] Soạn bản nháp submission: problem, approach, cultural safeguards, Gemini usage, evaluation, limitation và impact.
 - [x] Soạn demo script/shot list cùng Hiền; chọn case pass, warning và fallback minh bạch.
 
-Kết quả Linh ngày 2026-10-06:
+Kết quả Linh, cập nhật ngày 2026-10-08:
 
-- `docs/meeting-05-cultural-adjudication.json`: 18 case có expected/actual/verdict/rationale và evidence.
+- `docs/meeting-05-cultural-adjudication.json`: 19 case có expected/actual/verdict/rationale và evidence; bao phủ toàn bộ 16 case consolidated cùng ba regression case bổ sung.
 - `scripts/validate-meeting-05-cultural-review.ts`: kiểm tra coverage, duplicate ID, source/rule approval và garment scope.
-- `docs/meeting-05-cultural-review.md`: cultural/source audit; không có P0/P1, còn hai P2 về raw intent evidence và live image review.
+- `docs/meeting-05-cultural-review.md`: cultural/source audit; không có P0/P1, còn một P2 về image provider/live visual review.
 - `docs/submission-draft.md` và `docs/demo-script-shot-list.md`: bản nháp handoff cho Meeting 06.
-- Chưa tick image review vì artefact hiện chỉ có tám fallback `not_configured`, chưa có ảnh thật. Hiền vẫn cần xác nhận shot list theo UI/deploy candidate.
+- Image review được đóng N/A cho artefact hiện tại vì có 0 ảnh generated; nếu provider tạo ảnh thật, Linh phải review bổ sung trước khi dùng ảnh trong demo/submission.
 
 ## 5. Evaluation matrix tối thiểu
 
@@ -100,7 +100,7 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 - [x] Không còn lỗi P0/P1; P2 còn lại có owner và limitation rõ ràng.
 - [x] Prompt/schema production có version/hash và không còn thay đổi chưa đánh giá.
 - [ ] Preview/demo candidate chạy được bằng hướng dẫn trong repo.
-- [ ] Bản nháp submission, demo script và shot list đã sẵn sàng cho Meeting 06.
+- [x] Bản nháp submission, demo script và shot list đã sẵn sàng cho Meeting 06.
 - [ ] Cả ba owner review artefact và đồng ý khóa scope.
 
 ## 9. Handoff sang Meeting 06
@@ -115,6 +115,6 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 
 - [x] Đã lập kế hoạch.
 - [x] Đang thực hiện (Lan Anh hoàn thành phần AI & Backend — 2026-10-08).
-- [ ] Chưa hoàn thành (chờ Hiền cung cấp bằng chứng regression/preview và Linh review khi có ảnh generated).
+- [ ] Chưa hoàn thành (chờ Hiền chốt screenshot/demo flow, preview URL và cả đội sign-off).
 - [ ] Hoàn thành.
 - [x] Có blocker cần xử lý: **P2** — `GEMINI_IMAGE_MODEL` chưa cấu hình; generated-image success case không thể chứng minh. Ghi rõ limitation trong `docs/ai-log.md` và `docs/meeting-05-ai-evaluation.json`.

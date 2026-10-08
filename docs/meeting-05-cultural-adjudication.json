@@ -3,7 +3,7 @@
     "owner": "Diệu Linh",
     "reviewed_at": "2026-10-06",
     "case_count": 19,
-    "status": "provisional_until_live_image_review",
+    "status": "complete_with_image_provider_limitation",
     "evidence_policy": "Actual values are copied or summarized only from committed Meeting 03/04 runtime artefacts. Missing raw evidence is recorded as a limitation, never inferred.",
     "visual_policy": "AI images are illustrations, not authenticated artefacts or evidence for cultural claims."
   },

@@ -50,8 +50,9 @@ Cần hoàn thành trước khi đóng checkpoint:
   - Ghi: expected / actual / verdict / lý do cho từng case
   - Bốn garment cần có coverage: áo dài, áo ngũ thân, áo tứ thân, nhật bình
   - Cần có đủ 3 loại verdict: pass ✓, warning ⚠, failure/fallback ✗
-- [ ] **Review ảnh thật** theo rubric bốn garment
-  - **Không dùng ảnh AI làm bằng chứng lịch sử**
+- [x] **Review ảnh thật** theo rubric bốn garment — **N/A trong artefact hiện tại**
+  - 0 ảnh generated, toàn bộ image cases trả fallback `not_configured`; không có visual output để chấm.
+  - Gate này tự mở lại nếu provider tạo ảnh thật; **không dùng ảnh AI làm bằng chứng lịch sử**.
 - [x] Kiểm tra **citation/source link**, garment scope,
   các source còn `needs_review` — không nâng trạng thái nếu chưa đối chiếu thực tế
 - [x] **Soạn bản nháp submission** gồm:
@@ -77,7 +78,7 @@ Cần hoàn thành trước khi đóng checkpoint:
 - [x] Bốn garment có cultural coverage; pass + warning + fallback đều được chứng minh
 - [x] Không còn lỗi P0/P1; P2 (image provider) có owner + limitation rõ ràng ← **đã ghi**
 - [ ] Preview/demo candidate chạy được bằng hướng dẫn trong repo
-- [ ] Bản nháp submission, demo script và shot list sẵn sàng cho Meeting 06
+- [x] Bản nháp submission, demo script và shot list sẵn sàng cho Meeting 06
 - [ ] **Cả ba owner** review artefact và đồng ý khóa scope
 
 ---

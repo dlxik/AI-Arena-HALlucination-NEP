@@ -41,7 +41,7 @@ Không phát hiện P0/P1 trong tập bằng chứng hiện tại. Một P2 đư
 | `VWM_AO_DAI` | needs_review | ba nhóm áo | Tiếp tục loại khỏi production retrieval |
 | `HMCC_NHAT_BINH_2022` | needs_review | `nhat_binh` | Tiếp tục loại khỏi production retrieval |
 
-Validator xác nhận mọi citation trong 18 case tồn tại, `approved`, đúng garment; mọi rule được tham chiếu đều `verified`, `reviewed: true` và đúng source scope. Linh **không nâng trạng thái** hai nguồn chưa đối chiếu đủ toàn văn.
+Validator xác nhận mọi citation trong 19 case tồn tại, `approved`, đúng garment; mọi rule được tham chiếu đều `verified`, `reviewed: true` và đúng source scope. Linh **không nâng trạng thái** hai nguồn chưa đối chiếu đủ toàn văn.
 
 ## Image review gate
 
@@ -64,4 +64,4 @@ Validator kiểm tra tổng số case, coverage từng nhóm, duplicate ID, sour
 
 - Lan Anh: consolidated evaluation và raw intent outputs đã hoàn thành; cấu hình image provider nếu đội có model khả dụng.
 - Hiền: xác nhận shot list khớp UI/deploy candidate và cung cấp screenshot/recording thật.
-- Linh: review ảnh ngay khi có generated output; cập nhật hai P2 trước khi khóa submission cuối.
+- Linh: phần Meeting 05 đã hoàn tất với image review N/A; nếu có generated output trước submission, mở lại visual-review gate và cập nhật P2.

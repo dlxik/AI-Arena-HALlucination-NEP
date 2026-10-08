@@ -71,14 +71,14 @@ Prototype giúp người dùng khám phá cách phối Việt phục trong khi v
 - Repository: <https://github.com/dlxik/AI-Arena-HALlucination-NEP>
 - Video URL: `TODO_MEETING_06`
 - Gemini conversation URL: `TODO_TEAM`
-- Final evaluation artefact: `TODO_LAN_ANH`
+- Final evaluation artefact: `docs/meeting-05-ai-evaluation.json`
 - Screenshot/email xác nhận nộp: `TODO_MEETING_06`
 
 ## Final-copy checklist
 
-- [ ] Số liệu khớp artefact evaluation cuối.
-- [ ] Không tuyên bố có ảnh thật nếu demo chỉ dùng fallback.
-- [ ] Không gọi ảnh AI là phục dựng hoặc hiện vật.
-- [ ] Không đưa source `needs_review` vào phần bằng chứng.
+- [x] Số liệu khớp artefact evaluation cuối.
+- [x] Không tuyên bố có ảnh thật nếu demo chỉ dùng fallback.
+- [x] Không gọi ảnh AI là phục dựng hoặc hiện vật.
+- [x] Không đưa source `needs_review` vào phần bằng chứng.
 - [ ] Mọi URL công khai mở được mà không cần tài khoản ngoài yêu cầu cuộc thi.
 - [ ] Hiền và Lan Anh review nội dung thuộc phần của mình.

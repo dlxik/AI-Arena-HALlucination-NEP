@@ -17,7 +17,7 @@ Trong khoảng **2 phút 30 giây**, chứng minh ba điểm: gợi ý có ngu�
 | 01:00-01:20 | Mở Cultural Passport | “Passport giải thích cultural note, rule warning và provenance.” | Source title, publisher, link; AI-image disclaimer |
 | 01:20-01:50 | Remix bằng risky claim đã định nghĩa | “Sau thay đổi, validation cũ không được tái sử dụng; Critic chạy lại trước image pipeline.” | Loading revalidation, warning mới, rule ID và suggested fix |
 | 01:50-02:10 | Chuyển sang case fallback hoặc provider error | “Nếu ảnh không khả dụng, hệ thống giữ nội dung và báo fallback thay vì tạo fake success.” | `not_configured`/fallback UI đúng thực tế |
-| 02:10-02:30 | Slide evaluation + limitation | “Tập cultural review có 18 case trên bốn garment. Ảnh AI chỉ là minh họa và KB vẫn có phạm vi giới hạn.” | Số liệu từ artefact cuối, limitation ngắn |
+| 02:10-02:30 | Slide evaluation + limitation | “Tập cultural review có 19 case trên bốn garment, bao phủ toàn bộ 16 case consolidated. Image provider hiện trả fallback minh bạch.” | Số liệu từ artefact cuối, limitation ngắn |
 
 ## Case đề xuất
 
@@ -45,6 +45,6 @@ Nếu dữ liệu live không tái hiện đúng case, dùng case khác trong ar
 | Asset | Owner | Trạng thái |
 | --- | --- | --- |
 | Deploy URL và screen recording | Hiền | TODO |
-| Final model/prompt/evaluation metrics | Lan Anh | TODO |
-| Cultural wording, case selection, limitation | Linh | Draft hoàn tất |
+| Final model/prompt/evaluation metrics | Lan Anh | Hoàn tất trong `docs/meeting-05-ai-evaluation.json` |
+| Cultural wording, case selection, limitation | Linh | Hoàn tất |
 | Final edit và submission links | Cả đội | Meeting 06 |
