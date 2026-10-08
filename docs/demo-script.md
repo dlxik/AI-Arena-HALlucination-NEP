@@ -33,8 +33,9 @@ Trình diễn core flow của AI Arena HALlucination: từ việc tạo bản ph
 ### 4. Bước 4: Tinh chỉnh (Remix) & Re-validate (2:15 - 3:00)
 - **Hành động:**
   - Ở màn Cultural Passport, bấm "Chỉnh sửa" tại phần Remix.
-  - Đổi màu sắc ở ô "Bảng màu" (ví dụ: đổi thành màu neon không phù hợp).
+  - Thêm vào ô "Phụ kiện": `thắt lưng kim loại rộng` (phụ kiện không phù hợp với áo dài truyền thống).
   - Bấm "Cập nhật & Chạy lại Critic".
-  - Hiển thị trạng thái "Đang kiểm duyệt..." sau đó là "Đang tạo ảnh...".
-  - Kết quả trả về từ Critic chuyển sang Warning/Revise do màu sắc không hợp lễ hội truyền thống.
-- **Điểm nhấn:** Vòng lặp đóng (Closed loop) - người dùng sửa đổi thì hệ thống tự động kiểm duyệt lại để đảm bảo an toàn mọi lúc.
+  - Hiển thị trạng thái "Đang kiểm duyệt..." rồi "Đang tạo ảnh...".
+  - Cultural Critic cảnh báo: phụ kiện làm biến dạng cấu trúc áo dài cổ điển, vi phạm nguyên tắc bảo tồn dáng trang phục truyền thống.
+- **Điểm nhấn:** Vòng lặp đóng (Closed loop) — mọi thay đổi đều bị Critic kiểm tra lại từ đầu dựa trên Cultural Knowledge Base, không dùng kết quả validation cũ. Look gốc được bảo toàn nếu remix thất bại.
+- **Ví dụ thực từ evaluation:** Nhật Bình khái quát "trang phục lễ hội phổ quát" — Critic phát hiện vi phạm rule `nhb-motif-01` về tính đặc thù vùng miền. Hoặc áo tứ thân "áp phong cách Kinh Bắc" — Critic cảnh báo sai scope theo rule `at-scope-01`.
