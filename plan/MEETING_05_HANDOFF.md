@@ -45,16 +45,16 @@ Cần hoàn thành trước khi đóng checkpoint:
 
 Cần hoàn thành trước khi đóng checkpoint:
 
-- [ ] **Adjudicate cultural correctness** cho toàn bộ **16 cases** trong
+- [x] **Adjudicate cultural correctness** cho toàn bộ **16 cases** trong
   `docs/meeting-05-ai-evaluation.json`
   - Ghi: expected / actual / verdict / lý do cho từng case
   - Bốn garment cần có coverage: áo dài, áo ngũ thân, áo tứ thân, nhật bình
   - Cần có đủ 3 loại verdict: pass ✓, warning ⚠, failure/fallback ✗
 - [ ] **Review ảnh thật** theo rubric bốn garment
   - **Không dùng ảnh AI làm bằng chứng lịch sử**
-- [ ] Kiểm tra **citation/source link**, garment scope,
+- [x] Kiểm tra **citation/source link**, garment scope,
   các source còn `needs_review` — không nâng trạng thái nếu chưa đối chiếu thực tế
-- [ ] **Soạn bản nháp submission** gồm:
+- [x] **Soạn bản nháp submission** gồm:
   - Problem statement
   - Approach (pipeline: intent → recommend → Critic → image/fallback → remix)
   - Cultural safeguards
@@ -62,24 +62,24 @@ Cần hoàn thành trước khi đóng checkpoint:
   - Evaluation results (16/16 pass — backend; cần Linh xác nhận cultural)
   - Limitation (image provider chưa cấu hình; ảnh AI không phải bằng chứng lịch sử)
   - Impact
-- [ ] **Soạn demo script / shot list** cùng Hiền
+- [x] **Soạn demo script / shot list** cùng Hiền
   - Chọn ít nhất 1 case pass, 1 warning, 1 fallback minh bạch
 
-> 💡 **Note cho Linh**: Artefact evaluation của Lan Anh (`docs/meeting-05-ai-evaluation.json`)
-> ghi rõ: *"backend verdicts are not cultural approval"* — Linh cần review độc lập,
-> không lấy verdict backend làm cultural sign-off.
+> 💡 **Cập nhật Linh 2026-10-08**: `docs/meeting-05-cultural-adjudication.json`
+> đã review toàn bộ 16 case consolidated và ba regression case bổ sung. Chỉ còn visual review
+> ảnh generated; hiện provider trả fallback `not_configured` nên chưa có ảnh thật để chấm.
 
 ---
 
 ## 🔴 Definition of Done (cả nhóm phải xong)
 
-- [ ] Artefact 16 cases có expected / actual / verdict / **reviewer Linh**
-- [ ] Bốn garment có cultural coverage; pass + warning + fallback đều được chứng minh
-- [ ] Không còn lỗi P0/P1; P2 (image provider) có owner + limitation rõ ràng ← **đã ghi**
+- [x] Artefact 16 cases có expected / actual / verdict / **reviewer Linh**
+- [x] Bốn garment có cultural coverage; pass + warning + fallback đều được chứng minh
+- [x] Không còn lỗi P0/P1; P2 (image provider) có owner + limitation rõ ràng ← **đã ghi**
 - [ ] Preview/demo candidate chạy được bằng hướng dẫn trong repo
 - [ ] Bản nháp submission, demo script và shot list sẵn sàng cho Meeting 06
 - [ ] **Cả ba owner** review artefact và đồng ý khóa scope
 
 ---
 
-*Cập nhật lần cuối: 2026-10-08 11:23 — Lan Anh*
+*Cập nhật integration review: 2026-10-08 — Lan Anh + Diệu Linh*

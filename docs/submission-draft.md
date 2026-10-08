@@ -43,15 +43,15 @@ Model, prompt hash và kết quả chạy cuối phải lấy từ artefact eval
 
 ## Evaluation
 
-Artefact cultural Meeting 05 hiện có 18 case:
+Artefact cultural Meeting 05 hiện có 19 case, bao phủ toàn bộ 16 case consolidated và ba regression case bổ sung:
 
 - 3 intent;
 - 4 recommendation;
 - 4 Critic;
-- 2 image/fallback;
+- 3 image/fallback;
 - 5 remix.
 
-Bốn garment đều có coverage. Recommendation 4/4, Critic 4/4 và remix 5/5 khớp expected cultural outcome. Hai image cases trả fallback `not_configured` minh bạch; chưa có ảnh thật để chấm visual. Ba intent cases dựa trên log 5/5 nhưng cần Lan Anh lưu raw actual theo từng case ở lần chạy tổng.
+Bốn garment đều có coverage. Recommendation 4/4, Critic 4/4 và remix 5/5 khớp expected cultural outcome. Ba image cases trả fallback `not_configured` minh bạch; chưa có ảnh thật để chấm visual. Ba intent cases có raw actual output và khớp expected structured fields/range.
 
 ## Impact
 

@@ -30,11 +30,13 @@ Không làm virtual try-on, account, commerce, social, weather, animation phức
 
 ### Hiền - Product và Frontend
 
-- [x] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
-- [x] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
-- [x] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
-- [x] Chốt demo flow 2-3 phút; chuẩn bị screenshot/shot list theo đúng UI hiện tại.
-- [x] Chuẩn bị preview/deploy candidate và ghi rõ cấu hình cần thiết, không đưa secret vào repo.
+- [ ] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
+- [ ] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
+- [ ] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
+- [ ] Chốt demo flow 2-3 phút; chuẩn bị screenshot/shot list theo đúng UI hiện tại.
+- [ ] Chuẩn bị preview/deploy candidate và ghi rõ cấu hình cần thiết, không đưa secret vào repo.
+
+Tiến độ Hiền ngày 2026-10-08: đã thêm `aria-pressed` cho color toggle và tạo hướng dẫn deploy. Integration review đã sửa env/Node contract trong guide; chưa có regression artefact, screenshot, URL preview hoặc accessibility audit để xác nhận năm task hoàn tất. Shot list chuẩn dùng `docs/demo-script-shot-list.md`; không dùng giả định palette neon tự động tạo cultural warning.
 
 ### Lan Anh - AI và Backend
 
@@ -93,10 +95,10 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 
 ## 8. Definition of Done
 
-- [ ] Có artefact 15-20 case với expected, actual, verdict và reviewer.
-- [ ] Bốn garment đều có cultural coverage; pass, warning và failure/fallback đều được chứng minh.
-- [ ] Không còn lỗi P0/P1; P2 còn lại có owner và limitation rõ ràng.
-- [ ] Prompt/schema production có version/hash và không còn thay đổi chưa đánh giá.
+- [x] Có artefact 15-20 case với expected, actual, verdict và reviewer.
+- [x] Bốn garment đều có cultural coverage; pass, warning và failure/fallback đều được chứng minh.
+- [x] Không còn lỗi P0/P1; P2 còn lại có owner và limitation rõ ràng.
+- [x] Prompt/schema production có version/hash và không còn thay đổi chưa đánh giá.
 - [ ] Preview/demo candidate chạy được bằng hướng dẫn trong repo.
 - [ ] Bản nháp submission, demo script và shot list đã sẵn sàng cho Meeting 06.
 - [ ] Cả ba owner review artefact và đồng ý khóa scope.

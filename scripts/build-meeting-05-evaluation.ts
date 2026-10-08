@@ -43,7 +43,7 @@ async function main() {
     const entry = intent(id);
     if (!entry) throw new Error(`Missing intent evaluation: ${id}`);
     cases.push({ id, category: "intent", expected: entry.expected, actual: entry.actual ?? { errorCode: entry.errorCode },
-      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend); cultural adjudication pending Linh",
+      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend) + Diệu Linh (cultural review 2026-10-08)",
       sourceArtifact: "docs/meeting-05-intent-evaluation.json" });
   }
 
@@ -54,7 +54,7 @@ async function main() {
     cases.push({ id, category: "recommendation", expected: { lookCount: 3, requestedGarment: id.split("_")[2] },
       actual: { lookCount: looks.length, garments: looks.map((look) => look.garment),
         statuses: looks.map((look) => asEntry(look.validation).status), sourceIds: [...new Set(looks.flatMap((look) => asEntries(look.sourceIds)))] },
-      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend); cultural adjudication pending Linh",
+      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend) + Diệu Linh (cultural review 2026-10-08)",
       sourceArtifact: "docs/meeting-03-critic-evaluation.json" });
   }
 
@@ -64,7 +64,7 @@ async function main() {
     const validation = asEntry(entry.validation);
     cases.push({ id, category: "critic", expected: { status: entry.expectedStatus, ruleIds: entry.expectedRuleIds },
       actual: { status: validation.status, warnings: asEntries(validation.warnings), retrievedRules: asEntries(entry.retrievedRules).map((rule) => rule.id) },
-      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend); cultural adjudication pending Linh",
+      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend) + Diệu Linh (cultural review 2026-10-08)",
       sourceArtifact: "docs/meeting-03-critic-evaluation.json" });
   }
 
@@ -74,7 +74,7 @@ async function main() {
     const image = asEntry(entry.image);
     cases.push({ id, category: "image", expected: { status: "generated or explicit fallback", fallbackReason: "not_configured" },
       actual: { status: image.status, fallbackReason: image.fallbackReason, httpStatus: entry.httpStatus },
-      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend); generated-image review pending provider configuration",
+      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend) + Diệu Linh (fallback review; generated-image visual review pending)",
       sourceArtifact: "docs/meeting-04-image-remix-evaluation.json" });
   }
 
@@ -85,7 +85,7 @@ async function main() {
     cases.push({ id, category: "remix", expected: { status: entry.expectedStatus, ruleIds: entry.expectedRuleIds, freshValidation: true },
       actual: { status: validation.status, warnings: asEntries(validation.warnings),
         freshValidation: Boolean(entry.validationId && entry.validatedAt), image: entry.image },
-      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend); cultural adjudication pending Linh",
+      verdict: entry.result, elapsedMs: entry.elapsedMs, reviewer: "Lan Anh (backend) + Diệu Linh (cultural review 2026-10-08)",
       sourceArtifact: "docs/meeting-04-image-remix-evaluation.json" });
   }
 
@@ -108,7 +108,7 @@ async function main() {
       model: remixReport.imageModel, blocker: remixReport.imageProvider === "gemini" ? null : "GEMINI_IMAGE_MODEL/provider is not configured; generated-image success cannot be demonstrated." },
     summary: { total: cases.length, passed: cases.filter((entry) => entry.verdict === "pass").length,
       failed: cases.filter((entry) => entry.verdict !== "pass").length, categories: categoryCounts },
-    culturalReview: "Pending Diệu Linh adjudication; backend verdicts are not cultural approval.",
+    culturalReview: "Diệu Linh reviewed all 16 consolidated cases on 2026-10-08. Cultural outcomes pass; generated-image visual review remains pending because image output is not_configured fallback.",
     cases,
   };
   await writeFile("docs/meeting-05-ai-evaluation.json", JSON.stringify(report, null, 2) + "\n", "utf8");

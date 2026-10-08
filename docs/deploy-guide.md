@@ -1,23 +1,26 @@
-# Hướng dẫn Deploy & Preview Candidate
+# Hướng dẫn deploy và preview candidate
 
 ## 1. Yêu cầu hệ thống
-- Node.js >= 18
-- NPM >= 9
+
+- Node.js `>=20.9.0` theo package Next.js đang cài.
+- npm và lockfile của repository.
 
 ## 2. Các biến môi trường (.env.local)
 Không bao giờ commit file `.env.local` vào repo. Bạn cần các biến sau:
 ```env
-# Google Gemini API Key để chạy Intent, Recommendation, Critic và Image Generation
-GEMINI_API_KEY="your_api_key_here"
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.8-flash
+GEMINI_TIMEOUT_MS=15000
 
-# (Tuỳ chọn) Nếu dùng model khác cho từng luồng
-GEMINI_MODEL_RECOMMEND="gemini-1.5-flash-8b"
-GEMINI_MODEL_CRITIC="gemini-1.5-flash-8b"
+# Image generation là tùy chọn. Để trống để nhận fallback not_configured.
+IMAGE_PROVIDER=
+GEMINI_IMAGE_MODEL=
+GEMINI_IMAGE_TIMEOUT_MS=60000
 ```
 
 ## 3. Khởi chạy Local Preview
 ```bash
-npm install
+npm ci
 npm run build
 npm run start
 ```
@@ -27,11 +30,16 @@ Dự án sẽ chạy tại `http://localhost:3000`.
 Dự án là một ứng dụng Next.js tiêu chuẩn, tối ưu tốt nhất trên nền tảng Vercel:
 1. Kết nối repository GitHub với Vercel.
 2. Framework preset: **Next.js**.
-3. Environment Variables: Thêm `GEMINI_API_KEY` vào cấu hình môi trường của Vercel (không lưu ở dạng code).
-4. Bấm **Deploy**.
-5. Đợi quá trình build hoàn tất và cấp URL công khai.
+3. Environment Variables: thêm các biến đúng theo `.env.example`; tối thiểu cần `GEMINI_API_KEY`, `GEMINI_MODEL` và `GEMINI_TIMEOUT_MS` cho text pipeline.
+4. Chỉ bật ảnh khi có cả `IMAGE_PROVIDER=gemini` và `GEMINI_IMAGE_MODEL` hợp lệ.
+5. Bấm **Deploy** và lưu URL/commit của preview candidate.
 
 ## 5. Security & Fallback
 - Project không lưu trữ bất cứ user secret nào.
-- Nếu không có API Key, mọi request `/api/` sẽ fail-safe và trả về mã lỗi HTTP minh bạch (ví dụ `503 Service Unavailable`). UI frontend sẽ hiển thị empty state/fallback state hợp lý thay vì crash trắng trang.
-- Chức năng tạo ảnh có timeout fallback mặc định để tránh treo request trên production (Vercel hobby tier giới hạn execution time rất ngắn).
+- Nếu thiếu `GEMINI_API_KEY`, các endpoint text trả lỗi cấu hình an toàn; đây không phải image fallback.
+- Nếu image provider/model chưa cấu hình, image pipeline trả fallback `not_configured` và giữ nguyên nội dung look/validation.
+- Không ghi `.env.local`, API key hoặc raw provider payload vào log, screenshot hay Git.
+
+## 6. Trạng thái Meeting 05
+
+Hướng dẫn đã được đối chiếu với `.env.example`, nhưng repository chưa có URL preview/deploy candidate hoặc artefact regression desktop/mobile. Hiền cần bổ sung các bằng chứng này trước khi tick hoàn thành task deploy/regression.

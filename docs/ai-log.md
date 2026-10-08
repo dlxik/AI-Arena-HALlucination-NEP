@@ -2,7 +2,7 @@
 
 | Date | Owner | Tool | Goal | Artefact/Commit | Reviewer | Result |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Lan Anh | Antigravity (Claude Sonnet) | Meeting 05: chạy toàn bộ evaluation, fix lint `no-explicit-any` trong script, khóa prompt hash và build report 16 cases | `scripts/build-meeting-05-evaluation.ts`, `docs/meeting-05-intent-evaluation.json`, `docs/meeting-05-ai-evaluation.json` | Chờ Hiền/Linh review | validate:data ✓; 165/165 tests ✓; lint ✓; typecheck ✓; intent 5/5 ✓; critic 8/8 ✓; recommend 5/5 ✓; image-remix 8/8 ✓; 16/16 cases pass trong consolidated report; image provider chưa cấu hình — blocker ghi rõ |
+| 2026-10-08 | Lan Anh | Antigravity (Claude Sonnet) | Meeting 05: chạy toàn bộ evaluation, fix lint `no-explicit-any` trong script, khóa prompt hash và build report 16 cases | `scripts/build-meeting-05-evaluation.ts`, `docs/meeting-05-intent-evaluation.json`, `docs/meeting-05-ai-evaluation.json` | Linh đã cultural review 16/16; chờ Hiền UX/preview | validate:data ✓; 165/165 tests ✓; lint ✓; typecheck ✓; intent 5/5 ✓; critic 8/8 ✓; recommend 5/5 ✓; image-remix 8/8 ✓; 16/16 cases pass trong consolidated report; image provider chưa cấu hình — blocker ghi rõ |
 | 2026-09-24 | Diệu Linh | Codex + web research | Khởi tạo Cultural KB, provenance và cultural validation cases | `feature/data` | Chờ phân công | 7 nguồn, 5 records và 5 test cases; tất cả chờ review chéo |
 | 2026-09-24 | Hiền | Antigravity (Claude) | Dựng skeleton frontend: form đầy đủ MVP, result cards từ fixture, cultural passport UI, navbar | `src/lib/fixtures.ts`, `src/lib/constants.ts`, `src/components/results/ResultCard.tsx`, `src/components/cultural-passport/CulturalPassport.tsx`, `src/app/results/page.tsx`, `src/app/create/page.tsx`, `src/app/looks/[id]/page.tsx`, `src/components/layout/Navbar.tsx` | Chờ Lan Anh + Linh review | UI render được toàn bộ field schema từ fixture; cần kết nối API thật |
 | 2026-09-24 | Lan Anh | Gemini API / `@google/genai` (`gemini-3.5-flash-lite`) | Tích hợp intent parser structured output và xử lý lỗi | `src/lib/gemini/`, `src/app/api/parse-intent/`, `prompts/intent/intent-v1.md` | Chờ review | Live evaluation: 5/5 passed |
@@ -20,7 +20,7 @@
 - Image/remix: **8/8 pass** (4 palette pass, 4 accessory-risk warning); tất cả `image=fallback` do `GEMINI_IMAGE_MODEL` chưa được cấu hình trong `.env.local`. Fallback `not_configured` trả minh bạch; không có generated-image evidence.
 - Prompt/schema production đã khóa: không thay đổi nào trong Meeting 05. Prompt hashes và model ghi trong `docs/meeting-05-ai-evaluation.json`.
 - **Blocker P2**: Image provider (`GEMINI_IMAGE_MODEL`) chưa cấu hình — generated-image success case không thể chứng minh. Ghi limitation; không phải blocker demo Critic/remix.
-- Consolidated report: **16/16 cases pass** (`intent`: 3, `recommendation`: 4, `critic`: 4, `image`: 2, `remix`: 3) — artefact `docs/meeting-05-ai-evaluation.json`. Cultural adjudication chờ Linh.
+- Consolidated report: **16/16 cases pass** (`intent`: 3, `recommendation`: 4, `critic`: 4, `image`: 2, `remix`: 3) — artefact `docs/meeting-05-ai-evaluation.json`. Linh đã adjudicate toàn bộ 16 case và ba regression case bổ sung; visual review ảnh generated còn chờ provider.
 
 ## Stylist v1 evaluation — 2026-09-27
 

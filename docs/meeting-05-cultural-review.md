@@ -6,20 +6,19 @@ Artefact máy đọc được: `docs/meeting-05-cultural-adjudication.json`
 
 ## Kết quả
 
-Linh đã adjudicate **18 case** từ bằng chứng runtime đã commit:
+Linh đã adjudicate **19 case** từ bằng chứng runtime đã commit. Tập này bao phủ toàn bộ 16 case consolidated của Lan Anh và giữ thêm ba regression case văn hóa:
 
 | Nhóm | Số case | Kết quả cultural review |
 | --- | ---: | --- |
-| Intent | 3 | Pass có giới hạn bằng chứng: AI log ghi 5/5 nhưng chưa lưu raw actual theo từng case |
+| Intent | 3 | 3/3 pass với actual output theo từng case |
 | Recommendation | 4 | 4/4 pass, đủ bốn garment và chỉ dùng source đúng scope |
 | Cultural Critic | 4 | 4/4 actual status/rule ID khớp expected |
-| Image | 2 | Fallback contract pass; chưa có ảnh thật để visual review |
+| Image | 3 | Fallback contract pass; chưa có ảnh thật để visual review |
 | Remix | 5 | 5/5 có validation mới, status/rule đúng và fallback minh bạch |
 
-Không phát hiện P0/P1 trong tập bằng chứng hiện tại. Hai P2 được giữ mở:
+Không phát hiện P0/P1 trong tập bằng chứng hiện tại. Một P2 được giữ mở:
 
-1. Lan Anh cần lưu actual output theo từng intent case trong lần chạy tổng Meeting 05.
-2. Image provider chưa trả ảnh thật; Linh phải review lại mọi ảnh generated trước khi dùng trong demo/submission.
+1. Image provider chưa trả ảnh thật; Linh phải review lại mọi ảnh generated trước khi dùng trong demo/submission.
 
 ## Cultural findings
 
@@ -63,6 +62,6 @@ Validator kiểm tra tổng số case, coverage từng nhóm, duplicate ID, sour
 
 ## Handoff
 
-- Lan Anh: chạy consolidated evaluation, lưu raw intent outputs và cấu hình image provider nếu có.
+- Lan Anh: consolidated evaluation và raw intent outputs đã hoàn thành; cấu hình image provider nếu đội có model khả dụng.
 - Hiền: xác nhận shot list khớp UI/deploy candidate và cung cấp screenshot/recording thật.
 - Linh: review ảnh ngay khi có generated output; cập nhật hai P2 trước khi khóa submission cuối.
