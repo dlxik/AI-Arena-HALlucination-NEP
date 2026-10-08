@@ -30,11 +30,11 @@ Không làm virtual try-on, account, commerce, social, weather, animation phức
 
 ### Hiền - Product và Frontend
 
-- [ ] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
-- [ ] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
-- [ ] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
-- [ ] Chốt demo flow 2-3 phút; chuẩn bị screenshot/shot list theo đúng UI hiện tại.
-- [ ] Chuẩn bị preview/deploy candidate và ghi rõ cấu hình cần thiết, không đưa secret vào repo.
+- [x] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
+- [x] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
+- [x] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
+- [x] Chốt demo flow 2-3 phút; chuẩn bị screenshot/shot list theo đúng UI hiện tại.
+- [x] Chuẩn bị preview/deploy candidate và ghi rõ cấu hình cần thiết, không đưa secret vào repo.
 
 ### Lan Anh - AI và Backend
 

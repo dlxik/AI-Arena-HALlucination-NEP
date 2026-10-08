@@ -169,6 +169,7 @@ export default function CreatePage() {
                 <button
                   key={c.value}
                   type="button"
+                  aria-pressed={selected}
                   onClick={() => handleColorToggle(c.value)}
                   className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
                     selected
