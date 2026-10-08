@@ -44,7 +44,7 @@ Nếu dữ liệu live không tái hiện đúng case, dùng case khác trong ar
 
 | Asset | Owner | Trạng thái |
 | --- | --- | --- |
-| Deploy URL và screen recording | Hiền | Build production xác nhận ✅. Deploy URL cần Vercel access. Screenshots cần màn hình thật. |
+| Deploy URL và screen recording | Hiền | Local production build pass; public deploy/video asset chuyển sang Meeting 06 do cần account/màn hình thật. |
 | Final model/prompt/evaluation metrics | Lan Anh | Hoàn tất trong `docs/meeting-05-ai-evaluation.json` |
 | Cultural wording, case selection, limitation | Linh | Hoàn tất |
 | Final edit và submission links | Cả đội | Meeting 06 |

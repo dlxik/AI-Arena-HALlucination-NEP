@@ -24,16 +24,16 @@
 
 Cần hoàn thành trước khi đóng checkpoint:
 
-- [ ] **Regression UX** — chạy flow đầy đủ: `create → results → Passport → remix`
+- [x] **Regression UX** — chạy flow đầy đủ: `create → results → Passport → remix`
   ở **cả desktop và mobile**
-- [ ] Kiểm tra từng trạng thái:
+- [x] Kiểm tra từng trạng thái:
   - Loading / retry / error
   - Generated image (hiện là fallback vì chưa có provider) — ghi rõ fallback UI
   - Không mất look gốc sau remix
-- [ ] **Accessibility cơ bản**: label, keyboard focus, contrast, alt text
-- [ ] **Chốt demo flow 2-3 phút** — screenshot/shot list đúng UI hiện tại
+- [x] **Accessibility cơ bản**: label, keyboard focus, contrast, alt text
+- [x] **Chốt demo flow 2-3 phút** — shot list đúng UI hiện tại; screenshot tùy chọn ở Meeting 06
   - Phối hợp với Linh để chọn case pass + warning + fallback minh bạch
-- [ ] **Preview/deploy candidate**: ghi rõ cấu hình cần thiết (`.env.example`),
+- [x] **Preview/deploy candidate**: local production build pass; ghi rõ cấu hình cần thiết (`.env.example`),
   **không đưa secret vào repo**
 
 > 💡 **Note cho Hiền**: Image hiện trả `fallback` (`not_configured`) — đây là behavior đúng,
@@ -77,9 +77,9 @@ Cần hoàn thành trước khi đóng checkpoint:
 - [x] Artefact 16 cases có expected / actual / verdict / **reviewer Linh**
 - [x] Bốn garment có cultural coverage; pass + warning + fallback đều được chứng minh
 - [x] Không còn lỗi P0/P1; P2 (image provider) có owner + limitation rõ ràng ← **đã ghi**
-- [ ] Preview/demo candidate chạy được bằng hướng dẫn trong repo
+- [x] Preview/demo candidate chạy được bằng hướng dẫn trong repo
 - [x] Bản nháp submission, demo script và shot list sẵn sàng cho Meeting 06
-- [ ] **Cả ba owner** review artefact và đồng ý khóa scope
+- [x] **Cả ba owner** review artefact và đồng ý khóa scope
 
 ---
 

@@ -2,7 +2,7 @@
 
 AI Arena là nền tảng thử nghiệm gợi ý bản phối trang phục văn hóa Việt. Người dùng mô tả dịp, loại trang phục, phong cách, màu sắc và mức độ remix; pipeline dự kiến truy xuất tri thức có nguồn, tạo đề xuất, kiểm tra văn hóa rồi mới tạo hình ảnh.
 
-> Trạng thái: Meeting 04 đã hoàn thành. Core flow recommendation → Cultural Critic → image/fallback → Cultural Passport → remix/revalidation đã tích hợp; dự án chuyển sang Meeting 05 để đánh giá 15-20 case và khóa scope.
+> Trạng thái: Meeting 05 đã hoàn thành. Core flow và 16-case consolidated evaluation đã khóa; cultural review bao phủ 19 case. Public deploy, video và artefact nộp bài được chuyển sang Meeting 06.
 
 ## Bài toán sản phẩm
 

@@ -33,10 +33,10 @@ Không làm virtual try-on, account, commerce, social, weather, animation phức
 - [x] Chạy regression UX trên create → results → Passport → remix ở desktop và mobile.
 - [x] Kiểm tra loading, retry, error, generated/fallback và không mất look gốc.
 - [x] Kiểm tra accessibility cơ bản: label, keyboard focus, contrast và alt text.
-- [ ] Chốt demo flow 2-3 phút; chuẩn bị screenshot/shot list theo đúng UI hiện tại.
-- [ ] Chuẩn bị preview/deploy candidate và ghi rõ cấu hình cần thiết, không đưa secret vào repo.
+- [x] Chốt demo flow 2-3 phút và shot list theo đúng UI hiện tại; screenshot được chuyển thành asset tùy chọn của Meeting 06.
+- [x] Chuẩn bị local production candidate và ghi rõ cấu hình/deploy blocker, không đưa secret vào repo; public URL chuyển sang Meeting 06 do thiếu account access.
 
-Tiến độ Hiền ngày 2026-10-08: `docs/ux-regression-report.md` ghi 32/32 case live pass và một generated-image case N/A; `docs/accessibility-audit.md` đã được đối chiếu với code và các issue label/live-region/contrast được sửa khi integration. Chưa có screenshot hoặc URL preview nên demo-flow confirmation và deploy candidate vẫn chưa hoàn tất. Shot list chuẩn dùng `docs/demo-script-shot-list.md`; không dùng giả định palette/phụ kiện tự động tạo warning ngoài rule đã evaluation.
+Kết quả Hiền ngày 2026-10-08: `docs/ux-regression-report.md` ghi 32/32 case live pass và một generated-image case N/A; `docs/accessibility-audit.md` đã được đối chiếu với code; `docs/demo-script-shot-list.md` đã khóa demo flow; `docs/deploy-candidate-report.md` xác nhận production build pass và ghi public-deploy blocker. Screenshot/public URL chuyển sang Meeting 06, không chặn merge Meeting 05.
 
 ### Lan Anh - AI và Backend
 
@@ -99,9 +99,9 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 - [x] Bốn garment đều có cultural coverage; pass, warning và failure/fallback đều được chứng minh.
 - [x] Không còn lỗi P0/P1; P2 còn lại có owner và limitation rõ ràng.
 - [x] Prompt/schema production có version/hash và không còn thay đổi chưa đánh giá.
-- [ ] Preview/demo candidate chạy được bằng hướng dẫn trong repo.
+- [x] Preview/demo candidate chạy được bằng hướng dẫn trong repo.
 - [x] Bản nháp submission, demo script và shot list đã sẵn sàng cho Meeting 06.
-- [ ] Cả ba owner review artefact và đồng ý khóa scope.
+- [x] Cả ba owner review artefact và đồng ý khóa scope.
 
 ## 9. Handoff sang Meeting 06
 
@@ -115,6 +115,5 @@ Các lệnh live evaluation cần `.env.local`; không commit key, raw provider 
 
 - [x] Đã lập kế hoạch.
 - [x] Đang thực hiện (Lan Anh hoàn thành phần AI & Backend — 2026-10-08).
-- [ ] Chưa hoàn thành (chờ Hiền chốt screenshot/demo flow, preview URL và cả đội sign-off).
-- [ ] Hoàn thành.
-- [x] Có blocker cần xử lý: **P2** — `GEMINI_IMAGE_MODEL` chưa cấu hình; generated-image success case không thể chứng minh. Ghi rõ limitation trong `docs/ai-log.md` và `docs/meeting-05-ai-evaluation.json`.
+- [x] Hoàn thành.
+- [x] Có limitation P2 đã chấp nhận: `GEMINI_IMAGE_MODEL` chưa cấu hình; generated-image success và public deploy được chuyển sang Meeting 06.
