@@ -14,7 +14,8 @@
     "evaluate:image-remix": "tsx scripts/evaluate-image-remix.ts",
     "evaluate:meeting-05:report": "tsx scripts/build-meeting-05-evaluation.ts",
     "validate:data": "node --experimental-strip-types scripts/validate-cultural-data.ts",
-    "validate:meeting05-cultural": "node --experimental-strip-types scripts/validate-meeting-05-cultural-review.ts"
+    "validate:meeting05-cultural": "node --experimental-strip-types scripts/validate-meeting-05-cultural-review.ts",
+    "validate:meeting06": "node --experimental-strip-types scripts/validate-meeting-06-submission.ts"
   },
   "dependencies": {
     "@google/genai": "^2.24.0",
