@@ -16,6 +16,20 @@ interface ResultCardProps {
   index: number;
 }
 
+const IMAGE_FALLBACK_MESSAGES: Record<string, string> = {
+  not_configured: "Chưa bật dịch vụ tạo ảnh trong cấu hình máy chủ.",
+  quota: "API key đã hết hoặc chưa được cấp quota tạo ảnh.",
+  timeout: "Dịch vụ tạo ảnh phản hồi quá thời gian cho phép.",
+  safety_rejection: "Yêu cầu ảnh bị chặn bởi bộ lọc an toàn.",
+  upstream_error: "Dịch vụ tạo ảnh đang tạm thời gián đoạn.",
+  invalid_image: "Ảnh trả về không vượt qua bước kiểm tra an toàn.",
+  cultural_revision_required: "Bản phối cần chỉnh sửa văn hóa trước khi tạo ảnh.",
+};
+
+function imageFallbackMessage(reason: string): string {
+  return IMAGE_FALLBACK_MESSAGES[reason] ?? reason;
+}
+
 export default function ResultCard({ look: initialLook, index }: ResultCardProps) {
   const [look, setLook] = useState<OutfitLook>(initialLook);
   const [isValidating, setIsValidating] = useState(false);
@@ -165,7 +179,9 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <span className="text-xs font-serif font-semibold text-[#8b6514]">Ảnh minh họa tạm khép lại</span>
-            <span className="text-[11px] opacity-80 max-w-xs">{look.imageFallback}</span>
+            <span className="text-[11px] opacity-80 max-w-xs">
+              {imageFallbackMessage(look.imageFallback)}
+            </span>
             <button onClick={() => generateImage(true)} className="mt-2 text-xs font-semibold text-[#1b4332] hover:underline underline-offset-2">
               Khởi tạo lại ảnh ↻
             </button>

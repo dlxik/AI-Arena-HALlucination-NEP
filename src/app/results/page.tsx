@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ResultCard from "@/components/results/ResultCard";
@@ -25,8 +25,10 @@ type PageState =
 // Helpers
 // ─────────────────────────────────────────────────────────
 
-/** Đọc kết quả từ sessionStorage một lần khi component khởi tạo */
-function readResultFromStorage(): PageState {
+const subscribeToHydration = () => () => {};
+
+/** Chỉ đọc sessionStorage sau hydration để server và client render cùng markup ban đầu. */
+function readResultFromStorage(isSample: boolean): PageState {
   try {
     const raw = sessionStorage.getItem("recommendation_result");
     if (raw) {
@@ -35,10 +37,8 @@ function readResultFromStorage(): PageState {
         return { status: "ready", result: stored };
       }
     }
-    if (typeof window !== "undefined" && window.location.search.includes("sample")) {
+    if (isSample) {
       const sampleResult: StoredResult = { data: fixtureOutput, isFixture: true };
-      sessionStorage.setItem("recommendation_input", JSON.stringify(fixtureInput));
-      sessionStorage.setItem("recommendation_result", JSON.stringify(sampleResult));
       return { status: "ready", result: sampleResult };
     }
     return { status: "no-data" };
@@ -53,8 +53,32 @@ function readResultFromStorage(): PageState {
 
 export default function ResultsPage() {
   const router = useRouter();
-  // Lazy initializer: đọc sessionStorage ngay lần đầu render, không dùng useEffect
-  const [state] = useState<PageState>(readResultFromStorage);
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
+  const isSample = hydrated && window.location.search.includes("sample");
+  const state = hydrated ? readResultFromStorage(isSample) : null;
+  const shouldSeedFixture =
+    state?.status === "ready" && state.result.isFixture;
+
+  useEffect(() => {
+    if (!shouldSeedFixture) return;
+    const sampleResult: StoredResult = { data: fixtureOutput, isFixture: true };
+    sessionStorage.setItem("recommendation_input", JSON.stringify(fixtureInput));
+    sessionStorage.setItem("recommendation_result", JSON.stringify(sampleResult));
+  }, [shouldSeedFixture]);
+
+  if (state === null) {
+    return (
+      <main className="mx-auto w-full max-w-3xl px-6 py-16 sm:px-10">
+        <div role="status" className="heritage-card p-10 text-center text-sm text-[#5c6470]">
+          Đang mở sổ tay bản phối…
+        </div>
+      </main>
+    );
+  }
 
   // ── No data / navigated directly ─────────────────────────
   if (state.status === "no-data") {
