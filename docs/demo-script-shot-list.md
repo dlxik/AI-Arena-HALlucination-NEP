@@ -1,7 +1,7 @@
-# Demo script và shot list - Draft Meeting 05
+# Demo script và shot list - Candidate Meeting 06
 
 Owner nội dung cultural/submission: **Diệu Linh**
-Trạng thái: chờ Hiền xác nhận UI, viewport, deploy URL và thời lượng quay thực tế.
+Trạng thái: cultural wording đã được Linh sign-off; chờ Hiền xác nhận UI, viewport, deploy URL và thời lượng quay thực tế; chờ Lan Anh xác nhận production AI wording.
 
 ## Mục tiêu video
 
@@ -48,3 +48,5 @@ Nếu dữ liệu live không tái hiện đúng case, dùng case khác trong ar
 | Final model/prompt/evaluation metrics | Lan Anh | Hoàn tất trong `docs/meeting-05-ai-evaluation.json` |
 | Cultural wording, case selection, limitation | Linh | Hoàn tất trong `docs/meeting-05-cultural-adjudication.json` |
 | Final edit và submission links | Cả đội | Meeting 06 |
+
+Cultural sign-off và các câu chữ không được dùng trong video nằm tại `docs/meeting-06-cultural-signoff.md`.

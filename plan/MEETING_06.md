@@ -54,11 +54,11 @@ Không thêm garment, virtual try-on, account, commerce, social feature, weather
 
 ### Linh - Cultural Sign-off và Submission
 
-- [ ] Rà final demo/video/submission wording: không khái quát hiện vật, không nâng source `needs_review`, không gọi ảnh AI là phục dựng xác thực.
-- [ ] Nếu có ảnh generated mới, review theo rubric bốn garment và ghi verdict trước khi dùng; nếu chỉ fallback thì ghi N/A.
-- [ ] Chốt submission copy từ `docs/submission-draft.md`: problem, approach, safeguards, Gemini usage, evaluation, limitations và impact.
-- [ ] Điền demo URL, video URL, Gemini conversation URL và final evaluation artefact; kiểm tra từng link ở chế độ không đăng nhập khi phù hợp.
-- [ ] Đối chiếu mọi số liệu với artefact cuối; không dùng con số tạm hoặc screenshot giả.
+- [x] Rà final demo/video/submission wording: không khái quát hiện vật, không nâng source `needs_review`, không gọi ảnh AI là phục dựng xác thực.
+- [x] Nếu có ảnh generated mới, review theo rubric bốn garment và ghi verdict trước khi dùng; nếu chỉ fallback thì ghi N/A. Candidate hiện chỉ có fallback `not_configured`, nên visual review là N/A có điều kiện.
+- [x] Chốt submission copy từ `docs/submission-draft.md`: problem, approach, safeguards, Gemini usage, evaluation, limitations và impact.
+- [ ] Điền demo URL, video URL, Gemini conversation URL và final evaluation artefact; kiểm tra từng link ở chế độ không đăng nhập khi phù hợp. Evaluation đã điền; demo/video chờ Hiền, Gemini URL chờ Lan Anh.
+- [x] Đối chiếu mọi số liệu với artefact cuối; không dùng con số tạm hoặc screenshot giả.
 - [ ] Phối hợp nộp form và lưu screenshot/email xác nhận nộp.
 
 ## 5. Demo flow bắt buộc
@@ -102,8 +102,8 @@ Sau deploy:
 - [ ] Video URL xem được, đúng thời lượng/quy định.
 - [ ] GitHub repository sạch, README và hướng dẫn chạy đúng.
 - [ ] Gemini conversation URL chính thức.
-- [ ] Prompt hashes và evaluation artefacts cuối.
-- [ ] Cultural sources/rules và limitations được trình bày trung thực.
+- [x] Prompt hashes và evaluation artefacts cuối.
+- [x] Cultural sources/rules và limitations được trình bày trung thực.
 - [ ] Nội dung form đã được cả ba owner review.
 - [ ] Form đã nộp; có screenshot/email xác nhận và thời gian nộp.
 
@@ -123,3 +123,12 @@ Sau deploy:
 - [x] Đang thực hiện.
 - [ ] Hoàn thành.
 - [ ] Có blocker cần xử lý.
+
+## 10. Kết quả phần việc của Linh - 2026-10-10
+
+- Cultural sign-off: `docs/meeting-06-cultural-signoff.md`.
+- Submission candidate đã chốt wording và số liệu: `docs/submission-draft.md`.
+- Demo script đã sign-off cultural wording: `docs/demo-script-shot-list.md`.
+- Link/evidence tracker: `docs/meeting-06-submission-checklist.md`.
+- Còn phụ thuộc bàn giao ngoài scope Linh: public demo/video + deployed SHA từ Hiền; Gemini conversation URL và production technical sign-off từ Lan Anh.
+- Nộp form và bằng chứng xác nhận chỉ thực hiện sau khi các link trên được verify; không tạo screenshot hoặc URL giả.

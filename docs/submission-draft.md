@@ -1,6 +1,6 @@
-# AI Arena HALlucination - Submission draft
+# AI Arena HALlucination - Submission candidate
 
-Trạng thái: **Bản nháp Meeting 05 — chưa phải nội dung nộp cuối**
+Trạng thái: **Cultural copy đã sign-off tại Meeting 06; chờ external links và review của team**
 Owner nội dung: **Diệu Linh**
 
 ## Project summary
@@ -39,11 +39,15 @@ Pipeline tách bước sáng tạo và bước kiểm tra:
 - Independent Cultural Critic with runtime-validated structured output.
 - Image generation adapter có timeout, safety mapping và validation; cấu hình provider/model lấy từ environment.
 
-Model, prompt hash và kết quả chạy cuối phải lấy từ artefact evaluation của Lan Anh; không điền từ trí nhớ vào bản nộp.
+Artefact cuối dùng model `gemini-3.5-flash-lite`. Prompt SHA-256 đã khóa:
+
+- intent: `e1db57e798e86952510d399103d176b2874a11d4dee8fb46ab00d461ece4cb89`;
+- critic: `6fcd7d3d595b94a799e17a50e1f3bd123e60ae92269f82c9bbd5dbda6b9ae0fa`;
+- image: `ef2f9343cfb58376fa4be8e7d046baec6b11f3759ecc3eff0d86b010df059697`.
 
 ## Evaluation
 
-Artefact cultural Meeting 05 hiện có 19 case, bao phủ toàn bộ 16 case consolidated và ba regression case bổ sung:
+Consolidated evaluation đạt **16/16 pass**. Artefact cultural Meeting 05 có **19 case**, bao phủ toàn bộ 16 case consolidated và ba regression case bổ sung:
 
 - 3 intent;
 - 4 recommendation;
@@ -72,6 +76,8 @@ Prototype giúp người dùng khám phá cách phối Việt phục trong khi v
 - Video URL: `TODO_MEETING_06`
 - Gemini conversation URL: `TODO_TEAM`
 - Final evaluation artefact: `docs/meeting-05-ai-evaluation.json`
+- Cultural sign-off: `docs/meeting-06-cultural-signoff.md`
+- Link/evidence checklist: `docs/meeting-06-submission-checklist.md`
 - Screenshot/email xác nhận nộp: `TODO_MEETING_06`
 
 ## Final-copy checklist
@@ -80,5 +86,6 @@ Prototype giúp người dùng khám phá cách phối Việt phục trong khi v
 - [x] Không tuyên bố có ảnh thật nếu demo chỉ dùng fallback.
 - [x] Không gọi ảnh AI là phục dựng hoặc hiện vật.
 - [x] Không đưa source `needs_review` vào phần bằng chứng.
+- [x] Linh đã sign-off cultural wording và image fallback limitation.
 - [ ] Mọi URL công khai mở được mà không cần tài khoản ngoài yêu cầu cuộc thi.
 - [ ] Hiền và Lan Anh review nội dung thuộc phần của mình.
