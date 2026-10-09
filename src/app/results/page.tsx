@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ResultCard from "@/components/results/ResultCard";
 import type { RecommendationOutput } from "@/types/api";
+import { fixtureInput, fixtureOutput } from "@/lib/fixtures";
 
 // ─────────────────────────────────────────────────────────
 // Types
@@ -28,12 +29,19 @@ type PageState =
 function readResultFromStorage(): PageState {
   try {
     const raw = sessionStorage.getItem("recommendation_result");
-    if (!raw) return { status: "no-data" };
-    const stored = JSON.parse(raw) as StoredResult;
-    if (!stored.data?.looks || !Array.isArray(stored.data.looks)) {
-      return { status: "no-data" };
+    if (raw) {
+      const stored = JSON.parse(raw) as StoredResult;
+      if (stored.data?.looks && Array.isArray(stored.data.looks)) {
+        return { status: "ready", result: stored };
+      }
     }
-    return { status: "ready", result: stored };
+    if (typeof window !== "undefined" && window.location.search.includes("sample")) {
+      const sampleResult: StoredResult = { data: fixtureOutput, isFixture: true };
+      sessionStorage.setItem("recommendation_input", JSON.stringify(fixtureInput));
+      sessionStorage.setItem("recommendation_result", JSON.stringify(sampleResult));
+      return { status: "ready", result: sampleResult };
+    }
+    return { status: "no-data" };
   } catch {
     return { status: "no-data" };
   }
@@ -62,13 +70,22 @@ export default function ResultsPage() {
               Hãy điền form để AI tạo gợi ý phù hợp với bạn.
             </p>
           </div>
-          <Link
-            href="/create"
-            id="btn-go-to-create"
-            className="rounded-xl bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 active:scale-[0.98]"
-          >
-            Tạo bản phối →
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/create"
+              id="btn-go-to-create"
+              className="rounded-xl bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 active:scale-[0.98]"
+            >
+              Tạo bản phối →
+            </Link>
+            <Link
+              href="/results?sample=1"
+              id="btn-load-sample"
+              className="rounded-xl border border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98]"
+            >
+              📋 Xem bản phối mẫu
+            </Link>
+          </div>
         </div>
       </main>
     );

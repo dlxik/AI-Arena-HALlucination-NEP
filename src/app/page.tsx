@@ -48,7 +48,8 @@ export default function Home() {
             Tạo bản phối →
           </Link>
           <Link
-            href="/results"
+            id="btn-sample-looks-home"
+            href="/results?sample=1"
             className="inline-flex rounded-full border border-slate-200 bg-white px-7 py-3.5 font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
           >
             Xem bản phối mẫu

@@ -7,6 +7,7 @@ import CulturalPassport from "@/components/cultural-passport/CulturalPassport";
 import type { RecommendationOutput, RecommendationInput, RemixOutput } from "@/types/api";
 import type { OutfitLook } from "@/types/outfit";
 import { toValidationLook } from "@/lib/client/look-payload";
+import { fixtureInput, fixtureOutput } from "@/lib/fixtures";
 
 // ─────────────────────────────────────────────────────────
 // Types
@@ -23,8 +24,15 @@ type PageState =
 
 function readLookFromStorage(id: string | undefined): PageState {
   try {
-    const rawResult = sessionStorage.getItem("recommendation_result");
-    const rawInput = sessionStorage.getItem("recommendation_input");
+    let rawResult = sessionStorage.getItem("recommendation_result");
+    let rawInput = sessionStorage.getItem("recommendation_input");
+    
+    if (!rawResult && id && fixtureOutput.looks.some((l) => l.id === id)) {
+      rawResult = JSON.stringify({ data: fixtureOutput, isFixture: true });
+      rawInput = JSON.stringify(fixtureInput);
+      sessionStorage.setItem("recommendation_result", rawResult);
+      sessionStorage.setItem("recommendation_input", rawInput);
+    }
     
     if (!rawResult) return { status: "no-session" };
     
