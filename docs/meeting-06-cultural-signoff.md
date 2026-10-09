@@ -1,7 +1,8 @@
 # Meeting 06 - Cultural sign-off
 
-Owner: **Diệu Linh**  
-Ngày rà soát: **2026-10-10**  
+Owner: **Diệu Linh**
+
+Ngày rà soát: **2026-10-10**
 Trạng thái: **Pass với limitation image provider đã chấp nhận**
 
 ## Phạm vi đã rà soát

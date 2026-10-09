@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   OCCASIONS,
@@ -33,25 +33,13 @@ function CreateFormContent() {
   const searchParams = useSearchParams();
 
   const [form, setForm] = useState<RecommendationInput>({
-    occasion: (searchParams.get("occasion") as any) || "cultural_visit",
-    garment: (searchParams.get("garment") as any) || "auto",
+    occasion: searchParams.get("occasion") || "cultural_visit",
+    garment: searchParams.get("garment") || "auto",
     style: "minimal",
     colors: ["pastel_blue"],
     remixLevel: 40,
     description: "",
   });
-
-  useEffect(() => {
-    const occ = searchParams.get("occasion");
-    const garm = searchParams.get("garment");
-    if (occ || garm) {
-      setForm((prev) => ({
-        ...prev,
-        ...(occ ? { occasion: occ as any } : {}),
-        ...(garm ? { garment: garm as any } : {}),
-      }));
-    }
-  }, [searchParams]);
 
   const [loading, setLoading] = useState(false);
   const [parsing, setParsing] = useState(false);
@@ -88,7 +76,7 @@ function CreateFormContent() {
           Tạo bản phối Việt phục
         </h1>
         <p className="text-sm leading-relaxed text-[#5c656e] max-w-2xl">
-          Chia sẻ cùng AI Arena về dịp lễ, kiểu áo và sở thích màu sắc bạn hướng tới. 
+          Chia sẻ cùng AI Arena về dịp lễ, kiểu áo và sở thích màu sắc bạn hướng tới.
           Hệ thống sẽ đối chiếu với cơ sở dữ liệu lịch sử và gợi ý 3 bản phối hài hòa, chuẩn mực nhất.
         </p>
       </div>
@@ -106,7 +94,7 @@ function CreateFormContent() {
           <select
             className={fieldClass}
             value={form.occasion}
-            onChange={(e) => setForm((p) => ({ ...p, occasion: e.target.value as any }))}
+            onChange={(e) => setForm((p) => ({ ...p, occasion: e.target.value }))}
             required
             id="field-occasion"
           >
@@ -127,7 +115,7 @@ function CreateFormContent() {
           <select
             className={fieldClass}
             value={form.garment}
-            onChange={(e) => setForm((p) => ({ ...p, garment: e.target.value as any }))}
+            onChange={(e) => setForm((p) => ({ ...p, garment: e.target.value }))}
             required
             id="field-garment"
           >
@@ -148,7 +136,7 @@ function CreateFormContent() {
           <select
             className={fieldClass}
             value={form.style}
-            onChange={(e) => setForm((p) => ({ ...p, style: e.target.value as any }))}
+            onChange={(e) => setForm((p) => ({ ...p, style: e.target.value }))}
             required
             id="field-style"
           >

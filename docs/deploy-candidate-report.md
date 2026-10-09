@@ -1,7 +1,8 @@
 # Deploy candidate report — Meeting 06
 
-Owner: **Hiền**  
-Review date: **2026-10-09**  
+Owner: **Hiền**
+
+Review date: **2026-10-09**
 Source commit: `1c2c056` (merged with main)
 
 ---

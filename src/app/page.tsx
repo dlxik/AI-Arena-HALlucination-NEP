@@ -21,8 +21,8 @@ export default function Home() {
           </h1>
 
           <p className="text-base sm:text-lg leading-relaxed text-[#515860] max-w-2xl font-normal">
-            Có những ngày bạn đứng trước gương thật lâu, muốn diện một tà áo truyền thống thật đẹp nhưng lại băn khoăn về quy tắc phối màu, phụ kiện hay sự trang nghiêm của dịp lễ. 
-            <strong className="font-semibold text-[#1b2a22]"> AI Arena </strong> 
+            Có những ngày bạn đứng trước gương thật lâu, muốn diện một tà áo truyền thống thật đẹp nhưng lại băn khoăn về quy tắc phối màu, phụ kiện hay sự trang nghiêm của dịp lễ.
+            <strong className="font-semibold text-[#1b2a22]"> AI Arena </strong>
             được tạo nên như một nơi giúp việc lựa chọn trang phục văn hóa trở nên tự tin, thanh lịch và chuẩn mực hơn bao giờ hết.
           </p>
 

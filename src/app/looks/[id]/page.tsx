@@ -26,7 +26,7 @@ function readLookFromStorage(id: string | undefined): PageState {
   try {
     let rawResult = sessionStorage.getItem("recommendation_result");
     let rawInput = sessionStorage.getItem("recommendation_input");
-    
+
     if (!rawResult && id && fixtureOutput.looks.some((l) => l.id === id)) {
       rawResult = JSON.stringify({ data: fixtureOutput, isFixture: true });
       rawInput = JSON.stringify(fixtureInput);

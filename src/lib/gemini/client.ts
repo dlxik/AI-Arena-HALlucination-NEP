@@ -210,5 +210,3 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
     );
   }
 };
-
-

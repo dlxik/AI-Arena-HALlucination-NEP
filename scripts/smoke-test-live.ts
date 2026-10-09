@@ -6,7 +6,13 @@ import { POST as validateHandler } from "../src/app/api/validate/route";
 import { POST as remixHandler } from "../src/app/api/remix/route";
 import { POST as generateImageHandler } from "../src/app/api/generate-image/route";
 import { makeCriticInput, criticCases } from "../tests/fixtures/critic-cases";
-import type { RecommendationOutput, RemixOutput, ImageGenerationOutput, ValidationOutput, OutfitLook } from "../src/types/api";
+import type {
+  RecommendationOutput,
+  RemixOutput,
+  ImageGenerationOutput,
+  ValidationOutput,
+} from "../src/types/api";
+import type { OutfitLook } from "../src/types/outfit";
 
 loadEnvConfig(process.cwd());
 
