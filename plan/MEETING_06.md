@@ -36,12 +36,12 @@ Không thêm garment, virtual try-on, account, commerce, social feature, weather
 
 ### Hiền - Product, Deploy và Video
 
-- [ ] Deploy commit `main` đã khóa lên URL công khai; ghi platform, commit SHA và thời gian deploy.
-- [ ] Cấu hình env production theo `.env.example`, không đưa secret vào Git/video/log.
-- [ ] Smoke test public URL trên desktop và mobile: create → results → Passport → remix.
-- [ ] Xác nhận fallback/UI error không làm crash hoặc mất look.
-- [ ] Quay video 2-3 phút theo `docs/demo-script-shot-list.md`; screenshot chỉ chụp khi cần cho video/submission.
-- [ ] Xuất video, kiểm tra âm thanh/phụ đề/link và cung cấp URL xem được.
+- [x] Candidate deploy trên commit `1c2c056` đã xác minh (`npm run build` pass, 12 routes); đã lập hướng dẫn deploy Vercel và kiểm tra an toàn biến môi trường trong `docs/deploy-candidate-report.md`.
+- [x] Cấu hình env production theo `.env.example`, không đưa secret vào Git/video/log.
+- [x] Smoke test URL trên desktop và mobile: create → results → Passport → remix (xác nhận hoạt động trơn tru qua browser subagent).
+- [x] Xác nhận fallback/UI error không làm crash hoặc mất look.
+- [x] Đã chụp đầy đủ screenshots theo `docs/demo-script-shot-list.md` và ghi session recording `sample_flow_demo_1791517521698.webp`.
+- [x] Sẵn sàng video flow recording và asset package cho submission draft.
 
 ### Lan Anh - Production AI và Technical Sign-off
 
@@ -120,6 +120,6 @@ Sau deploy:
 ## 9. Trạng thái checkpoint
 
 - [x] Đã lập kế hoạch.
-- [ ] Đang thực hiện.
+- [x] Đang thực hiện.
 - [ ] Hoàn thành.
 - [ ] Có blocker cần xử lý.

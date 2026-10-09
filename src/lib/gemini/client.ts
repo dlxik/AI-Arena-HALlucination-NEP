@@ -82,6 +82,17 @@ export function createGeminiClient(): GoogleGenAI {
   return cachedClient;
 }
 
+function stripMarkdownFences(text: string): string {
+  let cleaned = text.trim();
+  if (cleaned.startsWith("```")) {
+    cleaned = cleaned.replace(/^```[a-zA-Z0-9_-]*\r?\n?/, "");
+  }
+  if (cleaned.endsWith("```")) {
+    cleaned = cleaned.replace(/\r?\n?```$/, "");
+  }
+  return cleaned.trim();
+}
+
 function isTimeoutError(error: unknown): boolean {
   if (error instanceof ApiError && [408, 504].includes(error.status)) {
     return true;
@@ -89,10 +100,37 @@ function isTimeoutError(error: unknown): boolean {
 
   if (!(error instanceof Error)) return false;
 
+  const isNamedTimeout =
+    [
+      "RequestTimeoutError",
+      "TimeoutError",
+      "AbortError",
+      "APIConnectionTimeoutError",
+    ].includes(error.name) || error.name.includes("Timeout");
+
+  const isMessageTimeout = /timed out|timeout/i.test(error.message);
+
   return (
-    ["RequestTimeoutError", "TimeoutError", "AbortError"].includes(error.name) ||
+    isNamedTimeout ||
+    isMessageTimeout ||
     ("cause" in error && isTimeoutError(error.cause))
   );
+}
+
+function isServiceUnavailableError(error: unknown): boolean {
+  if (error instanceof ApiError && [503, 429].includes(error.status)) {
+    return true;
+  }
+  if (typeof error === "object" && error !== null) {
+    const errObj = error as Record<string, unknown>;
+    const status =
+      (errObj.status as number | undefined) ??
+      (errObj.statusCode as number | undefined);
+    if (status === 503 || status === 429) return true;
+    const msg = (errObj.message as string | undefined) ?? "";
+    if (/high demand|unavailable|overloaded|rate limit/i.test(msg)) return true;
+  }
+  return false;
 }
 
 export const generateStructuredJson: StructuredJsonGenerator = async ({
@@ -101,10 +139,14 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
   responseSchema,
   maxOutputTokens = 256,
 }) => {
-  try {
+  const primaryModel = getGeminiModel();
+  const fallbackModel =
+    primaryModel === "gemini-3.8-flash" ? "gemini-2.5-flash" : undefined;
+
+  const executeCall = async (model: string) => {
     const response = await createGeminiClient().interactions.create(
       {
-        model: getGeminiModel(),
+        model,
         input,
         system_instruction: systemInstruction,
         response_format: {
@@ -127,8 +169,29 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
       throw new GeminiRequestError("upstream");
     }
 
-    return response.output_text;
+    return stripMarkdownFences(response.output_text);
+  };
+
+  try {
+    return await executeCall(primaryModel);
   } catch (error) {
+    if (
+      fallbackModel &&
+      (isServiceUnavailableError(error) ||
+        (error instanceof Error &&
+          "cause" in error &&
+          isServiceUnavailableError(error.cause)))
+    ) {
+      console.warn(
+        `Primary model ${primaryModel} rate-limited or unavailable, falling back to ${fallbackModel}...`,
+      );
+      try {
+        return await executeCall(fallbackModel);
+      } catch (fallbackError) {
+        error = fallbackError;
+      }
+    }
+
     if (
       error instanceof GeminiConfigurationError ||
       error instanceof GeminiRequestError
@@ -147,3 +210,5 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
     );
   }
 };
+
+

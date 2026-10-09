@@ -134,65 +134,65 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   const validationUiState = resolveValidationUiState(look, isValidating, validationError);
 
   return (
-    <article className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden transition hover:shadow-md hover:-translate-y-0.5">
+    <article className="heritage-card flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       {/* Image area */}
-      <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center p-4 text-center">
+      <div className="relative aspect-[4/3] w-full bg-[#f2ece0] flex items-center justify-center p-4 text-center overflow-hidden border-b border-[#e8dfcf]">
         {look.imageUrl ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={look.imageUrl}
               alt={`Bản phối ${look.name}`}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition duration-500 hover:scale-105"
             />
-            <div className="absolute bottom-0 inset-x-0 bg-black/50 px-2 py-1.5 text-center backdrop-blur-sm">
-              <p className="text-[10px] text-white/90">{look.imageDisclaimer ?? "Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực."}</p>
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent px-3 py-2 text-center backdrop-blur-[2px]">
+              <p className="text-[11px] font-sans text-white/90 leading-tight">{look.imageDisclaimer ?? "Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực."}</p>
             </div>
           </>
         ) : isGeneratingImage ? (
-          <div role="status" aria-live="polite" className="flex flex-col items-center gap-3 text-slate-500">
-            <span className="h-6 w-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></span>
-            <span className="text-xs font-medium">Đang tạo ảnh minh họa...</span>
+          <div role="status" aria-live="polite" className="flex flex-col items-center gap-3 text-[#5c6470]">
+            <span className="h-7 w-7 border-2 border-[#1b4332] border-t-transparent rounded-full animate-spin"></span>
+            <span className="text-xs font-serif font-medium text-[#1b4332]">Đang họa tác ảnh phục trang...</span>
           </div>
         ) : look.imageFallback ? (
-          <div className="flex flex-col items-center gap-2 text-slate-500">
+          <div className="flex flex-col items-center gap-2 text-[#5c6470] px-4">
             <svg
-              className="h-10 w-10 opacity-40 text-amber-500"
+              className="h-10 w-10 opacity-50 text-[#c59b27]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <span className="text-xs font-medium">Ảnh minh họa không khả dụng</span>
-            <span className="text-[10px] opacity-80">{look.imageFallback}</span>
-            <button onClick={() => generateImage(true)} className="mt-2 text-xs font-semibold text-emerald-700 hover:underline">
-              Thử lại
+            <span className="text-xs font-serif font-semibold text-[#8b6514]">Ảnh minh họa tạm khép lại</span>
+            <span className="text-[11px] opacity-80 max-w-xs">{look.imageFallback}</span>
+            <button onClick={() => generateImage(true)} className="mt-2 text-xs font-semibold text-[#1b4332] hover:underline underline-offset-2">
+              Khởi tạo lại ảnh ↻
             </button>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-2 text-slate-400">
-            <span className="text-xs">Chờ tạo ảnh...</span>
+          <div className="flex flex-col items-center gap-2 text-[#8c94a0]">
+            <span className="text-xs font-serif">Chờ tạo ảnh minh họa...</span>
           </div>
         )}
         
         {/* Index badge */}
-        <span className="absolute top-3 left-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-900/70 text-xs font-bold text-white shadow-sm z-10">
+        <span className="absolute top-3 left-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#1b4332] text-xs font-serif font-bold text-[#fbf9f5] border border-[#d5c398] shadow z-10">
           {index + 1}
         </span>
         {/* Validation badge */}
         {validationUiState === "validating" ? (
-          <span role="status" aria-live="polite" className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5 z-10">
-            <span className="h-1.5 w-1.5 rounded-full bg-slate-400 animate-pulse" />
-            ĐANG KIỂM DUYỆT
+          <span role="status" aria-live="polite" className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-serif font-semibold bg-[#fbf9f5]/90 text-[#5c6470] border border-[#d6cbba] backdrop-blur-sm flex items-center gap-1.5 z-10 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#c59b27] animate-pulse" />
+            ĐANG KHẢO CỨU
           </span>
         ) : validationUiState === "error" ? (
-          <span className="absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-red-100 text-red-800 border border-red-200 z-10">
-            LỖI KIỂM DUYỆT
+          <span className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-serif font-semibold bg-red-50 text-[#a84232] border border-red-200 z-10 shadow-sm">
+            LỖI KIỂM ĐỊNH
           </span>
         ) : (
           <span
-            className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badge.className} z-10`}
+            className={`absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-serif font-semibold border backdrop-blur-sm z-10 shadow-sm ${badge.className}`}
           >
             {badge.label}
           </span>
@@ -200,24 +200,25 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      <div className="flex flex-1 flex-col gap-4 p-6 bg-gradient-to-b from-[#fbf9f5] to-[#f7f2e8]">
         {/* Header */}
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-emerald-700">
+          <div className="inline-block rounded-full bg-[#f2e9dc] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-[#a84232] border border-[#e5d8c3] mb-1.5">
             {GARMENT_LABEL[look.garment] ?? look.garment}
-          </p>
-          <h2 className="mt-1 text-xl font-semibold text-slate-900">{look.name}</h2>
+          </div>
+          <h2 className="text-xl font-serif font-bold text-[#1b4332] leading-snug">{look.name}</h2>
         </div>
 
         {/* Palette */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500">Bảng màu:</span>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs font-serif font-medium text-[#7a828e]">Sắc độ:</span>
           <div className="flex flex-wrap gap-1.5">
             {look.palette.map((color) => (
               <span
                 key={color}
-                className="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs text-slate-600 bg-slate-50"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#dcd2c1] bg-[#fdfcf9] px-2.5 py-0.5 text-xs text-[#2d3748]"
               >
+                <span className="h-2 w-2 rounded-full border border-black/10 bg-current opacity-70" />
                 {color.replace(/_/g, " ")}
               </span>
             ))}
@@ -226,12 +227,15 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
 
         {/* Items */}
         {look.items.length > 0 && (
-          <div>
-            <p className="text-xs font-medium text-slate-500 mb-1.5">Trang phục</p>
+          <div className="rounded-xl border border-[#ebe4d5] bg-[#f9f6ef] p-3">
+            <p className="text-xs font-serif font-bold text-[#1b4332] mb-1.5 flex items-center gap-1">
+              <span>🪡</span>
+              <span>Trang phục chính</span>
+            </p>
             <ul className="space-y-1">
               {look.items.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
-                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-500" />
+                <li key={item} className="flex items-start gap-2 text-xs text-[#3f4753] leading-relaxed">
+                  <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#1b4332]" />
                   {item}
                 </li>
               ))}
@@ -241,12 +245,15 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
 
         {/* Accessories */}
         {look.accessories.length > 0 && (
-          <div>
-            <p className="text-xs font-medium text-slate-500 mb-1.5">Phụ kiện</p>
+          <div className="rounded-xl border border-[#ebe4d5] bg-[#f9f6ef] p-3">
+            <p className="text-xs font-serif font-bold text-[#a84232] mb-1.5 flex items-center gap-1">
+              <span>🏮</span>
+              <span>Phụ kiện đi kèm</span>
+            </p>
             <ul className="space-y-1">
               {look.accessories.map((acc) => (
-                <li key={acc} className="flex items-start gap-2 text-sm text-slate-700">
-                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-amber-400" />
+                <li key={acc} className="flex items-start gap-2 text-xs text-[#3f4753] leading-relaxed">
+                  <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#c59b27]" />
                   {acc}
                 </li>
               ))}
@@ -255,17 +262,19 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
         )}
 
         {/* Reason */}
-        <p className="text-sm leading-6 text-slate-600 break-words">{look.reason}</p>
+        <p className="text-xs font-serif italic leading-relaxed text-[#5c6470] bg-[#f4eee1] p-3 rounded-xl border-l-2 border-[#1b4332] break-words">
+          &ldquo;{look.reason}&rdquo;
+        </p>
 
         {/* Retry Button */}
         {validationUiState === "error" && (
-          <div role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 flex flex-col items-center gap-2">
-            <p className="text-xs text-red-700 text-center">Có lỗi xảy ra khi kiểm duyệt văn hóa.</p>
+          <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3.5 flex flex-col items-center gap-2">
+            <p className="text-xs text-[#a84232] text-center font-serif">Có gián đoạn khi đối chiếu quy chuẩn văn hóa.</p>
             <button
               onClick={validateLook}
-              className="text-xs font-semibold text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded transition"
+              className="text-xs font-semibold text-white bg-[#a84232] hover:bg-[#8f3629] px-4 py-1.5 rounded-full shadow transition"
             >
-              Thử lại
+              Thử lại khảo cứu
             </button>
           </div>
         )}
@@ -278,28 +287,28 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
             {look.validation.warnings.map((w) => (
               <div
                 key={w.ruleId}
-                className={`rounded-lg border px-3 py-2.5 text-xs leading-5 ${SEVERITY_COLOR[w.severity] ?? ""}`}
+                className={`rounded-xl border px-3.5 py-2.5 text-xs leading-relaxed ${SEVERITY_COLOR[w.severity] ?? ""}`}
               >
                 <div className="flex justify-between items-start gap-2 mb-1">
                   <p className="font-semibold break-words">{w.reason}</p>
-                  <span className="shrink-0 rounded bg-white/50 px-1.5 py-0.5 text-[10px] font-mono opacity-80">
+                  <span className="shrink-0 rounded bg-white/60 px-1.5 py-0.5 text-[10px] font-mono opacity-80">
                     {w.ruleId}
                   </span>
                 </div>
-                <p className="opacity-80 break-words">💡 {w.suggestedFix}</p>
+                <p className="opacity-90 break-words">💡 Gợi ý: {w.suggestedFix}</p>
               </div>
             ))}
           </div>
         )}
 
         {/* CTA */}
-        <div className="mt-auto pt-2">
+        <div className="mt-auto pt-3">
           <Link
             href={`/looks/${look.id}`}
             id={`btn-view-passport-${look.id}`}
-            className="block w-full rounded-xl border border-emerald-600 px-4 py-2.5 text-center text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+            className="block w-full rounded-full border border-[#1b4332] bg-[#fbf9f5] px-4 py-2.5 text-center text-xs font-serif font-bold text-[#1b4332] shadow-sm transition hover:bg-[#1b4332] hover:text-[#fbf9f5] active:scale-[0.99]"
           >
-            Xem Cultural Passport ↗
+            Mở Cultural Passport ↗
           </Link>
         </div>
       </div>

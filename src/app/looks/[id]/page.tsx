@@ -7,6 +7,7 @@ import CulturalPassport from "@/components/cultural-passport/CulturalPassport";
 import type { RecommendationOutput, RecommendationInput, RemixOutput } from "@/types/api";
 import type { OutfitLook } from "@/types/outfit";
 import { toValidationLook } from "@/lib/client/look-payload";
+import { fixtureInput, fixtureOutput } from "@/lib/fixtures";
 
 // ─────────────────────────────────────────────────────────
 // Types
@@ -23,8 +24,15 @@ type PageState =
 
 function readLookFromStorage(id: string | undefined): PageState {
   try {
-    const rawResult = sessionStorage.getItem("recommendation_result");
-    const rawInput = sessionStorage.getItem("recommendation_input");
+    let rawResult = sessionStorage.getItem("recommendation_result");
+    let rawInput = sessionStorage.getItem("recommendation_input");
+    
+    if (!rawResult && id && fixtureOutput.looks.some((l) => l.id === id)) {
+      rawResult = JSON.stringify({ data: fixtureOutput, isFixture: true });
+      rawInput = JSON.stringify(fixtureInput);
+      sessionStorage.setItem("recommendation_result", rawResult);
+      sessionStorage.setItem("recommendation_input", rawInput);
+    }
     
     if (!rawResult) return { status: "no-session" };
     
@@ -83,35 +91,35 @@ export default function CulturalPassportPage() {
   // ── No session / not found ───────────────────────────────
   if (state.status === "no-session" || state.status === "not-found") {
     return (
-      <main className="mx-auto w-full max-w-3xl px-6 py-12 sm:px-10">
-        <div className="flex min-h-[60vh] flex-col items-center justify-center gap-6 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-3xl">
+      <main className="mx-auto w-full max-w-3xl px-6 py-16 sm:px-10">
+        <div className="heritage-card flex min-h-[55vh] flex-col items-center justify-center gap-6 p-8 sm:p-12 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#f4ece1] text-4xl shadow-inner border border-[#e6dbc9]">
             🪡
           </div>
           <div className="space-y-2">
-            <h1 className="text-xl font-semibold text-slate-900">
+            <h1 className="text-2xl font-serif font-bold text-[#1b4332]">
               {state.status === "not-found"
                 ? "Không tìm thấy bản phối này"
-                : "Phiên làm việc đã hết hạn"}
+                : "Phiên làm việc đã khép lại"}
             </h1>
-            <p className="max-w-sm text-sm leading-6 text-slate-500">
+            <p className="max-w-sm text-sm leading-relaxed text-[#5c6470]">
               {state.status === "not-found"
-                ? "Bản phối không tồn tại hoặc đã bị thay đổi."
-                : "Vui lòng quay lại trang kết quả hoặc tạo bản phối mới."}
+                ? "Bản phối không tồn tại hoặc đã bị thay đổi trong quá trình lưu trữ."
+                : "Vui lòng quay lại trang danh sách hoặc khởi tạo lại bản phối mới."}
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
             <Link
               href="/results"
-              className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              className="rounded-full border border-[#d6cbba] bg-[#fbf9f5] px-6 py-2.5 text-sm font-semibold text-[#1b4332] transition hover:bg-[#f4ece1]"
             >
-              ← Xem bản phối
+              ← Xem danh mục bản phối
             </Link>
             <Link
               href="/create"
-              className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
+              className="rounded-full bg-[#1b4332] px-6 py-2.5 text-sm font-semibold text-[#fbf9f5] shadow transition hover:bg-[#133024]"
             >
-              Tạo bản phối mới
+              🌿 Tạo bản phối mới
             </Link>
           </div>
         </div>
@@ -176,37 +184,42 @@ export default function CulturalPassportPage() {
   };
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-12 sm:px-10">
+    <main className="mx-auto w-full max-w-4xl px-6 py-12 sm:px-10">
       {/* Breadcrumb */}
-      <nav className="mb-8 flex items-center justify-between text-sm text-slate-500">
+      <nav className="mb-6 flex items-center justify-between text-sm text-[#7a828e]">
         <div className="flex items-center gap-2">
-          <Link href="/results" className="hover:text-emerald-700 transition-colors">
-            ← Bản phối
+          <Link href="/results" className="hover:text-[#1b4332] transition-colors flex items-center gap-1 font-serif">
+            <span>←</span>
+            <span>Bản phối</span>
           </Link>
           <span>/</span>
-          <span className="text-slate-900 font-medium">{look.name}</span>
+          <span className="text-[#1b4332] font-serif font-bold">{look.name}</span>
         </div>
       </nav>
 
       {/* Fixture badge */}
       {isFixture && (
-        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          📋 Đây là dữ liệu mẫu (fixture) — không phải kết quả từ API thật.
+        <div className="mb-6 rounded-2xl border border-[#e6c875] bg-[#fbf6e2] px-5 py-3 text-xs text-[#845b10] flex items-center gap-2">
+          <span>📜</span>
+          <span>Đây là dữ liệu mẫu đối chiếu (fixture) — trích xuất từ kho lưu trữ mẫu chuẩn.</span>
         </div>
       )}
 
       {/* Remix Controls */}
-      <div className="mb-8 rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
+      <div className="heritage-card mb-8 p-6 shadow-sm">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
-            Remix (Tinh chỉnh)
-          </h2>
+          <div className="flex items-center gap-2">
+            <span className="text-base">🪡</span>
+            <h2 className="text-xs font-serif font-bold uppercase tracking-widest text-[#1b4332]">
+              Xưởng tinh chỉnh phối sắc (Remix Atelier)
+            </h2>
+          </div>
           {!isEditing && (
             <button
               onClick={startEdit}
-              className="text-xs font-semibold text-emerald-700 hover:underline"
+              className="rounded-full border border-[#d6cbba] bg-[#fbf9f5] px-3.5 py-1 text-xs font-serif font-semibold text-[#1b4332] hover:bg-[#f4ece1] transition"
             >
-              Chỉnh sửa
+              Chỉnh sửa sắc thái ✎
             </button>
           )}
         </div>
@@ -214,90 +227,101 @@ export default function CulturalPassportPage() {
         {isEditing ? (
           <div className="space-y-4">
             <div>
-              <label htmlFor="remix-palette" className="block text-xs font-medium text-slate-700 mb-1">Bảng màu (cách nhau bằng dấu phẩy)</label>
+              <label htmlFor="remix-palette" className="block text-xs font-serif font-bold text-[#1b4332] mb-1">
+                Bảng màu (ngăn cách bằng dấu phẩy)
+              </label>
               <input
                 id="remix-palette"
                 type="text"
                 value={editPalette}
                 onChange={(e) => setEditPalette(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#d6cbba] bg-[#fdfcf9] px-3.5 py-2.5 text-sm text-[#1b4332] focus:border-[#1b4332] focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
                 disabled={isRemixing}
               />
             </div>
             <div>
-              <label htmlFor="remix-accessories" className="block text-xs font-medium text-slate-700 mb-1">Phụ kiện (cách nhau bằng dấu phẩy)</label>
+              <label htmlFor="remix-accessories" className="block text-xs font-serif font-bold text-[#1b4332] mb-1">
+                Phụ kiện (ngăn cách bằng dấu phẩy)
+              </label>
               <input
                 id="remix-accessories"
                 type="text"
                 value={editAccessories}
                 onChange={(e) => setEditAccessories(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#d6cbba] bg-[#fdfcf9] px-3.5 py-2.5 text-sm text-[#1b4332] focus:border-[#1b4332] focus:outline-none focus:ring-1 focus:ring-[#1b4332]"
                 disabled={isRemixing}
               />
             </div>
 
             {remixError && (
-              <p role="alert" className="text-xs text-red-600 font-medium">{remixError}</p>
+              <p role="alert" className="text-xs text-[#a84232] font-medium bg-red-50 p-2.5 rounded-lg border border-red-200">
+                {remixError}
+              </p>
             )}
 
             <div className="flex items-center gap-3 mt-4">
               <button
                 onClick={handleRemix}
                 disabled={isRemixing}
-                className="rounded-xl bg-emerald-700 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-50 flex items-center gap-2"
+                className="rounded-full bg-[#1b4332] px-6 py-2.5 text-sm font-semibold text-[#fbf9f5] transition hover:bg-[#133024] disabled:opacity-50 flex items-center gap-2 shadow"
               >
                 {isRemixing ? (
                   <>
                     <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                     <span role="status" aria-live="polite">
-                      {isRevalidating ? "Đang kiểm duyệt..." : "Đang tạo ảnh..."}
+                      {isRevalidating ? "Đang đối chiếu Critic..." : "Đang họa tác ảnh..."}
                     </span>
                   </>
                 ) : (
-                  "Cập nhật & Chạy lại Critic"
+                  "Cập nhật & Chạy lại Critic ✦"
                 )}
               </button>
               <button
                 onClick={() => setIsEditing(false)}
                 disabled={isRemixing}
-                className="text-sm font-medium text-slate-500 hover:text-slate-700 disabled:opacity-50"
+                className="text-sm font-serif font-medium text-[#7a828e] hover:text-[#1b4332] disabled:opacity-50"
               >
-                Hủy
+                Hủy bỏ
               </button>
             </div>
           </div>
         ) : (
-          <p className="text-xs text-slate-500">
-            Bạn có thể chỉnh sửa bảng màu hoặc phụ kiện. Sau khi lưu, Cultural Critic sẽ kiểm duyệt lại và tạo ảnh mới.
+          <p className="text-xs text-[#5c6470] leading-relaxed">
+            Bạn có thể tùy biến sắc độ vải hoặc chi tiết phụ kiện theo cảm hứng riêng. Sau khi lưu, Cultural Critic sẽ tiến hành khảo cứu độc lập để đảm bảo không vi phạm các cấm kỵ trang phục.
           </p>
         )}
       </div>
 
-      <div className={`rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10 transition-opacity ${isRemixing ? 'opacity-50' : 'opacity-100'}`}>
+      <div className={`heritage-card p-6 sm:p-10 shadow-md transition-opacity ${isRemixing ? 'opacity-50' : 'opacity-100'}`}>
         {/* Header */}
-        <div className="mb-8 border-b border-slate-100 pb-6">
-          <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
-            Cultural Passport
+        <div className="mb-8 border-b border-[#e8dfcf] pb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#d5c398] bg-[#f6efe1] px-3 py-0.5 text-xs font-serif font-semibold text-[#8b6514] mb-2">
+              <span>📜</span>
+              <span>Cultural Passport • Hồ Sơ Di Sản</span>
+            </div>
+            <h1 className="text-3xl font-serif font-bold text-[#1b4332]">{look.name}</h1>
+          </div>
+          <p className="text-xs font-mono text-[#8c94a0] bg-[#f4ece1] px-3 py-1 rounded-full border border-[#e0d6c4] self-start sm:self-auto">
+            Mã định danh: {look.id}
           </p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-950">{look.name}</h1>
-          <p className="mt-2 text-sm text-slate-500 font-mono">{look.id}</p>
         </div>
 
         <CulturalPassport look={look} />
 
         {/* Actions */}
-        <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
+        <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-[#e8dfcf] pt-8">
           <Link
             href="/results"
-            className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            className="rounded-full border border-[#d6cbba] bg-[#fbf9f5] px-6 py-2.5 text-sm font-semibold text-[#1b4332] transition hover:bg-[#f4ece1]"
           >
             ← Xem tất cả bản phối
           </Link>
           <Link
             href="/create"
-            className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
+            className="rounded-full bg-[#1b4332] px-6 py-2.5 text-sm font-semibold text-[#fbf9f5] shadow transition hover:bg-[#133024]"
           >
-            Tạo bản phối mới
+            🌿 Tạo bản phối mới
           </Link>
         </div>
       </div>

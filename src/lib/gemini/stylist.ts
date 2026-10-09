@@ -206,6 +206,81 @@ export async function recommendWithGemini(
     });
   }
 
+function normalizeLook(
+  look: unknown,
+  input: RecommendationInput,
+): unknown {
+  if (!look || typeof look !== "object") return look;
+  const l = { ...(look as Record<string, unknown>) };
+
+  delete l.remixLevel;
+
+  if (Array.isArray(l.items)) {
+    l.items = l.items.map((it) =>
+      typeof it === "string"
+        ? it
+        : typeof it === "object" && it !== null && "name" in it && typeof (it as Record<string, unknown>).name === "string"
+        ? (it as Record<string, unknown>).name
+        : String(it),
+    );
+  }
+
+  if (Array.isArray(l.accessories)) {
+    l.accessories = l.accessories.map((ac) =>
+      typeof ac === "string"
+        ? ac
+        : typeof ac === "object" && ac !== null && "name" in ac && typeof (ac as Record<string, unknown>).name === "string"
+        ? (ac as Record<string, unknown>).name
+        : String(ac),
+    );
+  }
+
+  if (!l.validation || typeof l.validation !== "object") {
+    l.validation = {
+      status: "warning",
+      warnings: [PENDING_CRITIC_WARNING],
+    };
+  }
+
+  if (Array.isArray(l.palette)) {
+    const stringColors = l.palette.map((c) => String(c));
+    if (!stringColors.some((c) => (input.colors as readonly string[]).includes(c))) {
+      l.palette = [input.colors[0], ...stringColors].slice(0, 4);
+    } else {
+      l.palette = stringColors.slice(0, 4);
+    }
+  } else {
+    l.palette = [...input.colors];
+  }
+
+  return l;
+}
+
+  if (Array.isArray(decoded)) {
+    decoded = { looks: decoded };
+  } else if (
+    decoded &&
+    typeof decoded === "object" &&
+    !("looks" in decoded) &&
+    "recommendations" in decoded &&
+    Array.isArray((decoded as { recommendations?: unknown }).recommendations)
+  ) {
+    decoded = { looks: (decoded as { recommendations: unknown }).recommendations };
+  }
+
+  if (
+    decoded &&
+    typeof decoded === "object" &&
+    "looks" in decoded &&
+    Array.isArray((decoded as { looks?: unknown }).looks)
+  ) {
+    decoded = {
+      looks: (decoded as { looks: unknown[] }).looks.map((l) =>
+        normalizeLook(l, input),
+      ),
+    };
+  }
+
   const parsed = parseRecommendationOutput(
     decoded,
     createOutputConstraints(input, context),

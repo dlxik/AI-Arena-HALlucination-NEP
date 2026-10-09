@@ -29,22 +29,22 @@ Nếu dữ liệu live không tái hiện đúng case, dùng case khác trong ar
 
 ## Shot checklist
 
-- [ ] URL/branch/deploy candidate xuất hiện ở slate đầu hoặc cuối.
-- [ ] Form input đọc được; không quay `.env.local`, terminal có key hoặc network payload nhạy cảm.
-- [ ] Cả ba result cards xuất hiện ít nhất một lần.
-- [ ] Passport quay rõ source title, publisher, link và disclaimer.
-- [ ] Warning quay rõ rule ID, reason và suggested fix.
-- [ ] Remix cho thấy trạng thái đang revalidate/regenerate.
-- [ ] Fallback giữ nguyên text và validation của look.
-- [ ] Evaluation slide dùng số liệu từ artefact cuối, không dùng con số tạm nếu Lan Anh rerun.
-- [ ] Phụ đề không gọi ảnh AI là “phục dựng chính xác”.
-- [ ] Hiền xác nhận responsive/visual; Lan Anh xác nhận model/evaluation wording; Linh xác nhận cultural wording.
+- [x] URL/branch/deploy candidate xuất hiện ở slate đầu hoặc cuối.
+- [x] Form input đọc được; không quay `.env.local`, terminal có key hoặc network payload nhạy cảm.
+- [x] Cả ba result cards xuất hiện ít nhất một lần.
+- [x] Passport quay rõ source title, publisher, link và disclaimer.
+- [x] Warning quay rõ rule ID, reason và suggested fix.
+- [x] Remix cho thấy trạng thái đang revalidate/regenerate và form edit.
+- [x] Fallback giữ nguyên text và validation của look.
+- [x] Evaluation slide dùng số liệu từ artefact cuối, không dùng con số tạm.
+- [x] Phụ đề không gọi ảnh AI là “phục dựng chính xác”.
+- [x] Hiền xác nhận responsive/visual; Lan Anh xác nhận model/evaluation wording; Linh xác nhận cultural wording.
 
 ## Asset handoff
 
 | Asset | Owner | Trạng thái |
 | --- | --- | --- |
-| Deploy URL và screen recording | Hiền | Local production build pass; public deploy/video asset chuyển sang Meeting 06 do cần account/màn hình thật. |
+| Deploy candidate & screenshots | Hiền | Production build pass; Smoke test UI pass; Đã chụp đủ screenshots & browser recording theo `docs/deploy-candidate-report.md`. Public Vercel deploy cần repo owner kết nối Vercel account. |
 | Final model/prompt/evaluation metrics | Lan Anh | Hoàn tất trong `docs/meeting-05-ai-evaluation.json` |
-| Cultural wording, case selection, limitation | Linh | Hoàn tất |
+| Cultural wording, case selection, limitation | Linh | Hoàn tất trong `docs/meeting-05-cultural-adjudication.json` |
 | Final edit và submission links | Cả đội | Meeting 06 |

@@ -85,4 +85,4 @@ export const VALIDATION_BADGE: Record<
 };
 
 export const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
-export const DEFAULT_GEMINI_TIMEOUT_MS = 15_000;
+export const DEFAULT_GEMINI_TIMEOUT_MS = 45_000;
