@@ -2,6 +2,7 @@
 
 | Date | Owner | Tool | Goal | Artefact/Commit | Reviewer | Result |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-09 | Lan Anh | Antigravity | Meeting 06: technical sign-off, live endpoints smoke test, prompt lock audit, secret/log hygiene check | `docs/meeting-06-lan-anh-verification.md`, `scripts/smoke-test-live.ts` | Chờ Hiền (deploy/video) & Linh (submission) | 165/165 tests ✓; lint ✓; typecheck ✓; build ✓; 5/5 live endpoints smoke test ✓; prompt SHA-256 match 100% ✓; image fallback not_configured minh bạch ✓; no secret leaked ✓ |
 | 2026-10-08 | Lan Anh | Antigravity (Claude Sonnet) | Meeting 05: chạy toàn bộ evaluation, fix lint `no-explicit-any` trong script, khóa prompt hash và build report 16 cases | `scripts/build-meeting-05-evaluation.ts`, `docs/meeting-05-intent-evaluation.json`, `docs/meeting-05-ai-evaluation.json` | Linh đã cultural review 16/16; chờ Hiền UX/preview | validate:data ✓; 165/165 tests ✓; lint ✓; typecheck ✓; intent 5/5 ✓; critic 8/8 ✓; recommend 5/5 ✓; image-remix 8/8 ✓; 16/16 cases pass trong consolidated report; image provider chưa cấu hình — blocker ghi rõ |
 | 2026-09-24 | Diệu Linh | Codex + web research | Khởi tạo Cultural KB, provenance và cultural validation cases | `feature/data` | Chờ phân công | 7 nguồn, 5 records và 5 test cases; tất cả chờ review chéo |
 | 2026-09-24 | Hiền | Antigravity (Claude) | Dựng skeleton frontend: form đầy đủ MVP, result cards từ fixture, cultural passport UI, navbar | `src/lib/fixtures.ts`, `src/lib/constants.ts`, `src/components/results/ResultCard.tsx`, `src/components/cultural-passport/CulturalPassport.tsx`, `src/app/results/page.tsx`, `src/app/create/page.tsx`, `src/app/looks/[id]/page.tsx`, `src/components/layout/Navbar.tsx` | Chờ Lan Anh + Linh review | UI render được toàn bộ field schema từ fixture; cần kết nối API thật |
@@ -11,6 +12,19 @@
 | 2026-09-28 | Team | Codex integration review | Merge Meeting 02, đối chiếu retrieval policy và chạy automated checks | Local `main` integration commits | Codex + cần owner demo | 35/35 tests, data validation, lint và typecheck pass; live 5-case acceptance chờ `GEMINI_API_KEY`, responsive review chờ Hiền xác nhận. |
 | 2026-10-01 | Lan Anh | Codex + Gemini (`gemini-3.5-flash-lite`) | Cultural Critic v1 độc lập, Rule Retrieval và recommendation orchestration | `plan/LAN_ANH_MEETING_03.md`, `docs/meeting-03-critic-evaluation.json` | Chờ Hiền/Linh review | 86/86 tests; data validation, lint, typecheck pass; live 8/8 Critic cases + 5/5 recommendation inputs sau prompt iteration và retry upstream. |
 | 2026-10-02 | Lan Anh | Codex + Gemini Critic (`gemini-3.5-flash-lite`); Gemini image provider qua SDK | Image/fallback contract, whitelist remix và fresh Critic trước regeneration | `plan/MEETING_04.md`, `docs/meeting-04-image-remix-evaluation.json`, `prompts/image/image-v1.md` | Chờ Hiền/Linh review | 160/160 tests; data validation, lint, typecheck, build pass; live 8/8 remix Critic cases. Live ảnh chưa chạy do chưa cấu hình provider/model; không mô tả fallback là generated. |
+
+## Meeting 06 technical sign-off — 2026-10-09
+
+- Automated checks: `validate:data` pass (4 garment, 8 source, 14 records, 8 validation cases); `validate:meeting05-cultural` pass (19 cases); **165/165 unit tests** pass; `lint` pass (0 errors, 0 warnings); `typecheck` pass; Next.js 16.3.5 Turbopack production build pass (12/12 static pages).
+- Live endpoints smoke test: **5/5 live endpoints pass** (`/api/parse-intent` 200 ✓; `/api/validate` 200 ✓; `/api/recommend` 200, 3 looks + independent Critic ✓; `/api/remix` 200, fresh validationId + re-Critic ✓; `/api/generate-image` 200, explicit fallback `not_configured` + disclaimer ✓). Test script: `scripts/smoke-test-live.ts`.
+- Prompt hashes: 100% khớp artefact Meeting 05, không thay đổi prompt đã khóa:
+  - `prompts/intent/intent-v1.md`: `e1db57e798e86952510d399103d176b2874a11d4dee8fb46ab00d461ece4cb89`
+  - `prompts/critic/critic-v1.md`: `6fcd7d3d595b94a799e17a50e1f3bd123e60ae92269f82c9bbd5dbda6b9ae0fa`
+  - `prompts/image/image-v1.md`: `ef2f9343cfb58376fa4be8e7d046baec6b11f3759ecc3eff0d86b010df059697`
+  - `prompts/stylist/stylist-v1.md`: `bedbc5e55953c394dc07257c152266b0a4afab004a79cfcbc46612666b5fdbd4`
+- Image behavior: `IMAGE_PROVIDER` / `GEMINI_IMAGE_MODEL` chưa cấu hình trong `.env.local`; image pipeline trả fallback `not_configured` minh bạch và kèm disclaimer bắt buộc; không tạo ảnh giả mạo phục dựng lịch sử.
+- Error mapping & Secret exposure: mọi error envelope đều an toàn (400, 422, 500, 502, 503, 504), không lộ API key, không leak stack trace hoặc raw provider payload; `.env*` nằm trong `.gitignore` ngoại trừ `.env.example`; log hygiene sạch sẽ.
+- Handoff & Technical sign-off: Đạt toàn bộ tiêu chí kỹ thuật của Lan Anh. Sẵn sàng cho Hiền deploy / quay video và Linh tổng duyệt cultural / nộp submission.
 
 ## Meeting 05 live evaluation — 2026-10-08
 
