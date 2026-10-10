@@ -94,79 +94,29 @@ export async function generateImageWithGemini(
 
 function buildDetailedVisualPrompt(imagePrompt: string): string {
   try {
-    const spec = JSON.parse(imagePrompt);
-    const garmentId = spec.garment;
-    const style = spec.style || "traditional";
-    const colors = Array.isArray(spec.palette) && spec.palette.length > 0
-      ? spec.palette.map((c: string) => String(c).replace(/_/g, " ")).join(", ")
-      : "pastel mint green, traditional colors";
-    const items = Array.isArray(spec.items) && spec.items.length > 0
-      ? spec.items.join(", ")
+    const spec = JSON.parse(imagePrompt) as Record<string, unknown>;
+    const garmentId = String(spec.garment ?? "");
+    const style = String(spec.style ?? "");
+    const colors = Array.isArray(spec.palette)
+      ? spec.palette.map((color) => String(color).replace(/_/g, " ")).join(", ")
       : "";
-    const accessories = Array.isArray(spec.accessories) && spec.accessories.length > 0
-      ? spec.accessories.join(", ")
+    const items = Array.isArray(spec.items)
+      ? spec.items.map((item) => String(item)).join(", ")
       : "";
-
-    let garmentDescription = "";
-
-    if (garmentId === "nhat_binh") {
-      garmentDescription = [
-        "authentic Vietnamese royal court costume Nhat Binh robe (Áo Nhật Bình) from Nguyen Dynasty",
-        "prominent wide rectangular embroidered collar band running vertically down the chest (cổ đối khâm hình chữ nhật)",
-        "wide loose sleeves with distinct five-colored rainbow stripes (ngũ sắc cuffs: red, yellow, blue, white, green) on the sleeve hems",
-        "wearing an elaborate traditional royal blue coiled fabric crown turban (khăn vành quấn đầu nhiều vòng) neatly atop styled hair",
-        "luxurious long silk outer robe over wide white silk trousers",
-        "wearing traditional Vietnamese imperial embroidered silk slippers (hài thêu hoa sen hoặc chim phượng) clearly visible on feet resting on the floor",
-        accessories ? `holding matching accessories: ${accessories}` : "holding a delicate traditional imperial embroidered silk purse or clutch handbag (túi gấm) and painted silk folding fan",
-        "traditional Vietnamese royal embroidery with cloud and water (thủy ba) wave patterns",
-        "strictly authentic Vietnamese historical attire, NOT Chinese Hanfu, NOT Japanese Kimono",
-      ].join(", ");
-    } else if (garmentId === "ao_ngu_than") {
-      garmentDescription = [
-        "authentic traditional Vietnamese five-panel robe (Áo Ngũ Thân)",
-        "featuring a high standing round Mandarin collar (cổ đứng)",
-        "curved overlapping front right lapel fastened with a vertical row of five traditional buttons (hàng năm cúc ngũ khuy) from neck to side",
-        "modest straight silhouette with side slits worn over loose white silk pants",
-        "wearing an authentic traditional Vietnamese folded fabric turban (khăn đóng / khăn vấn)",
-        items.toLowerCase().includes("chẽn") || items.toLowerCase().includes("tay chẽn")
-          ? "neatly fitted narrow sleeves (tay chẽn)"
-          : "traditional sleeves",
-        "wearing traditional Vietnamese wooden clogs (guốc mộc) or embroidered slippers visible on feet standing on the floor",
-        accessories ? `holding accessories: ${accessories}` : "holding a traditional fabric pouch handbag (túi vải gấm) or traditional folding bamboo fan",
-        "authentic 19th-century Vietnamese cultural costume, historical Vietnamese tailoring",
-      ].filter(Boolean).join(", ");
-    } else if (garmentId === "ao_tu_than") {
-      garmentDescription = [
-        "authentic traditional Northern Vietnamese four-panel dress (Áo Tứ Thân)",
-        "open flowing outer robe with two front panels tied loosely into a bow at the waist",
-        "worn over an embroidered silk halter-neck bodice (áo yếm) and long flowing dark silk skirt",
-        "colorful silk waist sash ribbons (dây bao thắt lưng)",
-        "wearing traditional black kerchief (khăn mỏ quạ) on head and holding a large round flat woven palm hat with silk ribbons (nón quai thao)",
-        "wearing traditional hand-carved wooden clogs (guốc mộc) clearly visible standing on the floor",
-        accessories ? `holding accessories: ${accessories}` : "carrying a traditional embroidered cloth pouch (túi gấm quai thao)",
-        "traditional Vietnamese folk festival cultural attire (Quan Họ cultural heritage)",
-      ].join(", ");
-    } else {
-      garmentDescription = [
-        "authentic traditional Vietnamese Ao Dai (Áo Dài)",
-        "featuring high stand-up Mandarin collar, form-fitting bodice, two long elegant split panels flowing down to ankles",
-        "side slits starting from waistline, worn over wide-leg flowing silk trousers",
-        "wearing an ornate matching circular fabric headband crown (mấn đội đầu / khăn vấn) on sleek hairstyle",
-        "wearing elegant traditional embroidered silk shoes (hài thêu) or heels clearly visible on feet standing on the floor",
-        accessories ? `holding accessories: ${accessories}` : "holding an elegant embroidered silk clutch handbag (túi xách thêu gấm) or silk folding fan",
-        "timeless Vietnamese traditional national dress",
-      ].join(", ");
-    }
+    const accessories = Array.isArray(spec.accessories)
+      ? spec.accessories.map((accessory) => String(accessory)).join(", ")
+      : "";
 
     return [
-      "Full body head-to-toe standing wide shot fashion photography of a young Vietnamese model in clean studio lighting",
-      "entire figure completely visible from top of headwear down to feet and shoes, standing pose with ample margins above head and below shoes, zero cropping, full length view",
-      `wearing ${garmentDescription}`,
-      `color palette: ${colors}`,
-      items ? `specific garment items: ${items}` : "",
-      accessories ? `accessories and handbag: ${accessories}` : "",
-      `style mood: ${style}`,
-      "photorealistic editorial fashion photography, high resolution 8k, authentic Vietnamese cultural heritage, sharp focus, full length view, visible footwear and shoes on floor, visible headdress and headwear on head, museum-grade textile details, natural fabric texture, uncropped full body shot",
+      "Full-body head-to-toe editorial fashion illustration of a Vietnamese model in neutral studio lighting.",
+      garmentId ? `Garment category ID: ${garmentId}.` : "",
+      style ? `Style ID: ${style}.` : "",
+      colors ? `Use only this requested palette: ${colors}.` : "",
+      items ? `Show only these supplied garment items: ${items}.` : "",
+      accessories ? `Show only these supplied accessories: ${accessories}.` : "Do not invent accessories.",
+      "Keep the entire figure visible without cropping.",
+      "Do not infer or add rank, insignia, motifs, ritual status, historical period, region, or authenticity claims not present in the supplied specification.",
+      "This is an AI-created fashion illustration, not an authenticated artefact or historical reconstruction.",
     ]
       .filter(Boolean)
       .join(", ");

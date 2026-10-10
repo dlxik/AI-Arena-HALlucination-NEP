@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { retrieveCulturalRules } from "@/lib/cultural/rule-retrieval";
 import { CriticOutputError, critiqueWithGemini } from "@/lib/gemini/critic";
-import { generateImage, generateImageWithGemini, ImageProviderError } from "@/lib/gemini/image-generator";
+import { generateImage, ImageProviderError } from "@/lib/gemini/image-generator";
 import { buildImagePrompt } from "@/lib/gemini/image-prompt";
 import { parseCulturalValidation, parseValidationInput } from "@/lib/validation/cultural-validation";
 import { parseImageDataUrl } from "@/lib/validation/image";
