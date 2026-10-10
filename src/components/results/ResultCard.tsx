@@ -35,6 +35,7 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   const [isValidating, setIsValidating] = useState(false);
   const [validationError, setValidationError] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Sync look to session storage whenever it updates significantly
   const updateStorage = (updatedLook: OutfitLook) => {
@@ -81,8 +82,11 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   };
 
   const generateImage = async (forceRetry = false) => {
-    if (look.imageUrl || (look.imageFallback && !forceRetry) || isGeneratingImage) return;
+    if ((look.imageUrl && !forceRetry) || (look.imageFallback && !forceRetry) || isGeneratingImage) return;
     setIsGeneratingImage(true);
+    if (forceRetry) {
+      setLook((prev) => ({ ...prev, imageUrl: undefined, imageFallback: undefined }));
+    }
     try {
       const rawInput = sessionStorage.getItem("recommendation_input");
       if (!rawInput) throw new Error("Thiếu dữ liệu yêu cầu ban đầu.");
@@ -139,10 +143,14 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   useEffect(() => {
     if (!look.imageUrl && !look.imageFallback && !hasFiredImageGeneration.current) {
       hasFiredImageGeneration.current = true;
-      generateImage();
+      const delayMs = index * 2000;
+      const timer = setTimeout(() => {
+        generateImage();
+      }, delayMs);
+      return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [look.imageUrl, look.imageFallback]);
+  }, [look.imageUrl, look.imageFallback, index]);
 
   const badge = VALIDATION_BADGE[look.validation.status];
   const validationUiState = resolveValidationUiState(look, isValidating, validationError);
@@ -150,23 +158,45 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
   return (
     <article className="heritage-card flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       {/* Image area */}
-      <div className="relative aspect-[4/3] w-full bg-[#f2ece0] flex items-center justify-center p-4 text-center overflow-hidden border-b border-[#e8dfcf]">
+      <div
+        className={`relative aspect-[3/4] w-full bg-[#f2ece0] flex items-center justify-center text-center overflow-hidden border-b border-[#e8dfcf] group ${look.imageUrl ? "cursor-pointer" : ""}`}
+        onClick={() => {
+          if (look.imageUrl) setIsModalOpen(true);
+        }}
+      >
         {look.imageUrl ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={look.imageUrl}
-              alt={`Bản phối ${look.name}`}
-              className="h-full w-full object-cover transition duration-500 hover:scale-105"
+              alt={`Bản phối toàn thân ${look.name}`}
+              className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
             />
-            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent px-3 py-2 text-center backdrop-blur-[2px]">
+            <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 opacity-90 transition-opacity">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  generateImage(true);
+                }}
+                className="rounded-full bg-black/65 hover:bg-black/90 backdrop-blur-sm text-white text-[11px] px-2.5 py-1 flex items-center gap-1 shadow transition hover:scale-105 active:scale-95"
+                title="Họa lại ảnh mới cho bản phối này"
+              >
+                <span>↻</span>
+                <span>Họa lại</span>
+              </button>
+              <span className="rounded-full bg-black/60 backdrop-blur-sm text-white text-[11px] px-2 py-1 flex items-center gap-1 shadow pointer-events-none">
+                🔍 Phóng to
+              </span>
+            </div>
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/45 to-transparent px-3 py-2 text-center backdrop-blur-[2px]">
               <p className="text-[11px] font-sans text-white/90 leading-tight">{look.imageDisclaimer ?? "Ảnh minh họa bởi AI, không phải hiện vật hay phục dựng xác thực."}</p>
             </div>
           </>
         ) : isGeneratingImage ? (
           <div role="status" aria-live="polite" className="flex flex-col items-center gap-3 text-[#5c6470]">
             <span className="h-7 w-7 border-2 border-[#1b4332] border-t-transparent rounded-full animate-spin"></span>
-            <span className="text-xs font-serif font-medium text-[#1b4332]">Đang họa tác ảnh phục trang...</span>
+            <span className="text-xs font-serif font-medium text-[#1b4332]">Đang họa tác ảnh cổ phục...</span>
           </div>
         ) : look.imageFallback ? (
           <div className="flex flex-col items-center gap-2 text-[#5c6470] px-4">
@@ -187,8 +217,9 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
             </button>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-2 text-[#8c94a0]">
-            <span className="text-xs font-serif">Chờ tạo ảnh minh họa...</span>
+          <div className="flex flex-col items-center gap-2.5 text-[#8c94a0]">
+            <span className="h-5 w-5 border-2 border-[#8c94a0] border-t-transparent rounded-full animate-spin opacity-40"></span>
+            <span className="text-xs font-serif text-[#7a828e]">Đang chờ lượt họa ảnh ({index + 1}/3)...</span>
           </div>
         )}
         
@@ -277,10 +308,6 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
           </div>
         )}
 
-        {/* Reason */}
-        <p className="text-xs font-serif italic leading-relaxed text-[#5c6470] bg-[#f4eee1] p-3 rounded-xl border-l-2 border-[#1b4332] break-words">
-          &ldquo;{look.reason}&rdquo;
-        </p>
 
         {/* Retry Button */}
         {validationUiState === "error" && (
@@ -328,6 +355,46 @@ export default function ResultCard({ look: initialLook, index }: ResultCardProps
           </Link>
         </div>
       </div>
+
+      {/* Full-body image lightbox modal */}
+      {isModalOpen && look.imageUrl && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="relative max-h-[94vh] max-w-lg w-full flex flex-col items-center bg-[#1b4332] rounded-2xl p-3 shadow-2xl border border-[#d5c398]/50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex w-full items-center justify-between pb-2 px-2 text-[#fbf9f5]">
+              <span className="font-serif text-sm font-semibold tracking-wide">
+                {look.name} &bull; Toàn thân & Phụ kiện
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="rounded-full bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 font-sans transition"
+                aria-label="Đóng ảnh phóng to"
+              >
+                ✕ Đóng
+              </button>
+            </div>
+            <div className="relative max-h-[80vh] w-full flex items-center justify-center overflow-hidden rounded-xl bg-black/40">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={look.imageUrl}
+                alt={`Bản phối toàn thân ${look.name}`}
+                className="max-h-[80vh] w-auto object-contain rounded-xl shadow-lg"
+              />
+            </div>
+            <p className="mt-2 text-center text-[11px] text-[#fbf9f5]/85 font-sans leading-tight">
+              Góc nhìn toàn thân: Trọn bộ mũ / khăn vấn / mấn, thân áo, phụ kiện túi xách và giày dép / guốc mộc.
+            </p>
+          </div>
+        </div>
+      )}
     </article>
   );
 }

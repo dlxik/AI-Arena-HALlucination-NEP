@@ -82,6 +82,51 @@ export function createGeminiClient(): GoogleGenAI {
   return cachedClient;
 }
 
+export const DEFAULT_FPT_BASE_URL = "https://mkp-api.fptcloud.com/v1";
+export const DEFAULT_FPT_MODEL = "Qwen3.6-27B";
+export const DEFAULT_FPT_TIMEOUT_MS = 60_000;
+
+export function getLlmProvider(): "fpt" | "gemini" {
+  const provider = process.env.LLM_PROVIDER?.trim().toLowerCase();
+  if (provider === "fpt" || provider === "gemini") {
+    return provider;
+  }
+  if (process.env.FPT_API_KEY?.trim()) {
+    return "fpt";
+  }
+  return "gemini";
+}
+
+export function getFptApiKey(): string {
+  const apiKey = process.env.FPT_API_KEY?.trim();
+  if (!apiKey) {
+    throw new GeminiConfigurationError(
+      "FPT_API_KEY is not configured. Add FPT_API_KEY to your environment or .env file.",
+    );
+  }
+  return apiKey;
+}
+
+export function getFptBaseUrl(): string {
+  return process.env.FPT_BASE_URL?.trim() || DEFAULT_FPT_BASE_URL;
+}
+
+export function getFptModel(): string {
+  return process.env.FPT_MODEL?.trim() || DEFAULT_FPT_MODEL;
+}
+
+export function getFptTimeoutMs(): number {
+  const configured = Number(process.env.FPT_TIMEOUT_MS);
+  if (
+    Number.isInteger(configured) &&
+    configured >= 1_000 &&
+    configured <= 120_000
+  ) {
+    return configured;
+  }
+  return DEFAULT_FPT_TIMEOUT_MS;
+}
+
 function stripMarkdownFences(text: string): string {
   let cleaned = text.trim();
   if (cleaned.startsWith("```")) {
@@ -133,7 +178,98 @@ function isServiceUnavailableError(error: unknown): boolean {
   return false;
 }
 
-export const generateStructuredJson: StructuredJsonGenerator = async ({
+async function generateStructuredJsonWithFpt({
+  systemInstruction,
+  input,
+  responseSchema,
+  maxOutputTokens = 256,
+}: StructuredJsonRequest): Promise<string> {
+  const apiKey = getFptApiKey();
+  const baseUrl = getFptBaseUrl();
+  const model = getFptModel();
+  const timeoutMs = getFptTimeoutMs();
+
+  const maxTokens = Math.max(maxOutputTokens, 1024);
+  const endpoint = `${baseUrl.replace(/\/+$/, "")}/chat/completions`;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  let response: Response;
+  try {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: systemInstruction },
+          { role: "user", content: input },
+        ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "structured_output",
+            schema: responseSchema,
+          },
+        },
+        max_tokens: maxTokens,
+      }),
+      signal: controller.signal,
+    });
+  } catch (error) {
+    clearTimeout(timer);
+    if (
+      (error instanceof Error && error.name === "AbortError") ||
+      (typeof error === "object" &&
+        error !== null &&
+        "name" in error &&
+        (error as { name: string }).name === "TimeoutError")
+    ) {
+      throw new GeminiRequestError("timeout", undefined, { cause: error });
+    }
+    throw new GeminiRequestError("upstream", undefined, { cause: error });
+  } finally {
+    clearTimeout(timer);
+  }
+
+  if (!response.ok) {
+    if (response.status === 408 || response.status === 504) {
+      throw new GeminiRequestError("timeout", response.status);
+    }
+    throw new GeminiRequestError("upstream", response.status);
+  }
+
+  let data: unknown;
+  try {
+    data = await response.json();
+  } catch (error) {
+    throw new GeminiRequestError("upstream", response.status, { cause: error });
+  }
+
+  const payload = data as {
+    choices?: Array<{
+      message?: {
+        content?: string | null;
+        reasoning_content?: string | null;
+      };
+    }>;
+  };
+
+  const choice = payload?.choices?.[0];
+  const content = choice?.message?.content?.trim();
+
+  if (!content) {
+    throw new GeminiRequestError("upstream", response.status);
+  }
+
+  return stripMarkdownFences(content);
+}
+
+const generateStructuredJsonWithGemini: StructuredJsonGenerator = async ({
   systemInstruction,
   input,
   responseSchema,
@@ -209,4 +345,35 @@ export const generateStructuredJson: StructuredJsonGenerator = async ({
       { cause: error },
     );
   }
+};
+
+export const generateStructuredJson: StructuredJsonGenerator = async (
+  request,
+) => {
+  const provider = getLlmProvider();
+
+  if (provider === "fpt") {
+    try {
+      return await generateStructuredJsonWithFpt(request);
+    } catch (error) {
+      const hasGeminiKey = Boolean(process.env.GEMINI_API_KEY?.trim());
+      if (
+        hasGeminiKey &&
+        (error instanceof GeminiRequestError || isServiceUnavailableError(error))
+      ) {
+        console.warn(
+          "FPT provider failed or unavailable, falling back to Gemini...",
+          error,
+        );
+        try {
+          return await generateStructuredJsonWithGemini(request);
+        } catch (geminiError) {
+          throw geminiError;
+        }
+      }
+      throw error;
+    }
+  }
+
+  return await generateStructuredJsonWithGemini(request);
 };
